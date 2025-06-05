@@ -36,3 +36,10 @@ def signup():
         
         hashed_password = generate_password_hash(password)
 
+
+        new_user = User (
+            user_name = 'user_name'
+            password = 'hashed_password'
+        )
+
+        stm = select('username').where
