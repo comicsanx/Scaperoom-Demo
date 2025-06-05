@@ -10,7 +10,7 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str] = mapped_column(String(120), nullable=False)
+    user_name: Mapped[str] = mapped_column(String(120), nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
     best_time :  Mapped[float] = mapped_column(Float, nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
