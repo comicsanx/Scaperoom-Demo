@@ -15,6 +15,7 @@ class User(db.Model):
     username: Mapped[str] = mapped_column(String(80), nullable=False)
     password_hash: Mapped[str] = mapped_column(String(2256),nullable=False)
     avatar_filename: Mapped[str] = mapped_column(String(100), nullable=False, default="default_avatar.png")
+    best_time: Mapped[float] = mapped_column(Float, nullable=True, default=None)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
@@ -27,6 +28,7 @@ class User(db.Model):
             "email": self.email,
             "username": self.username,    
             "avatar_filename": self.avatar_filename,
+            "best_time": self.best_time,
         }
      
 class GameSession(db.Model):
@@ -35,7 +37,7 @@ class GameSession(db.Model):
     id : Mapped[int] = mapped_column(primary_key=True)
     status:  Mapped[str] = mapped_column(nullable=False, default="playing")
     accumulated_time: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
-    # total_time: Mapped[float] = mapped_column(Float, nullable=True)
+    total_time: Mapped[float] = mapped_column(Float, nullable=True)
     current_level: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
     user_id : Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False) 
     
