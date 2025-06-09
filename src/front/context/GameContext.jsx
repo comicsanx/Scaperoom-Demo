@@ -10,6 +10,7 @@ export const GameProvider = ({ children }) => {
   const [pistasUsadas, setPistasUsadas] = useState([]);
   const [nivelActual, setNivelActual] = useState(1);
   const [tiempo, setTiempo] = useState(0);
+  // const { segundos, iniciar, pausar, reiniciar } = useChrono(true);
 
   const login = async (email, password) => {
     const res = await fetch("http://localhost:5000/login", {
@@ -71,6 +72,10 @@ export const GameProvider = ({ children }) => {
         pistasUsadas,
         registrarPistaUsada,
         apiCall,
+        // pausar,
+        // iniciar,
+        // reiniciar
+
       }}
     >
       {children}
