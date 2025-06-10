@@ -1,4 +1,5 @@
 import Timer from "../components/Timer";
+import { InfoModalUser } from "../components/InfoModalUser";
 
 export default function GameContainer() {
   return (
@@ -6,6 +7,7 @@ export default function GameContainer() {
       <h2>Nivel 1</h2>
       <Timer />
       {/* Aquí se colocarán puzzles, pistas, menú de objetos */}
+      <InfoModalUser />
     </div>
   );
 }
