@@ -17,7 +17,7 @@ class User(db.Model):
     avatar_filename: Mapped[str] = mapped_column(String(100), nullable=False, default="default_avatar.png")
     best_time: Mapped[float] = mapped_column(Float, nullable=True, default=None)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    # created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     user_games: Mapped[List['GameSession']] = relationship(back_populates = "user", cascade="all, delete-orphan")
   

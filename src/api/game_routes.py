@@ -82,49 +82,6 @@ def start_new_game_session():
         db.session.rollback()
         print(f'Error al iniciar nueva sesión de juego: {error}')
         return jsonify({"msg": "Error interno del servidor"}), 500
-
-@game_api.route('/ranking', methods=['GET'])
-@jwt_required() 
-def get_ranking_by_level():
-    try:
-        level_param = request.args.get('level', type=int)
-        if level_param is None:
-            return jsonify({"msg": "Es necesario especificar el nivel para el ranking (ej: /api/ranking?level=1)"}), 400
-        
-        subquery = (
-            db.session.query(
-                GameSession.user_id,
-                func.min(GameSession.accumulated_time).label('best_level_time')
-            )
-            .filter(
-                GameSession.current_level == level_param,
-                GameSession.status == "completed"
-            )
-            .group_by(GameSession.user_id)
-            .subquery()
-        )
-        results = (
-            db.session.query(
-                User.id,
-                User.username,
-                subquery.c.best_level_time
-            )
-            .join(subquery, User.id == subquery.c.user_id)
-            .order_by(subquery.c.best_level_time.asc())
-            .all()
-        )
-        ranking = [
-            {
-                "user_id": user_id,
-                "username": username,
-                "best_time_for_level": best_level_time
-            }
-            for user_id, username, best_level_time in results
-        ]
-        return jsonify(ranking), 200
-    except Exception as error:
-        print(f'Error en el ranking: {error}')
-        return jsonify({"msg": "Error interno del servidor"}), 500
     
 @game_api.route('/ranking/global', methods=['GET'])
 @jwt_required()
