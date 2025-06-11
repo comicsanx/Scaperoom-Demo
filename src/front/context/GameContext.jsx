@@ -4,16 +4,46 @@ const GameContext = createContext();
 
 export const useGame = () => useContext(GameContext);
 
+const API_BASE = "http://localhost:5000"
+
 export const GameProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [pistasUsadas, setPistasUsadas] = useState([]);
   const [nivelActual, setNivelActual] = useState(1);
   const [tiempo, setTiempo] = useState(0);
-  // const { segundos, iniciar, pausar, reiniciar } = useChrono(true);
+
+  // fetch que registra tiempo y nivelActual post/put revisar
+  // falta adaptar las url a los endpoints cuando estén subidos.
+ 
+
+
+  const signup = async (email, password, avatar_filename, user_name) => {
+    try {
+      const res = await fetch(`${API_BASE}/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, avatar_filename, user_name }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        alert("¡Registro exitoso! Ya puedes iniciar sesión.")
+        return true;
+      } else {
+        alert("registro fallido");
+        return false;
+      }
+    }
+    catch (error) {
+      console.error("Error de conexión durante el registro:", error);
+      alert("No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
+      return false;
+    }
+  }
 
   const login = async (email, password) => {
-    const res = await fetch("http://localhost:5000/login", {
+    const res = await fetch(`${API_BASE}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -54,6 +84,73 @@ export const GameProvider = ({ children }) => {
     return await res.json();
   };
 
+  const deleteUser = async () => {
+    if (!user || !user.id || !token) {
+      throw new Error("No hay usuario autenticado para eliminar.");
+    }
+    try {
+      await apiCall(`${API_BASE}`, "DELETE") 
+      logout()
+      return true
+    } catch (error) {
+      console.error("Error al eliminar usuario en la API:", error);
+      throw new Error(error.message)
+    }
+  }
+
+  // newProfile es la variable que hay que poner en el componente para actualizar los datos
+
+  const updateUserProfile = async (newProfile) => {
+    if (!user || !user.id || !token) {
+      throw new Error("No hay usuario autenticado para modiifcar.");
+    }
+    try {
+      const updateProfile = await apiCall(`${API_BASE}`,"PUT", newProfile)
+
+      setUser(updateProfile)
+      alert("Perfil actualizado exitosamente.");
+      return true;
+    } catch (error) {
+      console.error("Error al eliminar usuario en la API:", error);
+      throw new Error(error.message)
+
+    }
+  }
+
+  // const saveGameProgress = async (current_level, accumulated_time,) => {
+
+  //   if (!user || !user.id || !token) {
+  //     console.error("No hay usuario autenticado.");
+  //     return false;
+  //   }
+  //   try {
+  //     const hasProgress = await apiCall(`${API_BASE}`, method = "GET");
+  //     console.log(hasProgress)
+    
+
+  //     const method = hasProgress ? "PUT" : "POST";
+  //     const endpoint = method === "POST" ? `${API_BASE}` : `${API_BASE}`/${user.id}`;
+
+
+
+
+  //     await apiCall(endpoint, method, {
+  //       current_level,
+  //       accumulated_time,
+  //       user_id: user.id,
+  //     });
+
+  //     console.log("Progreso guardado.");
+  //     setNivelActual(current_level)
+  //     setTiempo(accumulated_time);
+  //     return true;
+  //   } catch (error) {
+  //     console.error("Error al guardar progreso:", error);
+  //     return false;
+  //   }
+  // };
+
+
   const registrarPistaUsada = (idPista) => {
     setPistasUsadas((prev) => [...prev, idPista]);
   };
@@ -72,10 +169,10 @@ export const GameProvider = ({ children }) => {
         pistasUsadas,
         registrarPistaUsada,
         apiCall,
-        // pausar,
-        // iniciar,
-        // reiniciar
-
+        signup,
+        saveGameProgress,
+        deleteUser,
+        updateUserProfile
       }}
     >
       {children}

@@ -30,7 +30,7 @@ class GameSession(db.Model):
 
     id : Mapped[int] = mapped_column(primary_key=True)
     status:  Mapped[str] = mapped_column(nullable=False)
-    acumuated_time : Mapped[float] = mapped_column(Float, nullable=True)
+    accumulated_time : Mapped[float] = mapped_column(Float, nullable=True)
     total_time :  Mapped[float] = mapped_column(Float, nullable=True)
     current_level  :Mapped[int] = mapped_column(Float, nullable=False)
     user_id : Mapped[int] = mapped_column(ForeignKey("users.id")) 
@@ -40,13 +40,13 @@ class GameSession(db.Model):
    
 
 
-def serialize(self):
+    def serialize(self):
         
         return {
             "id": self.id,
             "user_id": self.user_id,
             "status": self.status,
             "accumulated_time": self.accumulated_time,
-            "final_total_time": self.final_total_time,
+            "total_time": self.total_time,
             "current_level": self.current_level
         }

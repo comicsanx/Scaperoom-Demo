@@ -6,8 +6,8 @@ export default function GameContainer() {
     <div>
       <h2>Nivel 1</h2>
       <Timer />
+     
       {/* Aquí se colocarán puzzles, pistas, menú de objetos */}
-      <InfoModalUser />
     </div>
   );
 }
