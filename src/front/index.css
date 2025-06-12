@@ -1,0 +1,132 @@
+
+/* css componente OBJECTS */
+
+
+.objectPosition{
+  position: absolute;
+  top: 100px;
+  left: 200px;
+  border: none;
+  background: transparent;
+ 
+}
+.objectImg{
+  width: 50px;
+  height: 50px;
+  object-fit: contain
+}
+.objectButtonDisable{
+     opacity: 0; 
+     border: none; 
+     background: transparent;
+}
+.objectModal {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  background: rgba(101, 67, 33, 1); 
+  border: 2px solid #6b4226; 
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(50, 30, 10, 0.4);
+  padding: 15px 25px;
+  max-width: 280px;
+  z-index: 9999;
+  animation: popIn 0.7s ease forwards;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.modal-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-content button {
+  background-color: #6a2e06; 
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 3 0.5rem;
+  line-height: 1;
+  border-radius: 4px;
+  margin-top: 2px;
+}
+@keyframes popIn {
+  0% {
+    transform: translateX(-50%) scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+
+.modal-content button:hover {
+  background-color: #d48a4e;
+  color: #222;
+}
+
+.modal-content h2 {
+  font-size: 1rem;
+  color: #f3e6d8;
+  margin: 0 10px 0 0;
+  text-align: center;
+  flex-grow: 1;
+}
+
+/* css componente INVENTORY */
+
+.inventoryImg{
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  border-radius: 20px;
+  background-color: rgb(235, 210, 178);
+  margin-top: 20px;
+
+}
+ .inventoryName{
+  font-size: 8px;
+} 
+
+.inventoryContainer {
+  position: fixed;
+  bottom: 1%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1050; 
+  
+}
+
+.inventory_btn {
+  z-index: 1040;
+  position: relative;
+
+}
+
+.inventoryMenuObjects {
+  background-color: #e36c1c;
+  padding: 10px;
+  border-radius: 10px;
+  height: 70px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  animation: slideUp 0.5s ease-out;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
