@@ -5,7 +5,7 @@ export default function Dashboard() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("http://localhost:3000/api/ranking/global")
+        fetch("https://glorious-memory-695976v44pqg255jx-3001.app.github.dev/api/ranking/global")
             .then(res => res.json())
             .then(data => {
                 console.log("Ranking:", data);

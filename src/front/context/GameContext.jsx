@@ -4,7 +4,7 @@ const GameContext = createContext();
 
 export const useGame = () => useContext(GameContext);
 
-const API_BASE = "http://localhost:3000"
+const API_BASE = "https://glorious-memory-695976v44pqg255jx-3001.app.github.dev"
 
 export const GameProvider = ({ children }) => {
   const [user, setUser] = useState(null);
