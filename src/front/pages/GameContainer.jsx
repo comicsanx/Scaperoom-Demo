@@ -42,6 +42,7 @@ export default function GameContainer() {
   return (
     <div>
       <h2>Nivel 1</h2>
+      <InfoModalUser />
       <Timer menuOpen={menuOpen} ref={timerRef} />
       <button onClick={handleHint} className="btn btn-warning mt-2">
         Pedir pista

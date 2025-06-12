@@ -4,7 +4,7 @@ const GameContext = createContext();
 
 export const useGame = () => useContext(GameContext);
 
-const API_BASE = "http://localhost:5000"
+const API_BASE = "http://localhost:3000"
 
 export const GameProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -68,14 +68,13 @@ export const GameProvider = ({ children }) => {
     // No navegar aquí
   };
 
-  const apiCall = async (url, method = "GET", body = null) => {
-    const res = await fetch(url, {
-      method,
+  const apiCall = async () => {
+    const res = await fetch(`${API_BASE}/user/profile`, {
+      method: 'GET',
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      ...(body && { body: JSON.stringify(body) }),
     });
 
     if (!res.ok) {
@@ -124,13 +123,13 @@ export const GameProvider = ({ children }) => {
       return false;
     }
     try {
-      const hasProgress = await apiCall(`${API_BASE}`, method = "GET");
+      const hasProgress = await apiCall(`${API_BASE}`);
       console.log(hasProgress)
 
       const method = hasProgress ? "PUT" : "POST";
       const endpoint = method === "POST" ? `${API_BASE}` : `${API_BASE}/${user.id}`;
 
-      await apiCall(endpoint, method, {
+      await apiCall({
         current_level,
         accumulated_time,
         user_id: user.id,
