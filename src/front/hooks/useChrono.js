@@ -1,20 +1,26 @@
 import { useEffect, useState } from "react";
 
 export default function useChrono(start = false) {
-  const [segundos, setSegundos] = useState(0);
-  const [activo, setActivo] = useState(start);
+  const [seconds, setSeconds] = useState(0);
+  const [active, setActive] = useState(start);
 
   useEffect(() => {
-    let intervalo = null;
-    if (activo) {
-      intervalo = setInterval(() => {
-        setSegundos((s) => s + 1);
+    let interval = null;
+    if (active) {
+      interval = setInterval(() => {
+        setSeconds((s) => s + 1);
       }, 1000);
     } else {
-      clearInterval(intervalo);
+      clearInterval(interval);
     }
-    return () => clearInterval(intervalo);
-  }, [activo]);
+    return () => clearInterval(interval);
+  }, [active]);
 
-  return { segundos, iniciar: () => setActivo(true), pausar: () => setActivo(false), reiniciar: () => setSegundos(0) };
+  return {
+    seconds,
+    start: () => setActive(true),
+    pause: () => setActive(false),
+    reset: () => setSeconds(0),
+    addSeconds: (n) => setSeconds((s) => s + n),
+  };
 }
