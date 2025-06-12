@@ -5,14 +5,24 @@ import { Objects } from "./Objects";
 export const Inventory = ({ pickedUpObjects, allObjects }) => {
 
     const [isOpen, setIsOpen] = useState(false)
+    const [selectObject, setSelectObject] = useState(null)
+    const [wrongClicks, setWrongClicks] = useState(0)
 
     const modalObject = allObjects.filter(obj => pickedUpObjects.includes(obj.id))
     console.log("Objetos recogidos:", pickedUpObjects);
     console.log("Objetos filtrados:", modalObject);
 
-    const handleCloseButton = () => {
+    const handleSelect = (id) => {
+        if (selectObject === id) {
+            setSelectObject(null)
+            setWrongClicks(0)
+        }
+        else {
+            setSelectObject(id)
+            setWrongClicks(0)
+        }
 
-        setIsOpen(!isOpen)
+
 
     }
 
@@ -37,8 +47,16 @@ export const Inventory = ({ pickedUpObjects, allObjects }) => {
                         )}
 
                         {modalObject.map(obj => (
-                            <div key={obj.id} className="inventory-item">
-                                <img src={obj.img} className="inventoryImg" alt={obj.name} />
+                            <div
+                                key={obj.id}
+                                className='inventory-item'
+                                onClick={() => handleSelect(obj.id)}
+                            >
+                                <img
+                                    src={obj.img}
+                                    className={`inventoryImg ${selectObject === obj.id ? "selected" : ""}`}
+                                    alt={obj.name}
+                                />
                                 <p className="inventoryName">{obj.name}</p>
                             </div>
                         ))}
@@ -48,7 +66,7 @@ export const Inventory = ({ pickedUpObjects, allObjects }) => {
                             className="btn btn-sm btn-danger  "
                             onClick={() => setIsOpen(false)}
                         >
-                           X
+                            X
                         </button>
                     </div>
                 )}
