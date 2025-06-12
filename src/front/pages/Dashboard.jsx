@@ -1,7 +1,17 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Dashboard() {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetch("http://localhost:3001/api/ranking")
+            .then(res => res.json())
+            .then(data => {
+                console.log("Ranking:", data);
+            })
+            .catch(err => console.error("Error fetching ranking:", err));
+    }, []);
 
     return (
         <div>

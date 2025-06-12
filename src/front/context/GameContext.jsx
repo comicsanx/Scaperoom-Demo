@@ -15,7 +15,7 @@ export const GameProvider = ({ children }) => {
 
   // fetch que registra tiempo y nivelActual post/put revisar
   // falta adaptar las url a los endpoints cuando estén subidos.
- 
+
 
 
   const signup = async (email, password, avatar_filename, user_name) => {
@@ -89,7 +89,7 @@ export const GameProvider = ({ children }) => {
       throw new Error("No hay usuario autenticado para eliminar.");
     }
     try {
-      await apiCall(`${API_BASE}`, "DELETE") 
+      await apiCall(`${API_BASE}`, "DELETE")
       logout()
       return true
     } catch (error) {
@@ -105,7 +105,7 @@ export const GameProvider = ({ children }) => {
       throw new Error("No hay usuario autenticado para modiifcar.");
     }
     try {
-      const updateProfile = await apiCall(`${API_BASE}`,"PUT", newProfile)
+      const updateProfile = await apiCall(`${API_BASE}`, "PUT", newProfile)
 
       setUser(updateProfile)
       alert("Perfil actualizado exitosamente.");
@@ -116,40 +116,36 @@ export const GameProvider = ({ children }) => {
 
     }
   }
+  // TODO: revisar si se puede hacer un put o post dependiendo de si hay progreso guardado o no
+  const saveGameProgress = async (current_level, accumulated_time,) => {
 
-  // const saveGameProgress = async (current_level, accumulated_time,) => {
+    if (!user || !user.id || !token) {
+      console.error("No hay usuario autenticado.");
+      return false;
+    }
+    try {
+      const hasProgress = await apiCall(`${API_BASE}`, method = "GET");
+      console.log(hasProgress)
 
-  //   if (!user || !user.id || !token) {
-  //     console.error("No hay usuario autenticado.");
-  //     return false;
-  //   }
-  //   try {
-  //     const hasProgress = await apiCall(`${API_BASE}`, method = "GET");
-  //     console.log(hasProgress)
-    
+      const method = hasProgress ? "PUT" : "POST";
+      const endpoint = method === "POST" ? `${API_BASE}` : `${API_BASE}/${user.id}`;
 
-  //     const method = hasProgress ? "PUT" : "POST";
-  //     const endpoint = method === "POST" ? `${API_BASE}` : `${API_BASE}`/${user.id}`;
+      await apiCall(endpoint, method, {
+        current_level,
+        accumulated_time,
+        user_id: user.id,
+      });
 
-
-
-
-  //     await apiCall(endpoint, method, {
-  //       current_level,
-  //       accumulated_time,
-  //       user_id: user.id,
-  //     });
-
-  //     console.log("Progreso guardado.");
-  //     setNivelActual(current_level)
-  //     setTiempo(accumulated_time);
-  //     return true;
-  //   } catch (error) {
-  //     console.error("Error al guardar progreso:", error);
-  //     return false;
-  //   }
-  // };
-
+      console.log("Progreso guardado.");
+      setNivelActual(current_level)
+      setTiempo(accumulated_time);
+      return true;
+    } catch (error) {
+      console.error("Error al guardar progreso:", error);
+      alert("No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
+      return false;
+    }
+  };
 
   const registrarPistaUsada = (idPista) => {
     setPistasUsadas((prev) => [...prev, idPista]);

@@ -122,12 +122,12 @@ def get_ranking():
             db.session.query(
                 User.id,
                 User.user_name,
-                func.sum(GameSession.acumuated_time).label('total_time')
+                func.sum(GameSession.accumulated_time).label('total_time')
             )
             .join(GameSession, GameSession.user_id == User.id)
             .filter(GameSession.current_level.in_([1, 2]))
             .group_by(User.id, User.user_name)
-            .order_by(func.sum(GameSession.acumuated_time))
+            .order_by(func.sum(GameSession.accumulated_time))
             .all()
         )
         ranking = [
