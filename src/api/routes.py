@@ -122,7 +122,7 @@ def handle_user_profile():
                 if not current_password_for_verification or not check_password_hash(user.password_hash, current_password_for_verification):
                     return jsonify({"msg": "Contraseña actual incorrecta."}), 401
            
-            user.password_hash = generate_password_hash(new_password)
+                user.password_hash = generate_password_hash(new_password)
 
             db.session.commit()
 
