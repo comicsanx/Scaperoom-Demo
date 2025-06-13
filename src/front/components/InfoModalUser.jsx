@@ -8,7 +8,7 @@ import { Dropdown, Button, OverlayTrigger, Tooltip  } from 'react-bootstrap'
 
 export const InfoModalUser = () => {
 
-  const { user, setUser, nivelActual, apiCall, pistasUsadas, tiempo } = useGame()
+  const { user, setUser, nivelActual, apiCall, pistasUsadas, tiempo, token } = useGame()
 
   const [loading, setLoading] = useState(true);
 
@@ -17,16 +17,18 @@ export const InfoModalUser = () => {
 
 
   const fetchUserData = async () => {
-
     if (user) {
       setLoading(false);
       return;
     }
-
     try {
       setLoading(true);
-
-      const userData = await apiCall();
+      const userData = await apiCall(
+        (import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api") + "/api/user/profile",
+        "GET",
+        null,
+        token
+      );
       setUser(userData);
       setLoading(false);
     } catch (err) {
@@ -35,7 +37,7 @@ export const InfoModalUser = () => {
     }
   };
   useEffect(() => {
-    if (user === null) {
+    if (user) {
       fetchUserData();
     }
   }, [apiCall, user, setUser])

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import Login from "../components/Login";
+import { Login } from "../pages/Login";
+import { Signup } from "../pages/Signup";
 import GameContainer from "./GameContainer";
 import Dashboard from "./Dashboard";
 import Timer from "../components/Timer";
@@ -43,6 +44,7 @@ export const Home = () => {
 			<div className="alert alert-info">
 				<Login />
 				<Dashboard />
+				<Signup />
 
 			</div>
 		</div>

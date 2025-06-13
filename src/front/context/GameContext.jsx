@@ -4,7 +4,7 @@ const GameContext = createContext();
 
 export const useGame = () => useContext(GameContext);
 
-const API_BASE = "https://glorious-memory-695976v44pqg255jx-3001.app.github.dev"
+const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api";
 
 export const GameProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -18,12 +18,12 @@ export const GameProvider = ({ children }) => {
 
 
 
-  const signup = async (email, password, avatar_filename, user_name) => {
+  const signup = async (data) => {
     try {
-      const res = await fetch(`${API_BASE}/signup`, {
+      const res = await fetch(`${API_BASE}/api/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, avatar_filename, user_name }),
+        body: JSON.stringify(data),
       });
 
       if (res.ok) {
@@ -43,7 +43,7 @@ export const GameProvider = ({ children }) => {
   }
 
   const login = async (email, password) => {
-    const res = await fetch(`${API_BASE}/login`, {
+    const res = await fetch(`${API_BASE}/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -68,27 +68,30 @@ export const GameProvider = ({ children }) => {
     // No navegar aquí
   };
 
-  const apiCall = async () => {
-    const res = await fetch(`${API_BASE}/user/profile`, {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
+  const res = await fetch(API_BASE + "/api/", {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: body ? JSON.stringify(body) : null,
+  });
 
-    if (!res.ok) {
-      throw new Error("Error en la API");
-    }
-    return await res.json();
-  };
+  if (!res.ok) {
+    throw new Error("Error en la API");
+  }
+
+  return await res.json();
+};
+
 
   const deleteUser = async () => {
     if (!user || !user.id || !token) {
       throw new Error("No hay usuario autenticado para eliminar.");
     }
     try {
-      await apiCall(`${API_BASE}`, "DELETE")
+      await apiCall(`${API_BASE}/user/profile`, "DELETE")
       logout()
       return true
     } catch (error) {
@@ -104,7 +107,7 @@ export const GameProvider = ({ children }) => {
       throw new Error("No hay usuario autenticado para modiifcar.");
     }
     try {
-      const updateProfile = await apiCall(`${API_BASE}`, "PUT", newProfile)
+      const updateProfile = await apiCall(`${API_BASE}/user/profile`, "PUT", newProfile)
 
       setUser(updateProfile)
       alert("Perfil actualizado exitosamente.");
@@ -116,35 +119,35 @@ export const GameProvider = ({ children }) => {
     }
   }
   // TODO: revisar si se puede hacer un put o post dependiendo de si hay progreso guardado o no
-  const saveGameProgress = async (current_level, accumulated_time,) => {
+  // const saveGameProgress = async (current_level, accumulated_time,) => {
 
-    if (!user || !user.id || !token) {
-      console.error("No hay usuario autenticado.");
-      return false;
-    }
-    try {
-      const hasProgress = await apiCall(`${API_BASE}`);
-      console.log(hasProgress)
+  //   if (!user || !user.id || !token) {
+  //     console.error("No hay usuario autenticado.");
+  //     return false;
+  //   }
+  //   try {
+  //     const hasProgress = await apiCall(`${API_BASE}"/user/profile"`);
+  //     console.log(hasProgress)
 
-      const method = hasProgress ? "PUT" : "POST";
-      const endpoint = method === "POST" ? `${API_BASE}` : `${API_BASE}/${user.id}`;
+  //     const method = hasProgress ? "PUT" : "POST";
+  //     const endpoint = method === "POST" ? `${API_BASE}` : `${API_BASE}/${user.id}`;
 
-      await apiCall({
-        current_level,
-        accumulated_time,
-        user_id: user.id,
-      });
+  //     await apiCall({
+  //       current_level,
+  //       accumulated_time,
+  //       user_id: user.id,
+  //     });
 
-      console.log("Progreso guardado.");
-      setNivelActual(current_level)
-      setTiempo(accumulated_time);
-      return true;
-    } catch (error) {
-      console.error("Error al guardar progreso:", error);
-      alert("No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
-      return false;
-    }
-  };
+  //     console.log("Progreso guardado.");
+  //     setNivelActual(current_level)
+  //     setTiempo(accumulated_time);
+  //     return true;
+  //   } catch (error) {
+  //     console.error("Error al guardar progreso:", error);
+  //     alert("No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
+  //     return false;
+  //   }
+  // };
 
   const registrarPistaUsada = (idPista) => {
     setPistasUsadas((prev) => [...prev, idPista]);
@@ -165,7 +168,7 @@ export const GameProvider = ({ children }) => {
         registrarPistaUsada,
         apiCall,
         signup,
-        saveGameProgress,
+        //saveGameProgress,
         deleteUser,
         updateUserProfile
       }}
