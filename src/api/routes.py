@@ -2,6 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os
+import secrets
 from flask import Flask, request, jsonify, url_for, Blueprint, current_app
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
@@ -12,7 +13,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from sqlalchemy import select, func
 from flask import Blueprint, request, jsonify
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 api = Blueprint('api', __name__)
 
@@ -175,6 +176,13 @@ def get_ranking():
         print(f'Error en el ranking: {error}')
         return jsonify({"msg": "Error interno del servidor"}), 500
 
+# --- FLUJO DE RECUPERACIÓN DE CONTRASEÑA CON TOKEN CORTO EN MEMORIA ---
+
+password_reset_tokens = {}
+
+def generate_short_token(length=12):
+    return secrets.token_urlsafe(length)[:length]
+
 def generate_reset_token(email):
     serializer = URLSafeTimedSerializer(os.getenv("FLASK_APP_KEY"))
     return serializer.dumps(email, salt="password-reset-salt")
@@ -190,9 +198,12 @@ def forgot_password():
     if not user:
         return jsonify({"msg": "Si el email está registrado, recibirás instrucciones"}), 200
 
-    # Generar token seguro
-    token = generate_reset_token(email)
-    reset_url = f"{os.getenv('FRONTEND_URL', 'http://localhost:3000')}/reset-password/{token}"
+    short_token = generate_short_token(12)
+    password_reset_tokens[short_token] = {
+        "email": email,
+        "expires_at": datetime.now(timezone.utc) + timedelta(hours=1)
+    }
+    reset_url = f"{os.getenv('FRONTEND_URL', 'http://localhost:3000')}/reset-password/{short_token}"
 
     msg = Message(
     "Recuperación de contraseña",
@@ -221,14 +232,18 @@ def reset_password(token):
     if not new_password:
         return jsonify({"msg": "La nueva contraseña es requerida"}), 400
 
-    email = verify_reset_token(token)
-    if not email:
+    token_data = password_reset_tokens.get(token)
+    if not token_data or token_data["expires_at"] < datetime.now(timezone.utc):
         return jsonify({"msg": "El enlace es inválido o ha expirado"}), 400
 
+    email = token_data["email"]
     user = db.session.execute(select(User).where(User.email == email)).scalar_one_or_none()
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
 
     user.password_hash = generate_password_hash(new_password)
     db.session.commit()
+
+    del password_reset_tokens[token]
+
     return jsonify({"msg": "Contraseña actualizada correctamente"}), 200

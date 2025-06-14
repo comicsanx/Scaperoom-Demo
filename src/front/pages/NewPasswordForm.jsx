@@ -3,6 +3,14 @@ import { useParams } from "react-router-dom";
 
 export const ResetPassword = () => {
   const { token } = useParams();
+  console.log("TOKEN EN LA URL:", token);
+  try {
+  console.log("TOKEN DECODED:", decodeURIComponent(token));
+  } catch (e) {
+  console.error("Error decoding token:", e);
+  }
+  const decodedToken = decodeURIComponent(token);
+  console.log(token)
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
 
@@ -11,7 +19,7 @@ export const ResetPassword = () => {
     setMsg("");
     try {
       const res = await fetch(
-        process.env.BACKEND_URL + `/api/reset-password/${token}`,
+        import.meta.env.VITE_BACKEND_URL + `/api/reset-password/${decodedToken}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

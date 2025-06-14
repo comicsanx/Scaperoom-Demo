@@ -41,7 +41,7 @@ app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_USERNAME')
 mail = Mail(app)
 
-CORS(app)
+CORS(app, origins="*")
 
 # database configuration
 db_url = os.getenv("DATABASE_URL")
