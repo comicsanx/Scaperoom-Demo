@@ -1,8 +1,10 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-
-from flask import Flask, request, jsonify, url_for, Blueprint
+import os
+from flask import Flask, request, jsonify, url_for, Blueprint, current_app
+from flask_mail import Message
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from api.models import db, User, GameSession
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -86,7 +88,6 @@ def login():
     
 @api.route('/user/profile', methods=['GET', 'PUT', 'DELETE'])
 @jwt_required()
-
 def handle_user_profile():
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
@@ -173,3 +174,61 @@ def get_ranking():
     except Exception as error:
         print(f'Error en el ranking: {error}')
         return jsonify({"msg": "Error interno del servidor"}), 500
+
+def generate_reset_token(email):
+    serializer = URLSafeTimedSerializer(os.getenv("FLASK_APP_KEY"))
+    return serializer.dumps(email, salt="password-reset-salt")
+
+
+@api.route('/forgot-password', methods=['POST'])
+def forgot_password():
+    email = request.json.get('email')
+    if not email:
+        return jsonify({"msg": "El email es requerido"}), 400
+
+    user = db.session.execute(select(User).where(User.email == email)).scalar_one_or_none()
+    if not user:
+        return jsonify({"msg": "Si el email está registrado, recibirás instrucciones"}), 200
+
+    # Generar token seguro
+    token = generate_reset_token(email)
+    reset_url = f"{os.getenv('FRONTEND_URL', 'http://localhost:3000')}/reset-password/{token}"
+
+    msg = Message(
+    "Recuperación de contraseña",
+    recipients=[email],
+    html=f"""<p>Para restablecer tu contraseña, haz clic en el siguiente enlace:<br>
+    <a href="{reset_url}">{reset_url}</a>
+    <br><br>Este enlace expirará en 1 hora.</p>"""
+    )
+    mail = current_app.extensions['mail']
+    mail.send(msg)
+
+    return jsonify({"msg": "Si el email está registrado, recibirás instrucciones"}), 200
+
+def verify_reset_token(token, expiration=3600):
+    serializer = URLSafeTimedSerializer(os.getenv("FLASK_APP_KEY"))
+    try:
+        email = serializer.loads(token, salt="password-reset-salt", max_age=expiration)
+        return email
+    except (SignatureExpired, BadSignature):
+        return None
+    
+@api.route('/reset-password/<token>', methods=['POST'])
+def reset_password(token):
+    data = request.get_json()
+    new_password = data.get("password")
+    if not new_password:
+        return jsonify({"msg": "La nueva contraseña es requerida"}), 400
+
+    email = verify_reset_token(token)
+    if not email:
+        return jsonify({"msg": "El enlace es inválido o ha expirado"}), 400
+
+    user = db.session.execute(select(User).where(User.email == email)).scalar_one_or_none()
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+
+    user.password_hash = generate_password_hash(new_password)
+    db.session.commit()
+    return jsonify({"msg": "Contraseña actualizada correctamente"}), 200
