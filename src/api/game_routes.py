@@ -3,8 +3,10 @@ from api.models import db, User, GameSession # Asegúrate de importar los modelo
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy import select, func
 from datetime import datetime
+from flask_cors import CORS
 
 game_api = Blueprint('game_api', __name__) 
+CORS(game_api)
 
 # --- RUTAS DE AUTOGUARDADO / JUEGO ---
 

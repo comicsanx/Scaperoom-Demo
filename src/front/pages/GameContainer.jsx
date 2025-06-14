@@ -1,4 +1,5 @@
 import Timer from "../components/Timer";
+import { InfoModalUser } from "../components/InfoModalUser";
 import { useRef, useState, useEffect } from "react";
 
 export default function GameContainer() {
@@ -41,6 +42,7 @@ export default function GameContainer() {
   return (
     <div>
       <h2>Nivel 1</h2>
+      <InfoModalUser />
       <Timer menuOpen={menuOpen} ref={timerRef} />
       <button onClick={handleHint} className="btn btn-warning mt-2">
         Pedir pista

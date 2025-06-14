@@ -26,14 +26,14 @@ def signup():
         email = request.json.get('email', None)
         username = request.json.get('username', None)
         password = request.json.get('password', None)
-        avatar_filename = request.json.get('avatar_filename', None)
+        #avatar_filename = request.json.get('avatar_filename', None)
 
-        if not email or not username or not password or not avatar_filename: 
+        if not email or not username or not password: #or not avatar_filename: 
             return jsonify({'msg': 'Se necesita email, nombre de usuario, contraseña y avatar'}), 400
         
-        ALLOWED_AVATARS = ["avatar_01.png", "avatar_02.png", "avatar_03.png"] # EJEMPLO: ¡Ajusta estos nombres!
-        if avatar_filename not in ALLOWED_AVATARS:
-            return jsonify({"msg": "El avatar seleccionado no es válido"}), 400
+        # ALLOWED_AVATARS = ["avatar_01.png", "avatar_02.png", "avatar_03.png"]
+        # if avatar_filename not in ALLOWED_AVATARS:
+        #     return jsonify({"msg": "El avatar seleccionado no es válido"}), 400
 
         user_exists_email = db.session.execute(select(User).where(User.email == email)).scalar_one_or_none()
         if user_exists_email:
@@ -45,7 +45,7 @@ def signup():
             email=email,
             username=username,
             password_hash=hashed_password,
-            avatar_filename=avatar_filename,
+            # avatar_filename=avatar_filename,
             is_active=True
         )
 
@@ -62,8 +62,8 @@ def login():
     try:
         email = request.json.get('email', None)
         password = request.json.get('password', None)
-
-        if not email or not password:
+        print(f'Login attempt with email: {email} {password}')
+        if email is None or password is None:
             return jsonify({'msg': 'email o contraseña incorrectos'}), 401
 
         stm = select(User).where(User.email == email)
@@ -146,3 +146,30 @@ def handle_user_profile():
     
     return jsonify({"msg": "Método no permitido"}), 405 
 
+@api.route('/ranking', methods=['GET'])
+def get_ranking():
+    try:
+        results = (
+            db.session.query(
+                User.id,
+                User.username,
+                func.sum(GameSession.accumulated_time).label('total_time')
+            )
+            .join(GameSession, GameSession.user_id == User.id)
+            .filter(GameSession.current_level.in_([1, 2]))
+            .group_by(User.id, User.username)
+            .order_by(func.sum(GameSession.accumulated_time))
+            .all()
+        )
+        ranking = [
+            {
+                "user_id": user_id,
+                "user_name": user_name,
+                "total_time": total_time
+            }
+            for user_id, user_name, total_time in results
+        ]
+        return jsonify(ranking), 200
+    except Exception as error:
+        print(f'Error en el ranking: {error}')
+        return jsonify({"msg": "Error interno del servidor"}), 500
