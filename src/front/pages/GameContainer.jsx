@@ -1,6 +1,7 @@
 import Timer from "../components/Timer";
 import { InfoModalUser } from "../components/InfoModalUser";
 import { useRef, useState, useEffect } from "react";
+import "../level1.css";
 
 export default function GameContainer() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -40,7 +41,13 @@ export default function GameContainer() {
   };
 
   return (
-    <div>
+    <div className="game-container-bg">
+      <img src="./assets/img/Level1_img/Nivel1-Fondo.png" class="bg-img" />
+      <button id="planta"></button>
+      <button id="puerta"></button>
+      <button id="carta"></button>
+      <button id="mirilla"></button>
+      <button id="caja-de-cambios"></button>
       <h2>Nivel 1</h2>
       <InfoModalUser />
       <Timer menuOpen={menuOpen} ref={timerRef} />
