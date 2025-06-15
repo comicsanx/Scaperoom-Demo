@@ -8,11 +8,11 @@ import { GameProvider } from "./context/GameContext";
 
 const Main = () => {
 
-  /* if (! import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_BACKEND_URL == "") return (
+if (! import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_BACKEND_URL == "") return (
     <React.StrictMode>
       <BackendURL />
     </React.StrictMode>
-  ); */
+  );
   return (
     <React.StrictMode>
       {/* GameProvider debe envolver al RouterProvider */}
