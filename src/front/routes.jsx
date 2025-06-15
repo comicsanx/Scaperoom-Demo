@@ -10,6 +10,8 @@ import { Home } from "./pages/Home";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import GameContainer from "./pages/GameContainer";
+import { PassRecovery } from "./pages/PassRecovery";
+import { ResetPassword } from "./pages/NewPasswordForm";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +29,8 @@ export const router = createBrowserRouter(
       <Route path="/level" element={<GameContainer />} />
       <Route path="/single/:theId" element={<Single />} />  {/* Dynamic route for single items */}
       <Route path="/demo" element={<Demo />} />
+      <Route path="/forgot-password" element={<PassRecovery />} />
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
     </Route>
   )
 );
