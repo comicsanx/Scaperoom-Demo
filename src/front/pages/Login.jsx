@@ -61,6 +61,14 @@ export const Login = () => {
                 </div>
                 <button type="submit" className="btn btn-primary btn-lg w-100">Entrar</button>
             </form>
+            <div className="mt-3">
+                <button
+                    className="btn btn-link"
+                    onClick={() => navigate("/forgot-password")}
+                >
+                    He olvidado mi contraseña
+                </button>
+            </div>
         </div>
     );
 };
