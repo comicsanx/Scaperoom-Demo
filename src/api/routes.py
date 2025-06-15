@@ -173,3 +173,4 @@ def get_ranking():
     except Exception as error:
         print(f'Error en el ranking: {error}')
         return jsonify({"msg": "Error interno del servidor"}), 500
+    
