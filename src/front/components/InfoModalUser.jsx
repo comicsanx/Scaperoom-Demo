@@ -1,5 +1,6 @@
 import { useGame } from "../context/GameContext";
 import React, { useEffect, useState } from "react";
+import Timer from "./Timer";
 
 import { Dropdown, Button, OverlayTrigger, Tooltip  } from 'react-bootstrap'
 
@@ -8,7 +9,7 @@ import { Dropdown, Button, OverlayTrigger, Tooltip  } from 'react-bootstrap'
 
 export const InfoModalUser = () => {
 
-  const { user, setUser, nivelActual, apiCall, pistasUsadas, tiempo, token } = useGame()
+  const { user, setUser, nivelActual, apiCall, pistasUsadas, token } = useGame()
 
   const [loading, setLoading] = useState(true);
 
@@ -92,7 +93,7 @@ export const InfoModalUser = () => {
           <h3 className="modalUser-name">{user.username}</h3>
         </div>
 
-        <p>Tiempo: <strong>{tiempo} segundos</strong></p>
+        <p>Tiempo: <strong>{Timer} segundos</strong></p>
         <p>Nivel : <strong>{nivelActual}</strong></p>
         <p> {hintMessage(pistasUsadas)} </p>
 
