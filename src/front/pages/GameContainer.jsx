@@ -1,12 +1,9 @@
 
 import Timer from "../components/Timer";
-<<<<<<< HEAD
 import { Objects } from "../components/Objects";
 import { ObjectsLevel1 } from "../data/ObjectsArray";
-=======
 import { InfoModalUser } from "../components/InfoModalUser";
 import { useRef, useState, useEffect } from "react";
->>>>>>> origin/development
 
 export default function GameContainer() {
   const [menuOpen, setMenuOpen] = useState(false);
