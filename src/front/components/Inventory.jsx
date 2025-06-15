@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Objects } from "./Objects";
 
 
@@ -7,6 +7,16 @@ export const Inventory = ({ pickedUpObjects, allObjects }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [selectObject, setSelectObject] = useState(null)
     const [wrongClicks, setWrongClicks] = useState(0)
+    const [message, setMessage] = useState('')
+
+
+
+    const wrongMessage = [
+        "Eso no parece encajar... ¿estás seguro de lo que haces?",
+        "Has tocado algo que no deberías. Otra más y habrá consecuencias...",
+         "¡eh! deja de tocar donde no debes!" 
+
+    ]
 
     const modalObject = allObjects.filter(obj => pickedUpObjects.includes(obj.id))
     console.log("Objetos recogidos:", pickedUpObjects);
@@ -22,9 +32,50 @@ export const Inventory = ({ pickedUpObjects, allObjects }) => {
             setWrongClicks(0)
         }
 
-
-
     }
+    const handleWrongClick = () => {
+        setWrongClicks(prev => {
+            const newCount = prev + 1;
+
+
+            setMessage(wrongMessage[Math.min(newCount - 1, wrongMessage.length - 1)]);
+
+
+            setTimeout(() => {
+                setMessage('');
+            }, 3000);
+
+            if (newCount >= 3) {
+                console.log("Penalización");
+                setSelectObject(null);
+                return 0;
+            }
+
+            return newCount;
+        });
+    };
+
+    useEffect(() => {
+
+        if (!selectObject) return;
+
+        const handleClick = (e) => {
+            const isValid = e.target.closest(".correct-zone");
+            if (!isValid) {
+                handleWrongClick();
+            }
+        };
+
+        const timeoutId = setTimeout(() => {
+            document.addEventListener("click", handleClick);
+        }, 0);
+
+        return () => {
+            clearTimeout(timeoutId);
+            document.removeEventListener("click", handleClick);
+        };
+    }, [selectObject])
+
 
 
     return (
@@ -70,6 +121,9 @@ export const Inventory = ({ pickedUpObjects, allObjects }) => {
                         </button>
                     </div>
                 )}
+            </div>
+            <div className={`inventoryPenaltyMessage ${message ? 'visible' : 'hidden'}`}>
+                {message}
             </div>
 
         </>

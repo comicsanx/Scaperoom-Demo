@@ -4,8 +4,6 @@ import { Inventory } from "./Inventory";
 
 export const Objects = ({objectsLevel = []}) => {
 
-    // const [object, setObject] = useState({})
-    // const [used, setUSed] = useState(false)
     const [pickedUpObjects, setPickedUpObjects] = useState([]);
     const [message, setMessage] = useState(false)
 
@@ -17,6 +15,9 @@ export const Objects = ({objectsLevel = []}) => {
         const pickedObjectMessage = objectsLevel.find(obj => obj.id === id);
         setPickedUpObjects([...pickedUpObjects, id]);
         setMessage(pickedObjectMessage);
+        setTimeout(() => {
+            setMessage('');
+        }, 3000);
 
         console.log("Objeto recogido:", id);
     }
@@ -39,7 +40,7 @@ export const Objects = ({objectsLevel = []}) => {
                 <div className="objectModal">
                     <div className="modal-content">
                         <h2>{message.message}</h2>
-                        <button onClick={() => setMessage(false)}>X</button>
+                        {/* <button onClick={() => setMessage(false)}>X</button> */}
                     </div>
                 </div>
             )}
