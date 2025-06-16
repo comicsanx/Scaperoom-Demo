@@ -5,12 +5,15 @@ import "../level1.css";
 import "../Game.css";
 import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
 import FrameGame from "../assets/img/Game_img/Game-Frame.png";
+import { useGame } from "../context/GameContext";
+
 
 export default function GameContainer() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { menuOpen, timerRef, setMenuOpen } = useGame()
+  // const [menuOpen, setMenuOpen] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
   const [hintMessage, setHintMessage] = useState("");
-  const timerRef = useRef();
+  // const timerRef = useRef();
 
   useEffect(() => {
     const handleEsc = (e) => {

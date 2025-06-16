@@ -1,6 +1,8 @@
 import { useGame } from "../context/GameContext";
 import React, { useEffect, useState } from "react";
 import Timer from "./Timer";
+import GameContainer from "../pages/GameContainer";
+
 
 import { Dropdown, Button, OverlayTrigger, Tooltip  } from 'react-bootstrap'
 
@@ -9,7 +11,7 @@ import { Dropdown, Button, OverlayTrigger, Tooltip  } from 'react-bootstrap'
 
 export const InfoModalUser = () => {
 
-  const { user, setUser, nivelActual, apiCall, pistasUsadas, token } = useGame()
+  const { user, setUser, nivelActual, apiCall, pistasUsadas, token, menuOpen, timerRef, setMenuOpen } = useGame()
 
   const [loading, setLoading] = useState(true);
 
@@ -41,7 +43,7 @@ export const InfoModalUser = () => {
     if (user) {
       fetchUserData();
     }
-  }, [apiCall, user, setUser])
+  }, [apiCall, user, setUser]);
 
 
   if (loading) return <p>Cargando datos del jugador...</p>;
@@ -92,8 +94,7 @@ export const InfoModalUser = () => {
           )}
           <h3 className="modalUser-name">{user.username}</h3>
         </div>
-
-        <p>Tiempo: <strong>{Timer} segundos</strong></p>
+        {/* <div>Tiempo: <strong><Timer menuOpen={menuOpen} ref={timerRef} /> segundos</strong></div> */}
         <p>Nivel : <strong>{nivelActual}</strong></p>
         <p> {hintMessage(pistasUsadas)} </p>
 
