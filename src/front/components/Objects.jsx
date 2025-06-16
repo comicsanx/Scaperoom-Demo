@@ -1,0 +1,51 @@
+import React, { useState } from "react";
+import { ObjectsLevel1 } from "../data/ObjectsArray";
+import { Inventory } from "./Inventory";
+
+export const Objects = ({objectsLevel = [], onPenalty}) => {
+
+    const [pickedUpObjects, setPickedUpObjects] = useState([]);
+    const [message, setMessage] = useState(false)
+
+
+    const handlePickUp = (id) => {
+
+        if (pickedUpObjects.includes(id))
+            return
+        const pickedObjectMessage = objectsLevel.find(obj => obj.id === id);
+        setPickedUpObjects([...pickedUpObjects, id]);
+        setMessage(pickedObjectMessage);
+        setTimeout(() => {
+            setMessage('');
+        }, 3000);
+
+        console.log("Objeto recogido:", id);
+    }
+
+
+    return (
+        <>
+            {objectsLevel.map((object) => (
+                <button
+                    key={object.id}
+                    className={`${object.className} ${pickedUpObjects.includes(object.id) ? 'objectButtonDisable' : ''}`}
+                    onClick={() => handlePickUp(object.id)}
+                    disabled={pickedUpObjects.includes(object.id)}
+                >
+                    <img src={object.img} className= 'objectImg' alt={object.name} />
+                </button>
+            ))}
+
+            {message && (
+                <div className="objectModal">
+                    <div className="modal-content">
+                        <h2>{message.message}</h2>
+                        {/* <button onClick={() => setMessage(false)}>X</button> */}
+                    </div>
+                </div>
+            )}
+
+            <Inventory pickedUpObjects ={pickedUpObjects} allObjects ={objectsLevel} onPenalty={onPenalty}/>
+        </>
+    );
+}

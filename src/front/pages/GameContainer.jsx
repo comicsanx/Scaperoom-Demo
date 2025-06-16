@@ -1,4 +1,6 @@
 import Timer from "../components/Timer";
+import { Objects } from "../components/Objects";
+import { ObjectsLevel1 } from "../data/ObjectsArray";
 import { InfoModalUser } from "../components/InfoModalUser";
 import { useRef, useState, useEffect } from "react";
 import "../level1.css";
@@ -46,6 +48,12 @@ export default function GameContainer() {
     }
   };
 
+  const handlePenalty = (seconds) => {
+    if (timerRef.current) {
+      timerRef.current.addSeconds(seconds);
+    }
+  };
+
   return (
     <div className="game-container-bg">
       <img src={Level1BG} className="bg-img" alt="BG Level1" />
@@ -68,6 +76,7 @@ export default function GameContainer() {
       )}
       {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
       {/* Aquí se colocarán puzzles, pistas, menú de objetos */}
+      <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} />
     </div>
     </div>
   );
