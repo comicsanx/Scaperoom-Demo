@@ -2,7 +2,9 @@ import Timer from "../components/Timer";
 import { InfoModalUser } from "../components/InfoModalUser";
 import { useRef, useState, useEffect } from "react";
 import "../level1.css";
-import fondoNivel1 from "../assets/img/Level1_img/Level1-Background.png";
+import "../Game.css";
+import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
+import FrameGame from "../assets/img/Game_img/Game-Frame.png";
 
 export default function GameContainer() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -43,13 +45,15 @@ export default function GameContainer() {
 
   return (
     <div className="game-container-bg">
-      <img src={fondoNivel1} className="bg-img" alt="Fondo Nivel 1" />
+      <img src={Level1BG} className="bg-img" alt="BG Level1" />
+      <img src={FrameGame} className="bg-frame" alt="Game Frame" />
       <button id="plant"></button>
       <button id="door"></button>
       <button id="letter"></button>
-      <button id="letterbox"></button>
+      <button id="ESC"></button>
       <button id="lock"></button>
       <button id="gearbox"></button>
+      <button id="PlayerInfo"></button>
       <div className="menu-toggle">
       <InfoModalUser className="info-modal-user" />
       <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
