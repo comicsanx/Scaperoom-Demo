@@ -3,12 +3,19 @@ import { Objects } from "../components/Objects";
 import { ObjectsLevel1 } from "../data/ObjectsArray";
 import { InfoModalUser } from "../components/InfoModalUser";
 import { useRef, useState, useEffect } from "react";
+import "../level1.css";
+import "../Game.css";
+import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
+import FrameGame from "../assets/img/Game_img/Game-Frame.png";
+import { useGame } from "../context/GameContext";
+
 
 export default function GameContainer() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { menuOpen, timerRef, setMenuOpen } = useGame()
+  // const [menuOpen, setMenuOpen] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
   const [hintMessage, setHintMessage] = useState("");
-  const timerRef = useRef();
+  // const timerRef = useRef();
 
   useEffect(() => {
     const handleEsc = (e) => {
@@ -48,11 +55,20 @@ export default function GameContainer() {
   };
 
   return (
-    <div>
-      <h2>Nivel 1</h2>
-      <InfoModalUser />
-      <Timer menuOpen={menuOpen} ref={timerRef} />
-      <button onClick={handleHint} className="btn btn-warning mt-2">
+    <div className="game-container-bg">
+      <img src={Level1BG} className="bg-img" alt="BG Level1" />
+      <img src={FrameGame} className="bg-frame" alt="Game Frame" />
+      <button id="plant"></button>
+      <button id="door"></button>
+      <button id="letter"></button>
+      <button id="ESC"></button>
+      <button id="lock"></button>
+      <button id="gearbox"></button>
+      <button id="PlayerInfo"></button>
+      <div className="menu-toggle">
+      <InfoModalUser className="info-modal-user" />
+      <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
+      <button onClick={handleHint} className="hint-button btn btn-warning mt-2">
         Pedir pista
       </button>
       {hintMessage && (
@@ -61,6 +77,7 @@ export default function GameContainer() {
       {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
       {/* Aquí se colocarán puzzles, pistas, menú de objetos */}
       <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} />
+    </div>
     </div>
   );
 }
