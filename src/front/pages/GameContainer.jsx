@@ -1,12 +1,15 @@
 import Timer from "../components/Timer";
 import { InfoModalUser } from "../components/InfoModalUser";
 import { useRef, useState, useEffect } from "react";
+import { useGame } from "../context/GameContext";
+
 
 export default function GameContainer() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { menuOpen, timerRef, setMenuOpen } = useGame()
+  // const [menuOpen, setMenuOpen] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
   const [hintMessage, setHintMessage] = useState("");
-  const timerRef = useRef();
+  // const timerRef = useRef();
 
   useEffect(() => {
     const handleEsc = (e) => {
