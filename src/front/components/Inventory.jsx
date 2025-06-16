@@ -2,19 +2,20 @@ import React, { useState, useEffect } from "react";
 import { Objects } from "./Objects";
 
 
-export const Inventory = ({ pickedUpObjects, allObjects }) => {
+export const Inventory = ({ pickedUpObjects, allObjects, onPenalty }) => {
 
     const [isOpen, setIsOpen] = useState(false)
     const [selectObject, setSelectObject] = useState(null)
     const [wrongClicks, setWrongClicks] = useState(0)
     const [message, setMessage] = useState('')
+  
 
 
 
     const wrongMessage = [
         "Eso no parece encajar... ¿estás seguro de lo que haces?",
         "Has tocado algo que no deberías. Otra más y habrá consecuencias...",
-         "¡eh! deja de tocar donde no debes!" 
+         "Cada error tiene un precio... y el tuyo son 4 segundos más" 
 
     ]
 
@@ -43,15 +44,21 @@ export const Inventory = ({ pickedUpObjects, allObjects }) => {
 
             setTimeout(() => {
                 setMessage('');
-            }, 3000);
+            }, 2000);
 
             if (newCount >= 3) {
                 console.log("Penalización");
                 setSelectObject(null);
+                
+                if (typeof onPenalty === "function") {
+                    onPenalty(2);
+                    
+                }
                 return 0;
             }
 
             return newCount;
+            console.log("Se ha ejecutado handleWrongClick")
         });
     };
 
@@ -60,7 +67,7 @@ export const Inventory = ({ pickedUpObjects, allObjects }) => {
         if (!selectObject) return;
 
         const handleClick = (e) => {
-            const isValid = e.target.closest(".correct-zone");
+            const isValid = e.target.closest(".object-zone");
             if (!isValid) {
                 handleWrongClick();
             }
