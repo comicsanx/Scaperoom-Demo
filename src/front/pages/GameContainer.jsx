@@ -2,6 +2,7 @@ import Timer from "../components/Timer";
 import { InfoModalUser } from "../components/InfoModalUser";
 import { useRef, useState, useEffect } from "react";
 import "../level1.css";
+import fondoNivel1 from "../assets/img/Level1_img/Nivel1-Fondo.png";
 
 export default function GameContainer() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -42,16 +43,16 @@ export default function GameContainer() {
 
   return (
     <div className="game-container-bg">
-      <img src="./assets/img/Level1_img/Nivel1-Fondo.png" class="bg-img" />
-      <button id="planta"></button>
-      <button id="puerta"></button>
-      <button id="carta"></button>
-      <button id="mirilla"></button>
-      <button id="caja-de-cambios"></button>
-      <h2>Nivel 1</h2>
-      <InfoModalUser />
-      <Timer menuOpen={menuOpen} ref={timerRef} />
-      <button onClick={handleHint} className="btn btn-warning mt-2">
+      <img src={fondoNivel1} className="bg-img" alt="Fondo Nivel 1" />
+      <button id="plant"></button>
+      <button id="door"></button>
+      <button id="letter"></button>
+      <button id="lock"></button>
+      <button id="gearbox"></button>
+      <div className="menu-toggle">
+      <InfoModalUser className="info-modal-user" />
+      <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
+      <button onClick={handleHint} className="hint-button btn btn-warning mt-2">
         Pedir pista
       </button>
       {hintMessage && (
@@ -59,6 +60,7 @@ export default function GameContainer() {
       )}
       {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
       {/* Aquí se colocarán puzzles, pistas, menú de objetos */}
+    </div>
     </div>
   );
 }
