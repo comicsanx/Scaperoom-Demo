@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useRef } from "react";
+
 
 const GameContext = createContext();
 
@@ -12,6 +13,8 @@ export const GameProvider = ({ children }) => {
   const [pistasUsadas, setPistasUsadas] = useState([]);
   const [nivelActual, setNivelActual] = useState(1);
   const [tiempo, setTiempo] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const timerRef = useRef();
 
   // fetch que registra tiempo y nivelActual post/put revisar
   // falta adaptar las url a los endpoints cuando estén subidos.
@@ -69,11 +72,11 @@ export const GameProvider = ({ children }) => {
   };
 
 const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
-  const res = await fetch(API_BASE + "/api/", {
+  const res = await fetch(API_BASE, {
     method,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
     body: body ? JSON.stringify(body) : null,
   });
@@ -170,10 +173,15 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
         signup,
         //saveGameProgress,
         deleteUser,
-        updateUserProfile
+        updateUserProfile,
+        menuOpen,
+        setMenuOpen,
+        timerRef
       }}
     >
       {children}
     </GameContext.Provider>
   );
 };
+
+

@@ -21,7 +21,7 @@ const Timer = forwardRef(function Timer({ menuOpen }, ref) {
 
     return (
         <div>
-            <h3>Time: {seconds}s</h3>
+        {seconds}
         </div>
     );
 });
