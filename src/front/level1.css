@@ -6,22 +6,14 @@ overflow: hidden;
 }
 
 .game-container-bg {
- position: absolute; /* Para que ocupe el espacio del body y se pueda escalar */
-    top: 50%; /* Centrar verticalmente */
-    left: 50%; /* Centrar horizontalmente */
-    transform: translate(-50%, -50%); /* Ajustar para centrar después de aplicar top/left */
-    transform-origin: center center; /* El punto desde el que se escala */
-
-    /* Define el tamaño "base" o la relación de aspecto para tu juego */
-    /* Por ejemplo, si tu diseño está optimizado para 1920x1080 */
-    width: 1920px; /* Ancho base */
-    height: 1080px; /* Alto base */
-
-    /* Calcular la escala para que se ajuste al viewport */
-    /* Esto es JavaScript, lo veremos después, pero es la idea */
-    /* transform: translate(-50%, -50%) scale(var(--scale-factor)); */
-
-    overflow: hidden; /* Importante para que el contenido no se salga */
+ position: absolute; 
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    transform-origin: center center; 
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
 }
 
 .bg-img {
@@ -41,10 +33,10 @@ position: absolute;
 
 #door {
 left: 68.45%;
-top: 18.5%;
+top: 19%;
 width: 19.15%;
 height: 59.2%;
-background-image: url('./assets/img/Level1_img/Nivel1-Puerta.png');
+background-image: url('./assets/img/Level1_img/Level1-Door.png');
 background-color: transparent;
 background-size: contain;
 background-repeat: no-repeat;
@@ -58,7 +50,7 @@ left: 70.14%;
 top: 46.7%;
 width: 2.34%;
 height: 5.04%;
-background-image: url('./assets/img/Level1_img/Nivel1-Mirilla.png');
+background-image: url('./assets/img/Level1_img/Level1-Lock.png');
 background-color: transparent;
 background-size: contain;
 background-repeat: no-repeat;
@@ -72,7 +64,7 @@ left: 55.2%;
 top: 12.89%;
 width: 8.3%;
 height: 20%;
-background-image: url('./assets/img/Level1_img/Nivel1-PuertaCajaDeCambios.png');
+background-image: url('./assets/img/Level1_img/Level1-Gearbox.png');
 background-color: transparent;
 background-size: contain;
 background-repeat: no-repeat;
@@ -86,7 +78,7 @@ left: 9.9%;
 top: 32.1%;
 width: 10.13%;
 height: 45.5%;
-background-image: url('./assets/img/Level1_img/Nivel1-Planta.png');
+background-image: url('./assets/img/Level1_img/Level1-Plant.png');
 background-color: transparent;
 background-size: contain;
 background-repeat: no-repeat;
@@ -100,7 +92,7 @@ left: 58.2%;
 top: 46.3%;
 width: 2.7%;
 height: 3.2%;
-background-image: url('./assets/img/Level1_img/Nivel1-Carta.png');
+background-image: url('./assets/img/Level1_img/Level1-Letter.png');
 background-color: transparent;
 background-size: contain;
 background-repeat: no-repeat;
@@ -110,16 +102,11 @@ z-index: 1;
 }
 
 
-
 .menu-toggle {
- position: fixed; /* Crucial: se posiciona con respecto al viewport */
-    top: 120px;   /* Por ejemplo, 20px desde arriba */
-    left: 40px;  /* Por ejemplo, 20px desde la izquierda */
-    z-index: 100; /* Asegura que esté por encima de todo */
-    /* Puedes darle un tamaño fijo si quieres, ej: */
-    /* width: 200px; */
-    /* height: 80px; */
-    /* background-color: rgba(0,0,0,0.5); /* Para ver dónde está */
-    padding: 10px; /* Ejemplo de padding */
-    border-radius: 5px; /* Bordes redondeados */
+ position: fixed;
+    top: 120px; 
+    left: 40px;  
+    z-index: 100;
+    padding: 10px;
+    border-radius: 5px;
 }
