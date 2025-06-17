@@ -3,7 +3,7 @@ margin: 0;
 padding: 0;
 height: 100%;
 width: 100%;
-overflow: hidden;
+/* overflow: hidden; */
 background-color: #513325;
 z-index: 0;
 }
@@ -18,12 +18,12 @@ z-index: 0;
     height: 900px; 
     overflow: hidden; 
     z-index: 1;
-}
+}  
 
 .bg-img {
 position: absolute;
-top: 0;
-left: -0.5%;
+top: 0%;
+left: 0%;
 width: 100%;
 height: 100%;
 object-fit: cover;
@@ -92,18 +92,18 @@ border: none;
 z-index: 1;
 }
 
-#letter {
-left: 58.2%;
-top: 46.3%;
-width: 2.7%;
-height: 3.2%;
-background-image: url('./assets/img/Level1_img/Level1-Letter.png');
+#letterbox {
+left: 55.5%;
+top: 43.5%;
+width: 7.7%;
+height: 18%;
+background-image: url('./assets/img/Level1_img/Level1-Letterbox.png');
 background-color: transparent;
 background-size: contain;
 background-repeat: no-repeat;
 background-position: center;
-border: none;
 z-index: 1;
+border:none;
 }
 
 
