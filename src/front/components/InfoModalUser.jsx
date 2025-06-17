@@ -7,7 +7,7 @@ import GameContainer from "../pages/GameContainer";
 import { Dropdown, Button, OverlayTrigger, Tooltip  } from 'react-bootstrap'
 
 
-// añadir el componente a gamecontainer
+
 
 export const InfoModalUser = () => {
 

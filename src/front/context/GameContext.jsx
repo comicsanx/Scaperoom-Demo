@@ -10,7 +10,8 @@ const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api"
 export const GameProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-  const [pistasUsadas, setPistasUsadas] = useState([]);
+  const [hintsUsed, setHintsUsed] = useState({});
+  const [totalHintsUsed, setTotalHintsUsed] = useState(0);
   const [nivelActual, setNivelActual] = useState(1);
   const [tiempo, setTiempo] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -84,9 +85,7 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
   if (!res.ok) {
     throw new Error("Error en la API");
   }
-    if (!res.ok) {
-      throw new Error("Error en la API");
-    }
+   
 
     return await res.json();
   };
@@ -97,7 +96,7 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
       throw new Error("No hay usuario autenticado para eliminar.");
     }
     try {
-      await apiCall(`${API_BASE}/user/profile`, "DELETE")
+      await apiCall(`${API_BASE}/user/profile`, "DELETE", null, token)
       logout()
       return true
     } catch (error) {
@@ -113,7 +112,7 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
       throw new Error("No hay usuario autenticado para modiifcar.");
     }
     try {
-      const updateProfile = await apiCall(`${API_BASE}/user/profile`, "PUT", newProfile)
+      const updateProfile = await apiCall(`${API_BASE}/user/profile`, "PUT", newProfile, token)
 
       setUser(updateProfile)
       alert("Perfil actualizado exitosamente.");
@@ -170,9 +169,9 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
     }
   };
 
-  const registrarPistaUsada = (idPista) => {
-    setPistasUsadas((prev) => [...prev, idPista]);
-  };
+  // const registrarPistaUsada = (idPista) => {
+  //   setPistasUsadas((prev) => [...prev, idPista]);
+  // };
 
   return (
     <GameContext.Provider
@@ -185,8 +184,8 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
         setNivelActual,
         tiempo,
         setTiempo,
-        pistasUsadas,
-        registrarPistaUsada,
+        hintsUsed,
+        setHintsUsed,
         apiCall,
         signup,
         saveGameProgress,
@@ -194,7 +193,9 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
         updateUserProfile,
         menuOpen,
         setMenuOpen,
-        timerRef
+        timerRef,
+        totalHintsUsed,
+        setTotalHintsUsed,
       }}
     >
       {children}

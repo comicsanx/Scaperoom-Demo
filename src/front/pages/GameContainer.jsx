@@ -8,14 +8,17 @@ import "../Game.css";
 import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
 import FrameGame from "../assets/img/Game_img/Game-Frame.png";
 import { useGame } from "../context/GameContext";
+import { EnigmaModal } from "../components/EnigmaModal";
+import { EnigmasData } from "../data/EnigmasData";
+
 
 
 export default function GameContainer() {
-  const { menuOpen, timerRef, setMenuOpen } = useGame()
+  const { menuOpen, timerRef, setMenuOpen,hintsUsed, setHintsUsed } = useGame()
   // const [menuOpen, setMenuOpen] = useState(false);
-  const [hintsUsed, setHintsUsed] = useState(0);
-  const [hintMessage, setHintMessage] = useState("");
-  // const timerRef = useRef();
+ 
+  // const [hintMessage, setHintMessage] = useState("");
+  // // const timerRef = useRef();
 
   useEffect(() => {
     const handleEsc = (e) => {
@@ -25,28 +28,42 @@ export default function GameContainer() {
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
-  const handleHint = () => {
-    let penalty = 0;
-    let message = "";
-    if (hintsUsed === 0) {
-      message = "Primera pista: sin penalización.";
-    } else if (hintsUsed === 1) {
-      penalty = 2; // segundos
-      message = "Segunda pista: +2 segundos.";
-    } else if (hintsUsed === 2) {
-      penalty = 5;
-      message = "Tercera pista: +5 segundos.";
-    } else {
-      message = "No hay más pistas disponibles.";
-      setHintMessage(message);
-      return;
+  const [showEnigma, setShowEnigma] = useState(false);
+  const [currentEnigma, setCurrentEnigma] = useState(null);
+  
+  const handleEnigmaClick = (id) => {
+    const enigma = EnigmasData.enigmasNivel1.find(e => e.id === id); 
+    if (enigma) {
+      setCurrentEnigma(id);
+      setShowEnigma(true);
     }
-    setHintsUsed((prev) => prev + 1);
-    setHintMessage(message);
-    if (penalty > 0 && timerRef.current) {
-      timerRef.current.addSeconds(penalty);
-    }
+  }
+  const handleAskHint = (enigmaId, hintIndex) => {
+
+      console.log(`Pidiendo pista ${hintIndex + 1} para enigma ${enigmaId}`);
   };
+  // const handleHint = () => {
+  //   let penalty = 0;
+  //   let message = "";
+  //   if (hintsUsed === 0) {
+  //     message = "Primera pista: sin penalización.";
+  //   } else if (hintsUsed === 1) {
+  //     penalty = 2; // segundos
+  //     message = "Segunda pista: +2 segundos.";
+  //   } else if (hintsUsed === 2) {
+  //     penalty = 5;
+  //     message = "Tercera pista: +5 segundos.";
+  //   } else {
+  //     message = "No hay más pistas disponibles.";
+  //     setHintMessage(message);
+  //     return;
+  //   }
+  //   setHintsUsed((prev) => prev + 1);
+  //   setHintMessage(message);
+  //   if (penalty > 0 && timerRef.current) {
+  //     timerRef.current.addSeconds(penalty);
+  //   }
+  // };
 
   const handlePenalty = (seconds) => {
     if (timerRef.current) {
@@ -60,24 +77,31 @@ export default function GameContainer() {
       <img src={FrameGame} className="bg-frame" alt="Game Frame" />
       <button id="plant"></button>
       <button id="door"></button>
-      <button id="letter"></button>
+      <button id="letter" onClick={() => handleEnigmaClick(1)}></button>
       <button id="ESC"></button>
       <button id="lock"></button>
       <button id="gearbox"></button>
       <button id="PlayerInfo"></button>
       <div className="menu-toggle">
+
       <InfoModalUser className="info-modal-user" />
+
       <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
-      <button onClick={handleHint} className="hint-button btn btn-warning mt-2">
+      
+      {/* <button onClick={handleHint} className="hint-button btn btn-warning mt-2">
         Pedir pista
-      </button>
-      {hintMessage && (
+      </button> */}
+      {/* {hintMessage && (
         <div className="alert alert-info mt-2">{hintMessage}</div>
-      )}
+      )} */}
       {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
       {/* Aquí se colocarán puzzles, pistas, menú de objetos */}
+       <EnigmaModal show={showEnigma} onHide={() => setShowEnigma(false)}
+        enigmaId={currentEnigma} 
+      />
       <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} />
     </div>
     </div>
+
   );
 }
