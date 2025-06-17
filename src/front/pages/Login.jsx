@@ -19,7 +19,7 @@ export const Login = () => {
             console.log("login realizado", resp);
             console.log(resp);
             if (resp) {
-                navigate("/level");
+                navigate("/dashboard");
             } else {
                 console.error("Error en el login.");
                 setError("Credenciales inválidas.");

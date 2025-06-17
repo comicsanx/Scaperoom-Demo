@@ -7,11 +7,16 @@ import {
 } from "react-router-dom";
 import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
-import { Single } from "./pages/Single";
-import { Demo } from "./pages/Demo";
+import { Dashboard } from "./pages/Dashboard";
+import { Login } from "./pages/Login";
+import { Signup } from "./pages/Signup";
+import { Credits } from "./pages/Credits";
 import GameContainer from "./pages/GameContainer";
+import GameContainer2 from "./pages/GameContainer2";
 import { PassRecovery } from "./pages/PassRecovery";
 import { ResetPassword } from "./pages/NewPasswordForm";
+import { GameVictory } from "./pages/GameVictory";
+import { LevelVictory } from "./pages/LevelVictory";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,11 +31,16 @@ export const router = createBrowserRouter(
 
       {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
       <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/level" element={<GameContainer />} />
-      <Route path="/single/:theId" element={<Single />} />  {/* Dynamic route for single items */}
-      <Route path="/demo" element={<Demo />} />
+      <Route path="/level-2" element={<GameContainer2 />} />
       <Route path="/forgot-password" element={<PassRecovery />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
+      <Route path="/credits" element={<Credits />} />
+      <Route path="/level-victory" element={<LevelVictory />} />
+      <Route path="/game-victory" element={<GameVictory />} />
     </Route>
   )
 );

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-export default function Dashboard() {
+export function Dashboard() {
     const navigate = useNavigate();
     const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api";
 
@@ -23,9 +23,10 @@ export default function Dashboard() {
     return (
         <div>
             <h1>Escape Room</h1>
-            <button onClick={() => navigate(`/level/${1}`)}>Nueva Partida</button>
-            <button onClick={() => navigate(`/ranking`)}>Ranking</button>
-            <button onClick={() => navigate(`/creditos`)}>Créditos</button>
+            <button onClick={() => navigate(`/level`)}>Nueva Partida</button>
+            <button>Cómo Jugar</button> 
+            <button>Continuar</button>
+            {/* falta definir rutas */}
         </div>
     );
 }

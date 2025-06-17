@@ -5,11 +5,14 @@ import "../level1.css";
 import "../Game.css";
 import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
 
+import { useNavigate } from "react-router-dom";
+
 export default function GameContainer() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
   const [hintMessage, setHintMessage] = useState("");
   const timerRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleEsc = (e) => {
@@ -46,7 +49,7 @@ export default function GameContainer() {
     <div className="game-container-bg">
       <img src={Level1BG} className="bg-img" alt="BG Level1" />
       <button id="plant"></button>
-      <button id="door"></button>
+      <button onClick={() => navigate(`/level-victory`)} id="door"></button>
       <button id="letterbox"></button>
       <button id="ESC"></button>
       <button id="lock"></button>
