@@ -1,12 +1,13 @@
 import React, { useEffect } from "react"
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import { Login } from "../pages/Login";
 import { Signup } from "../pages/Signup";
 import GameContainer from "./GameContainer";
-import Dashboard from "./Dashboard";
 import Timer from "../components/Timer";
+import { useNavigate } from "react-router-dom";
 
-export const Home = () => {
+export function Home() {
+	 const navigate = useNavigate();
+    const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api";
 
 
 	/* const loadMessage = async () => {
@@ -35,18 +36,13 @@ export const Home = () => {
 		loadMessage()
 	}, []) */
 
-	return (
-		<div className="text-center mt-5">
-			<h1 className="display-4">Hello Rigo!!</h1>
-			<p className="lead">
-				<img src={rigoImageUrl} className="img-fluid rounded-circle mb-3" alt="Rigo Baby" />
-			</p>
-			<div className="alert alert-info">
-				<Login />
-				<Dashboard />
-				<Signup />
 
-			</div>
-		</div>
-	);
+    return (
+        <div>
+            <h1>Escape Room</h1>
+            <button onClick={() => navigate(`/login`)}>Iniciar Sesión</button>
+            <button onClick={() => navigate(`/signup`)}>Registro</button>
+            <button onClick={() => navigate(`/credits`)}>Créditos</button>
+        </div>
+    );	
 }; 

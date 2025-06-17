@@ -6,7 +6,8 @@ import { useRef, useState, useEffect } from "react";
 import "../level1.css";
 import "../Game.css";
 import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
-import FrameGame from "../assets/img/Game_img/Game-Frame.png";
+
+import { useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext";
 
 
@@ -16,6 +17,7 @@ export default function GameContainer() {
   const [hintsUsed, setHintsUsed] = useState(0);
   const [hintMessage, setHintMessage] = useState("");
   // const timerRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleEsc = (e) => {
@@ -57,10 +59,9 @@ export default function GameContainer() {
   return (
     <div className="game-container-bg">
       <img src={Level1BG} className="bg-img" alt="BG Level1" />
-      <img src={FrameGame} className="bg-frame" alt="Game Frame" />
       <button id="plant"></button>
-      <button id="door"></button>
-      <button id="letter"></button>
+      <button onClick={() => navigate(`/level-victory`)} id="door"></button>
+      <button id="letterbox"></button>
       <button id="ESC"></button>
       <button id="lock"></button>
       <button id="gearbox"></button>

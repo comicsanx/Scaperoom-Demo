@@ -1,0 +1,56 @@
+body, html {
+margin: 0;
+padding: 0;
+height: 100%;
+width: 100%;
+background-color: #513325;
+z-index: 0;
+}
+
+.responsive-gestor-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform-origin: center center;
+    width: min(100vw, (100vh * 16 / 9));
+    height: min(100vh, (100vw * 9 / 16));
+    overflow: hidden;
+    z-index: 1; 
+
+}
+
+.orientation-message {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #333; 
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    z-index: 9999; 
+}
+
+.orientation-message img {
+    max-width: 80%; 
+    max-height: 50%;
+    margin-bottom: 20px; 
+}
+
+@media screen and (orientation: portrait) {
+    .responsive-gestor-container {
+        display: none;
+    }
+
+
+    .orientation-message {
+        display: flex; 
+    }
+}
