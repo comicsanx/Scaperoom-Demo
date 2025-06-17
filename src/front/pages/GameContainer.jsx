@@ -1,4 +1,6 @@
 import Timer from "../components/Timer";
+import { Objects } from "../components/Objects";
+import { ObjectsLevel1 } from "../data/ObjectsArray";
 import { InfoModalUser } from "../components/InfoModalUser";
 import { useRef, useState, useEffect } from "react";
 import "../level1.css";
@@ -6,12 +8,15 @@ import "../Game.css";
 import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
 
 import { useNavigate } from "react-router-dom";
+import { useGame } from "../context/GameContext";
+
 
 export default function GameContainer() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { menuOpen, timerRef, setMenuOpen } = useGame()
+  // const [menuOpen, setMenuOpen] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
   const [hintMessage, setHintMessage] = useState("");
-  const timerRef = useRef();
+  // const timerRef = useRef();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,6 +50,12 @@ export default function GameContainer() {
     }
   };
 
+  const handlePenalty = (seconds) => {
+    if (timerRef.current) {
+      timerRef.current.addSeconds(seconds);
+    }
+  };
+
   return (
     <div className="game-container-bg">
       <img src={Level1BG} className="bg-img" alt="BG Level1" />
@@ -66,6 +77,7 @@ export default function GameContainer() {
       )}
       {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
       {/* Aquí se colocarán puzzles, pistas, menú de objetos */}
+      <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} />
     </div>
     </div>
   );
