@@ -16,6 +16,7 @@ export default function GameContainer() {
   const [hintsUsed, setHintsUsed] = useState(0);
   const [hintMessage, setHintMessage] = useState("");
   // const timerRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleEsc = (e) => {
@@ -57,28 +58,27 @@ export default function GameContainer() {
   return (
     <div className="game-container-bg">
       <img src={Level1BG} className="bg-img" alt="BG Level1" />
-      <img src={FrameGame} className="bg-frame" alt="Game Frame" />
       <button id="plant"></button>
-      <button id="door"></button>
-      <button id="letter"></button>
+      <button onClick={() => navigate(`/level-victory`)} id="door"></button>
+      <button id="letterbox"></button>
       <button id="ESC"></button>
       <button id="lock"></button>
       <button id="gearbox"></button>
       <button id="PlayerInfo"></button>
       <div className="menu-toggle">
-      <InfoModalUser className="info-modal-user" />
-      <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
-      <button onClick={handleHint} className="hint-button btn btn-warning mt-2">
-        Pedir pista
-      </button>
-      {hintMessage && (
-        <div className="alert alert-info mt-2">{hintMessage}</div>
-      )}
-      {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
-      {/* Aquí se colocarán puzzles, pistas, menú de objetos */}
-      <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} />
-      <Pause open={menuOpen}/>
-    </div>
+        <InfoModalUser className="info-modal-user" />
+        <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
+        <button onClick={handleHint} className="hint-button btn btn-warning mt-2">
+          Pedir pista
+        </button>
+        {hintMessage && (
+          <div className="alert alert-info mt-2">{hintMessage}</div>
+        )}
+        {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
+        {/* Aquí se colocarán puzzles, pistas, menú de objetos */}
+        <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} />
+        <Pause open={menuOpen} />
+      </div>
     </div>
   );
 }
