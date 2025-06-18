@@ -1,14 +1,14 @@
+import { useRef, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useGame } from "../context/GameContext";
+import { ObjectsLevel1 } from "../data/ObjectsArray";
+import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
 import Timer from "../components/Timer";
 import { Objects } from "../components/Objects";
-import { ObjectsLevel1 } from "../data/ObjectsArray";
 import { InfoModalUser } from "../components/InfoModalUser";
-import { useRef, useState, useEffect } from "react";
+import Pause from "../components/Pause";
 import "../level1.css";
 import "../Game.css";
-import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
-import FrameGame from "../assets/img/Game_img/Game-Frame.png";
-import { useGame } from "../context/GameContext";
-
 
 export default function GameContainer() {
   const { menuOpen, timerRef, setMenuOpen } = useGame()
@@ -77,6 +77,7 @@ export default function GameContainer() {
       {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
       {/* Aquí se colocarán puzzles, pistas, menú de objetos */}
       <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} />
+      <Pause open={menuOpen}/>
     </div>
     </div>
   );
