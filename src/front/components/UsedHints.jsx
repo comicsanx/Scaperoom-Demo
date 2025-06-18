@@ -21,7 +21,7 @@ export default function UsedHints({ enigmaId, isOpen, onClose }) {
       setMessage("No hay más pistas disponibles.");
       return;
   }
-
+  const canAskForMoreHints = current < hints.length && totalHintsUsed < 3;
 
 
     let penalty = 0;
@@ -50,7 +50,7 @@ export default function UsedHints({ enigmaId, isOpen, onClose }) {
     ;
   return (
     <div>
-      <button className="btn btn-warning" onClick={handleHint}>
+      <button className="btn btn-warning" onClick={handleHint} disabled={!canAskForMoreHints}>
         Pedir pista
       </button>
       {message && <p className="mt-2">{message}</p>}
