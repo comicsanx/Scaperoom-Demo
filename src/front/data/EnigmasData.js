@@ -3,8 +3,8 @@ import carta from '../assets/img/carta.jpg';
 export const EnigmasData = {
     "enigmasNivel1": [
         {
-        id: "1",
-        title: "Un buzon cerrado que requiere una llave especial para abrirse.",
+        id: 1,
+        title: "Has encontrado el planning diario del señor Geeks...",
         img: carta,
         hints: [
       
@@ -15,10 +15,10 @@ export const EnigmasData = {
        
         },
         {
-        "id": 2,
-        "title": "El cuadro de luces",
-        "description": "Un cuadro para manejar el reloj",
-        "hints": [
+        id: 2,
+        title: "un cuadro de luces.",
+        img: carta,
+        hints: [
             "Piensa en cómo se representaría numéricamente en un reloj de 24 horas.",
             "quizás necesites una hora en concreto para resolverlo.",
             

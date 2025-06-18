@@ -1,12 +1,16 @@
 import  { useGame } from "../context/GameContext";
 import {EnigmasData} from "../data/EnigmasData";
 import UsedHints from "./UsedHints"; 
-
 import { Modal, Button } from "react-bootstrap";
 
 export const EnigmaModal = ({ show, onHide, enigmaId }) => {
+   console.log("EnigmaModal: Renderizando con show:", show, "y enigmaId:", enigmaId)
  const enigma = EnigmasData.enigmasNivel1.find((e) => e.id === enigmaId);
-  if (!enigma) return null;
+  if (!enigma){
+    console.error("Enigma no encontrado con ID:", enigmaId);
+    return null; 
+  }
+
 
   return (
     <Modal show={show} onHide={onHide} centered backdrop="static">

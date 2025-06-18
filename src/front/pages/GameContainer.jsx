@@ -15,16 +15,8 @@ import { EnigmasData } from "../data/EnigmasData";
 
 
 export default function GameContainer() {
-<<<<<<< HEAD
   const { menuOpen, timerRef, setMenuOpen, hintsUsed, setHintsUsed } = useGame()
-=======
-  const { menuOpen, timerRef, setMenuOpen } = useGame()
-  // const [menuOpen, setMenuOpen] = useState(false);
-  const [hintsUsed, setHintsUsed] = useState(0);
-  const [hintMessage, setHintMessage] = useState("");
-  // const timerRef = useRef();
   const navigate = useNavigate();
->>>>>>> origin/development
 
   useEffect(() => {
     const handleEsc = (e) => {
@@ -38,11 +30,14 @@ export default function GameContainer() {
   const [currentEnigma, setCurrentEnigma] = useState(null);
 
   const handleEnigmaClick = (id) => {
-    alert(`Enigma clicado: ${id}`)
-    const enigma = EnigmasData.enigmasNivel1.find(e => e.id === id);
+    console.log("handleEnigmaClick llamado con ID:", id)
+     const enigma = EnigmasData.enigmasNivel1.find(e => e.id === id);
     if (enigma) {
       setCurrentEnigma(id);
       setShowEnigma(true);
+      console.log("Estados actualizados: currentEnigma =", id, ", showEnigma = true")
+    } else {
+      console.log("Enigma no encontrado con ID:", id); // <-- Añade este para depurar
     }
   }
   // const handleAskHint = (enigmaId, hintIndex) => {
@@ -62,12 +57,11 @@ export default function GameContainer() {
       <img src={Level1BG} className="bg-img" alt="BG Level1" />
       <button id="plant"></button>
       <button id="door"></button>
-      <button id="letter" type="button" onClick={() => {
+      <button onClick={() => navigate(`/level-victory`)} id="door"></button>
+      <button id="letterbox" onClick={() => {
         console.log("Click en carta detectado")
         handleEnigmaClick(1)
-      }}> Carta 📜</button>
-      <button onClick={() => navigate(`/level-victory`)} id="door"></button>
-      <button id="letterbox"></button>
+      }}></button>
       <button id="ESC"></button>
       <button id="lock"></button>
       <button id="gearbox"></button>
@@ -80,8 +74,9 @@ export default function GameContainer() {
 
 
         {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
+         {showEnigma && (
+        <EnigmaModal show={showEnigma} onHide={() =>{setShowEnigma(false) }} enigmaId={currentEnigma} /> )}
 
-        <EnigmaModal show={showEnigma} onHide={() => setShowEnigma(false)} enigmaId={currentEnigma} />
         <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} />
       </div>
     </div>

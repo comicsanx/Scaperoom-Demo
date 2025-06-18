@@ -15,13 +15,13 @@ export default function UsedHints({ enigmaId, isOpen, onClose }) {
   const current = hintsUsed[enigmaId] || 0;
   const hints = enigma.hints;
 
+  const canAskForMoreHints = current < hints.length && totalHintsUsed < 3;
   const handleHint = () =>{
   
     if (totalHintsUsed >= 3) {
       setMessage("No hay más pistas disponibles.");
       return;
   }
-  const canAskForMoreHints = current < hints.length && totalHintsUsed < 3;
 
 
     let penalty = 0;

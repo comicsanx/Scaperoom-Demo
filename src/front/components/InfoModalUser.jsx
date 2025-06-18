@@ -53,7 +53,7 @@ export const InfoModalUser = () => {
 
 
   function hintMessage(pistasUsadas) {
-    // const usadas = pistasUsadas.length;
+    const usadas = pistasUsadas.length;
 
     if (usadas === 0) {
       return 'Aún no has usado pistas, ¡la ayuda está lista cuando la necesites!';
