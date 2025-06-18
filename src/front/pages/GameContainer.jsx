@@ -6,7 +6,8 @@ import { useRef, useState, useEffect } from "react";
 import "../level1.css";
 import "../Game.css";
 import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
-import FrameGame from "../assets/img/Game_img/Game-Frame.png";
+
+import { useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext";
 import { EnigmaModal } from "../components/EnigmaModal";
 import { EnigmasData } from "../data/EnigmasData";
@@ -14,7 +15,16 @@ import { EnigmasData } from "../data/EnigmasData";
 
 
 export default function GameContainer() {
+<<<<<<< HEAD
   const { menuOpen, timerRef, setMenuOpen, hintsUsed, setHintsUsed } = useGame()
+=======
+  const { menuOpen, timerRef, setMenuOpen } = useGame()
+  // const [menuOpen, setMenuOpen] = useState(false);
+  const [hintsUsed, setHintsUsed] = useState(0);
+  const [hintMessage, setHintMessage] = useState("");
+  // const timerRef = useRef();
+  const navigate = useNavigate();
+>>>>>>> origin/development
 
   useEffect(() => {
     const handleEsc = (e) => {
@@ -50,13 +60,14 @@ export default function GameContainer() {
   return (
     <div className="game-container-bg">
       <img src={Level1BG} className="bg-img" alt="BG Level1" />
-      <img src={FrameGame} className="bg-frame" alt="Game Frame" />
       <button id="plant"></button>
       <button id="door"></button>
       <button id="letter" type="button" onClick={() => {
         console.log("Click en carta detectado")
         handleEnigmaClick(1)
       }}> Carta 📜</button>
+      <button onClick={() => navigate(`/level-victory`)} id="door"></button>
+      <button id="letterbox"></button>
       <button id="ESC"></button>
       <button id="lock"></button>
       <button id="gearbox"></button>
