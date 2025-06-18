@@ -26,24 +26,39 @@ export default function GameContainer() {
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
+  const [selectedObject, setSelectedObject] = useState(null);
   const [showEnigma, setShowEnigma] = useState(false);
   const [currentEnigma, setCurrentEnigma] = useState(null);
+  const [mailboxMessage, setMailboxMessage] = useState("")
+  const id_key = 101
+  const id_box_letter = 1
 
-  const handleEnigmaClick = (id) => {
-    console.log("handleEnigmaClick llamado con ID:", id)
-     const enigma = EnigmasData.enigmasNivel1.find(e => e.id === id);
+  const handleEnigmaClick = (enigmaIdToOpen) => {
+    console.log("handleEnigmaClick llamado con ID:", enigmaIdToOpen)
+    const enigma = EnigmasData.enigmasNivel1.find(e => e.id === enigmaIdToOpen);
     if (enigma) {
-      setCurrentEnigma(id);
+      setCurrentEnigma(enigmaIdToOpen);
       setShowEnigma(true);
-      console.log("Estados actualizados: currentEnigma =", id, ", showEnigma = true")
+      console.log(`Abriendo enigma ${enigmaIdToOpen}`)
     } else {
-      console.log("Enigma no encontrado con ID:", id); // <-- Añade este para depurar
+      console.log(`ERROR: Enigma ${enigmaIdToOpen} no encontrado.`);
     }
+    setSelectedObject(null)
+    setMailboxMessage("")
   }
-  // const handleAskHint = (enigmaId, hintIndex) => {
-
-  //   console.log(`Pidiendo pista ${hintIndex + 1} para enigma ${enigmaId}`);
-  // };
+  const handleMailboxClick = () => {
+    console.log("Clic en el buzón detectado.");
+    if (selectedObject === id_key) {
+      handleEnigmaClick(id_box_letter);
+    } else {
+      console.log("No tienes la llave seleccionada, o no es la llave correcta para el buzón.");
+      setMailboxMessage("Parece que necesitas una llave para abrir esto.")
+      setSelectedObject(null);
+      setTimeout(() => {
+        setMailboxMessage("");
+      }, 2000);
+    }
+  };
 
 
   const handlePenalty = (seconds) => {
@@ -58,10 +73,11 @@ export default function GameContainer() {
       <button id="plant"></button>
       <button id="door"></button>
       <button onClick={() => navigate(`/level-victory`)} id="door"></button>
-      <button id="letterbox" onClick={() => {
-        console.log("Click en carta detectado")
-        handleEnigmaClick(1)
-      }}></button>
+      <button
+        id="letterbox"
+        className='object-zone'
+        onClick={handleMailboxClick}
+      ></button>
       <button id="ESC"></button>
       <button id="lock"></button>
       <button id="gearbox"></button>
@@ -74,10 +90,15 @@ export default function GameContainer() {
 
 
         {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
-         {showEnigma && (
-        <EnigmaModal show={showEnigma} onHide={() =>{setShowEnigma(false) }} enigmaId={currentEnigma} /> )}
+        {showEnigma && (
+          <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }} enigmaId={currentEnigma} />)}
+        {mailboxMessage && (
+          <div className="mailbox-message">
+            <p>{mailboxMessage}</p>
+          </div>
+        )}
 
-        <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} />
+        <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
       </div>
     </div>
 

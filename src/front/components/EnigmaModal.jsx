@@ -14,7 +14,7 @@ export const EnigmaModal = ({ show, onHide, enigmaId }) => {
 
   return (
     <Modal show={show} onHide={onHide} centered backdrop="static">
-      <Modal.Header closeButton>
+      <Modal.Header>
         <Modal.Title>{enigma.title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
