@@ -34,7 +34,7 @@ export const Signup = () => {
     try {
       const response = await signup(data_and_password)
       console.log('usuario registrado', response)
-      navigate('/menu')
+      navigate('/login')
     } catch (error) {
       console.log('hubo un error a la hora en registrar al usuario', error)
     }
