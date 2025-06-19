@@ -1,3 +1,34 @@
+
+#PlayerInfo {
+left: -5%;
+top: 0%;
+width: 20%;
+height: 20%;
+background-image: url('./assets/img/Game_img/Game-Player-Button.png');
+background-color: transparent;
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+border: none;
+z-index: 2;
+}
+
+#ESC {
+left: 84%;
+top: -1.5%;
+width: 20%;
+height: 20%;
+background-image: url('./assets/img/Game_img/Game-ESC-Button.png');
+background-color: transparent;
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+border: none;
+z-index: 2;
+}
+
+/* Modales */
+
 .modalUser-avatar {
   width: 80px;
   height: 80px;
@@ -40,41 +71,7 @@
  background-color: #28a745;
 color: white;
 }
-/* css componente OBJECTS */
 
-
-.objectPosition{
-  position: absolute;
-  top: 100px;
-  left: 200px;
-  border: none;
-  background: transparent;
- 
-}
-.objectImg{
-  width: 50px;
-  height: 50px;
-  object-fit: contain
-}
-.objectButtonDisable{
-     opacity: 0; 
-     border: none; 
-     background: transparent;
-}
-.objectModal {
-  position: fixed;
-  top: 20%;
-  left: 50%;
-  background: rgba(101, 67, 33, 1); 
-  border: 2px solid #6b4226; 
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(50, 30, 10, 0.4);
-  padding: 15px 25px;
-  max-width: 280px;
-  z-index: 9999;
-  animation: popIn 0.7s ease forwards;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
 
 .modal-content {
   display: flex;
@@ -118,7 +115,42 @@ color: white;
   flex-grow: 1;
 }
 
-/* css componente INVENTORY */
+/* Objetos */
+
+.objectPosition{
+  position: absolute;
+  top: 100px;
+  left: 200px;
+  border: none;
+  background: transparent;
+ 
+}
+.objectImg{
+  width: 50px;
+  height: 50px;
+  object-fit: contain
+}
+.objectButtonDisable{
+     opacity: 0; 
+     border: none; 
+     background: transparent;
+}
+.objectModal {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  background: rgba(101, 67, 33, 1); 
+  border: 2px solid #6b4226; 
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(50, 30, 10, 0.4);
+  padding: 15px 25px;
+  max-width: 280px;
+  z-index: 9999;
+  animation: popIn 0.7s ease forwards;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Inventario */
 
 .inventoryImg{
   width: 30px;

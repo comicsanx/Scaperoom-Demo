@@ -3,8 +3,8 @@ import { Objects } from "../components/Objects";
 import { ObjectsLevel1 } from "../data/ObjectsArray";
 import { InfoModalUser } from "../components/InfoModalUser";
 import { useRef, useState, useEffect } from "react";
-import "../level1.css";
-import "../Game.css";
+import "../CSS/level1.css";
+import "../CSS/Game.css";
 import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
 
 import { useNavigate } from "react-router-dom";

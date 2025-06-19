@@ -1,0 +1,12 @@
+
+/* Aqui probablemente irá el responsive. */
+/* Lo que si que tiene que ir es el contenido body */
+
+body, html {
+margin: 0;
+padding: 0;
+height: 100%;
+width: 100%;
+background-color: #513325;
+z-index: 0;
+}

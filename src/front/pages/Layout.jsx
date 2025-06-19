@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom/dist"
-import '../Responsive.css';
+import '../CSS/Responsive.css';
 import RotateDeviceImage from '../assets/img/rotate-device.png';
-// Base component that maintains the navbar and footer throughout the page and the scroll to top functionality.
+
 export function Layout() {
   return (
     <> 

@@ -2,6 +2,7 @@ import { useGame } from "../context/GameContext";
 import React, { useEffect, useState } from "react";
 import Timer from "./Timer";
 import GameContainer from "../pages/GameContainer";
+import "../CSS/Game.css";
 
 
 import { Dropdown, Button, OverlayTrigger, Tooltip  } from 'react-bootstrap'
