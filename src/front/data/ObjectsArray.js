@@ -7,7 +7,7 @@ import llave from "../assets/img/llave.png"
 
 export const ObjectsLevel1 = [{
 
-    id : 'llave',
+    id : 101,
     name : 'llave maestra',
     img : llave,
     className :'objectPosition',

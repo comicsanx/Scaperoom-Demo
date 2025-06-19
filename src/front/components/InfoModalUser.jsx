@@ -4,65 +4,32 @@ import Timer from "./Timer";
 import GameContainer from "../pages/GameContainer";
 import "../CSS/Game.css";
 
+import { Dropdown, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 
-import { Dropdown, Button, OverlayTrigger, Tooltip  } from 'react-bootstrap'
+export const InfoModalUser = ({ showEnigma }) => {
 
+  const {user, nivelActual, totalHintsUsed, isUserLoading  } = useGame()
 
-// añadir el componente a gamecontainer
+  if (showEnigma) {
+    return null;
+  }
 
-export const InfoModalUser = () => {
-
-  const { user, setUser, nivelActual, apiCall, pistasUsadas, token, menuOpen, timerRef, setMenuOpen } = useGame()
-
-  const [loading, setLoading] = useState(true);
-
-  const [error, setError] = useState(null);
-
-
-
-  const fetchUserData = async () => {
-    if (user) {
-      setLoading(false);
-      return;
+    if (isUserLoading) {
+        return <p>Cargando información del jugador...</p>;
     }
-    try {
-      setLoading(true);
-      const userData = await apiCall(
-        (import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api") + "/api/user/profile",
-        "GET",
-        null,
-        token
-      );
-      setUser(userData);
-      setLoading(false);
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
+      if (!user) {
+        return <p>Información de usuario no disponible.</p>;
     }
-  };
-  useEffect(() => {
-    if (user) {
-      fetchUserData();
-    }
-  }, [apiCall, user, setUser]);
 
+  function hintMessage(totalHintsUsed) {
 
-  if (loading) return <p>Cargando datos del jugador...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!user) return <p>No se pudieron cargar los datos del jugador.</p>;
-
-
-
-  function hintMessage(pistasUsadas) {
-    const usadas = pistasUsadas.length;
-
-    if (usadas === 0) {
+    if (totalHintsUsed === 0) {
       return 'Aún no has usado pistas, ¡la ayuda está lista cuando la necesites!';
-    } else if (usadas === 1) {
+    } else if (totalHintsUsed === 1) {
       return 'Una pista ha sido revelada, pero aún queda ayuda disponible.';
-    } else if (usadas === 2) {
+    } else if (totalHintsUsed === 2) {
       return 'Solo te queda una pista, ¡úsala sabiamente!';
-    } else if (usadas >= 3) {
+    } else if (totalHintsUsed >= 3) {
       return 'No queda más ayuda, ahora toca confiar en tu ingenio.';
     }
 
@@ -73,35 +40,37 @@ export const InfoModalUser = () => {
 
 
 
+const avatarSrc = user.avatar_filename ? user.avatar_filename : Game_img;
 
   return (
 
 
     <Dropdown drop="end">
-      <Dropdown.Toggle as={Button} variant="secondary">
-        info
-      </Dropdown.Toggle>
+      <Dropdown.Toggle 
+                as="div" 
+                className="profile-toggle-container" 
+            >
+                <img
+                    src={avatarSrc}
+                    alt="Foto de perfil"
+                    className="rounded-circle profile-toggle-avatar"
+                />
+            </Dropdown.Toggle>
 
       <Dropdown.Menu className="p-3">
         <h2>Informe Clasificado</h2>
 
         <div className="d-flex align-items-center gap-3 mb-3">
-          {user.avatar_filename && (
-            <img
-              src={user.avatar_filename}
-              alt="Foto de perfil"
-              className="rounded-circle modalUser-avatar"
-            />
-          )}
+      
           <h3 className="modalUser-name">{user.username}</h3>
         </div>
-        {/* <div>Tiempo: <strong><Timer menuOpen={menuOpen} ref={timerRef} /> segundos</strong></div> */}
+
         <p>Nivel : <strong>{nivelActual}</strong></p>
-        <p> {hintMessage(pistasUsadas)} </p>
+        <p> {hintMessage(totalHintsUsed)} </p>
 
         <div className="d-flex gap-3 mt-3">
           {hints.map((number) => {
-            const used = pistasUsadas.length >= number
+            const used = totalHintsUsed >= number
             const tooltipText = used
               ? " El secreto ya fue revelado."
               : "Un consejo espera, solo tienes que solicitarlo.";

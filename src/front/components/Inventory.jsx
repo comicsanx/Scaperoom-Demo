@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Objects } from "./Objects";
 
 
-export const Inventory = ({ pickedUpObjects, allObjects, onPenalty }) => {
+
+export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelectedObject, selectedObject }) => {
 
     const [isOpen, setIsOpen] = useState(false)
-    const [selectObject, setSelectObject] = useState(null)
+    
     const [wrongClicks, setWrongClicks] = useState(0)
     const [message, setMessage] = useState('')
   
@@ -24,14 +24,19 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty }) => {
     console.log("Objetos filtrados:", modalObject);
 
     const handleSelect = (id) => {
-        if (selectObject === id) {
-            setSelectObject(null)
+        if (selectedObject === id) {
+            setSelectedObject(null)
             setWrongClicks(0)
+            setMessage('')
+            console.log(`Objeto deseleccionado en inventario: ${id}`)
         }
         else {
-            setSelectObject(id)
+            setSelectedObject(id)
             setWrongClicks(0)
+            setMessage('')
+            console.log(`Objeto seleccionado en inventario: ${id}`)
         }
+       
 
     }
     const handleWrongClick = () => {
@@ -48,29 +53,34 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty }) => {
 
             if (newCount >= 3) {
                 console.log("Penalización");
-                setSelectObject(null);
-                
-                if (typeof onPenalty === "function") {
-                    onPenalty(2);
-                    
-                }
+               setTimeout(() => {
+                    setSelectedObject(null); 
+                    if (typeof onPenalty === "function") {
+                        onPenalty(4);
+                    }
+                }, 0);
                 return 0;
             }
 
-            return newCount;
             console.log("Se ha ejecutado handleWrongClick")
+            return newCount;
         });
     };
 
     useEffect(() => {
-
-        if (!selectObject) return;
+        
+        
+        if (!selectedObject) return;
 
         const handleClick = (e) => {
-            const isValid = e.target.closest(".object-zone");
+            const isValid = e.target.closest("object-zone");
+            console.log("handleClick - isValid:", isValid)
+
             if (!isValid) {
                 handleWrongClick();
-            }
+            }  
+                
+            
         };
 
         const timeoutId = setTimeout(() => {
@@ -81,7 +91,7 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty }) => {
             clearTimeout(timeoutId);
             document.removeEventListener("click", handleClick);
         };
-    }, [selectObject])
+    }, [selectedObject,onPenalty])
 
 
 
@@ -101,7 +111,7 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty }) => {
                 {isOpen && (
                     <div className="inventoryMenuObjects  w-100 w-sm-75 w-md-50 w-lg-25 mx-auto gap-3 ">
                         {modalObject.length === 0 && (
-                            <p className="dropdown-item">Aún no has recogido ningun objeto.</p>
+                            <p className="dropdown-item">Ningun objeto en el inventario</p>
                         )}
 
                         {modalObject.map(obj => (
@@ -112,7 +122,7 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty }) => {
                             >
                                 <img
                                     src={obj.img}
-                                    className={`inventoryImg ${selectObject === obj.id ? "selected" : ""}`}
+                                    className={`inventoryImg ${selectedObject === obj.id ? "selected" : ""}`}
                                     alt={obj.name}
                                 />
                                 <p className="inventoryName">{obj.name}</p>

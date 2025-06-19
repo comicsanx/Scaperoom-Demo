@@ -196,25 +196,22 @@ export const GameProvider = ({ children }) => {
       // No navegar aquí
     };
 
-    const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
-      const res = await fetch(API_BASE, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: body ? JSON.stringify(body) : null,
-      });
+const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
+  const res = await fetch(API_BASE + "/api/", {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: body ? JSON.stringify(body) : null,
+  });
 
-      if (!res.ok) {
-        throw new Error("Error en la API");
-      }
-      if (!res.ok) {
-        throw new Error("Error en la API");
-      }
+  if (!res.ok) {
+    throw new Error("Error en la API");
+  }
 
-      return await res.json();
-    };
+  return await res.json();
+};
 
 
     const deleteUser = async () => {
@@ -247,86 +244,70 @@ export const GameProvider = ({ children }) => {
         console.error("Error al eliminar usuario en la API:", error);
         throw new Error(error.message)
 
-      }
     }
+  }
+  // TODO: revisar si se puede hacer un put o post dependiendo de si hay progreso guardado o no
+  // const saveGameProgress = async (current_level, accumulated_time,) => {
 
-    const saveGameProgress = async (current_level, accumulated_time) => {
-      if (!user || !user.id || !token) {
-        console.error("No hay usuario autenticado.");
-        return false;
+  //   if (!user || !user.id || !token) {
+  //     console.error("No hay usuario autenticado.");
+  //     return false;
+  //   }
+  //   try {
+  //     const hasProgress = await apiCall(`${API_BASE}"/user/profile"`);
+  //     console.log(hasProgress)
+
+      let method, endpoint;
+      if (session && session.id) {
+        method = "PUT";
+        endpoint = `${API_BASE}/gamesession/${session.id}`;
+      } else {
+        method = "POST";
+        endpoint = `${API_BASE}/gamesession`;
       }
-      try {
-        const res = await fetch(`${API_BASE}/gamesession/user/${user.id}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        const session = await res.ok ? await res.json() : null;
 
-        let method, endpoint;
-        if (session && session.id) {
-          method = "PUT";
-          endpoint = `${API_BASE}/gamesession/${session.id}`;
-        } else {
-          method = "POST";
-          endpoint = `${API_BASE}/gamesession`;
-        }
+  //     await apiCall({
+  //       current_level,
+  //       accumulated_time,
+  //       user_id: user.id,
+  //     });
 
-        const saveRes = await fetch(endpoint, {
-          method,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            current_level,
-            accumulated_time,
-            user_id: user.id
-          })
-        });
-
-        if (!saveRes.ok) throw new Error("Error al guardar progreso");
-
-        setNivelActual(current_level);
-        setTiempo(accumulated_time);
-        return true;
-      } catch (error) {
-        console.error("Error al guardar progreso:", error);
-        alert("No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
-        return false;
-      }
-    };
+  //     console.log("Progreso guardado.");
+  //     setNivelActual(current_level)
+  //     setTiempo(accumulated_time);
+  //     return true;
+  //   } catch (error) {
+  //     console.error("Error al guardar progreso:", error);
+  //     alert("No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
+  //     return false;
+  //   }
+  // };
 
     const registrarPistaUsada = (idPista) => {
       setPistasUsadas((prev) => [...prev, idPista]);
     };
 
-    return (
-      <GameContext.Provider
-        value={{
-          user,
-          token,
-          login,
-          logout,
-          nivelActual,
-          setNivelActual,
-          tiempo,
-          setTiempo,
-          pistasUsadas,
-          registrarPistaUsada,
-          apiCall,
-          signup,
-          saveGameProgress,
-          deleteUser,
-          updateUserProfile,
-          menuOpen,
-          setMenuOpen,
-          timerRef,
-          audiusAudioUrl,
-          isAudioLoading,
-          audioPlayerRef,
-          setCurrentMusicGroupId,
-        }}
-      >
-        {children}
-      </GameContext.Provider>
-    );
-  };
+  return (
+    <GameContext.Provider
+      value={{
+        user,
+        token,
+        login,
+        logout,
+        nivelActual,
+        setNivelActual,
+        tiempo,
+        setTiempo,
+        pistasUsadas,
+        registrarPistaUsada,
+        apiCall,
+        signup,
+        //saveGameProgress,
+        deleteUser,
+        updateUserProfile
+      }}
+    >
+      {children}
+    </GameContext.Provider>
+  );
+};
