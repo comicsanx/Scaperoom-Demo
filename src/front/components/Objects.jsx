@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { ObjectsLevel1 } from "../data/ObjectsArray";
 import { Inventory } from "./Inventory";
+import { useGame } from "../context/GameContext";
 
-export const Objects = ({objectsLevel = [], onPenalty}) => {
+export const Objects = ({objectsLevel = [], onPenalty,selectedObject, setSelectedObject }) => {
 
-    const [pickedUpObjects, setPickedUpObjects] = useState([]);
+     const {pickedUpObjects, setPickedUpObjects} = useGame()
     const [message, setMessage] = useState(false)
 
 
@@ -45,7 +46,8 @@ export const Objects = ({objectsLevel = [], onPenalty}) => {
                 </div>
             )}
 
-            <Inventory pickedUpObjects ={pickedUpObjects} allObjects ={objectsLevel} onPenalty={onPenalty}/>
+            <Inventory pickedUpObjects ={pickedUpObjects} allObjects ={objectsLevel} onPenalty={onPenalty} setSelectedObject={setSelectedObject}
+                selectedObject={selectedObject}   />
         </>
     );
 }

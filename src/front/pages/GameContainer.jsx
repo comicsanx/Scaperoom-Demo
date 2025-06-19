@@ -9,14 +9,13 @@ import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
 
 import { useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext";
+import { EnigmaModal } from "../components/EnigmaModal";
+import { EnigmasData } from "../data/EnigmasData";
+
 
 
 export default function GameContainer() {
-  const { menuOpen, timerRef, setMenuOpen } = useGame()
-  // const [menuOpen, setMenuOpen] = useState(false);
-  const [hintsUsed, setHintsUsed] = useState(0);
-  const [hintMessage, setHintMessage] = useState("");
-  // const timerRef = useRef();
+  const { menuOpen, timerRef, setMenuOpen, hintsUsed, setHintsUsed ,pickedUpObjects, setPickedUpObjects} = useGame()
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,28 +26,47 @@ export default function GameContainer() {
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
-  const handleHint = () => {
-    let penalty = 0;
-    let message = "";
-    if (hintsUsed === 0) {
-      message = "Primera pista: sin penalización.";
-    } else if (hintsUsed === 1) {
-      penalty = 2; // segundos
-      message = "Segunda pista: +2 segundos.";
-    } else if (hintsUsed === 2) {
-      penalty = 5;
-      message = "Tercera pista: +5 segundos.";
+  const [selectedObject, setSelectedObject] = useState(null);
+  const [showEnigma, setShowEnigma] = useState(false);
+  const [currentEnigma, setCurrentEnigma] = useState(null);
+  const [mailboxMessage, setMailboxMessage] = useState("")
+  const id_key = 101
+  const id_box_letter = 1
+
+  const handleObjectUsed = (objectId) => {
+    console.log(`Objeto (ID: ${objectId}) ha sido usado y se eliminará del inventario.`);
+    setPickedUpObjects(prevObjects => prevObjects.filter(id => id !== objectId));
+    setSelectedObject(null); 
+  };
+
+  const handleEnigmaClick = (enigmaIdToOpen) => {
+    console.log("handleEnigmaClick llamado con ID:", enigmaIdToOpen)
+    const enigma = EnigmasData.enigmasNivel1.find(e => e.id === enigmaIdToOpen);
+    if (enigma) {
+      setCurrentEnigma(enigmaIdToOpen);
+      setShowEnigma(true);
+      console.log(`Abriendo enigma ${enigmaIdToOpen}`)
     } else {
-      message = "No hay más pistas disponibles.";
-      setHintMessage(message);
-      return;
+      console.log(`ERROR: Enigma ${enigmaIdToOpen} no encontrado.`);
     }
-    setHintsUsed((prev) => prev + 1);
-    setHintMessage(message);
-    if (penalty > 0 && timerRef.current) {
-      timerRef.current.addSeconds(penalty);
+    setSelectedObject(null)
+    setMailboxMessage("")
+  }
+  const handleMailboxClick = () => {
+    console.log("Clic en el buzón detectado.");
+    if (selectedObject === id_key) {
+      handleEnigmaClick(id_box_letter);
+      handleObjectUsed(id_key)
+    } else {
+      console.log("No tienes la llave seleccionada, o no es la llave correcta para el buzón.");
+      setMailboxMessage("Parece que necesitas una llave para abrir esto.")
+      setSelectedObject(null);
+      setTimeout(() => {
+        setMailboxMessage("");
+      }, 2000);
     }
   };
+
 
   const handlePenalty = (seconds) => {
     if (timerRef.current) {
@@ -60,25 +78,36 @@ export default function GameContainer() {
     <div className="game-container-bg">
       <img src={Level1BG} className="bg-img" alt="BG Level1" />
       <button id="plant"></button>
+      <button id="door"></button>
       <button onClick={() => navigate(`/level-victory`)} id="door"></button>
-      <button id="letterbox"></button>
+      <button
+        id="letterbox"
+        className='object-zone'
+        onClick={handleMailboxClick}
+      ></button>
       <button id="ESC"></button>
       <button id="lock"></button>
       <button id="gearbox"></button>
       <button id="PlayerInfo"></button>
       <div className="menu-toggle">
-      <InfoModalUser className="info-modal-user" />
-      <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
-      <button onClick={handleHint} className="hint-button btn btn-warning mt-2">
-        Pedir pista
-      </button>
-      {hintMessage && (
-        <div className="alert alert-info mt-2">{hintMessage}</div>
-      )}
-      {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
-      {/* Aquí se colocarán puzzles, pistas, menú de objetos */}
-      <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} />
+
+        <InfoModalUser className="info-modal-user" />
+
+        <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
+
+
+        {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
+        {showEnigma && (
+          <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }} enigmaId={currentEnigma} />)}
+        {mailboxMessage && (
+          <div className="mailbox-message">
+            <p>{mailboxMessage}</p>
+          </div>
+        )}
+
+        <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
+      </div>
     </div>
-    </div>
+
   );
 }
