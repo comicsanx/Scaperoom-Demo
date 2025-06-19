@@ -7,16 +7,16 @@
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
 } */
 
-.profile-toggle-avatar {
-    width: 50px;   /* Tamaño deseado para el botón de imagen */
+/* .profile-toggle-avatar {
+    width: 50px;  
     height: 50px;
     object-fit: cover;
-    border-radius: 50%; /* Redonda */
-    cursor: pointer; /* Indica que es clicable */
-    border: 2px solid #6c757d; /* Borde sutil para la imagen del botón */
-    transition: all 0.2s ease-in-out; /* Animación al pasar el ratón */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra base para el botón */
-}
+    border-radius: 50%; 
+    cursor: pointer; 
+    border: 2px solid #6c757d; 
+    transition: all 0.2s ease-in-out; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); 
+} */
 .modalUser-name {
   font-family: "Courier New", Courier, monospace;
   font-size: 1.5rem;
