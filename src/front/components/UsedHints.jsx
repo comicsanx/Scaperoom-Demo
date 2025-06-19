@@ -12,6 +12,7 @@ export default function UsedHints({ enigmaId, isOpen, onClose }) {
   const enigma = EnigmasData.enigmasNivel1.find(e => e.id === enigmaId);
   if (!enigma) return <div>Enigma no encontrado</div>;
 
+  
   const current = hintsUsed[enigmaId] || 0;
   const hints = enigma.hints;
 

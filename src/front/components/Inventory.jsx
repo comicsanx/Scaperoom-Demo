@@ -28,13 +28,15 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
             setSelectedObject(null)
             setWrongClicks(0)
             setMessage('')
+            console.log(`Objeto deseleccionado en inventario: ${id}`)
         }
         else {
             setSelectedObject(id)
             setWrongClicks(0)
             setMessage('')
+            console.log(`Objeto seleccionado en inventario: ${id}`)
         }
-        console.log(`Objeto seleccionado en inventario: ${id === selectedObject ? 'ninguno' : id}`)
+       
 
     }
     const handleWrongClick = () => {
@@ -66,14 +68,19 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
     };
 
     useEffect(() => {
-
+        
+        
         if (!selectedObject) return;
 
         const handleClick = (e) => {
             const isValid = e.target.closest("object-zone");
+            console.log("handleClick - isValid:", isValid)
+
             if (!isValid) {
                 handleWrongClick();
-            }
+            }  
+                
+            
         };
 
         const timeoutId = setTimeout(() => {
@@ -104,7 +111,7 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
                 {isOpen && (
                     <div className="inventoryMenuObjects  w-100 w-sm-75 w-md-50 w-lg-25 mx-auto gap-3 ">
                         {modalObject.length === 0 && (
-                            <p className="dropdown-item">Aún no has recogido ningun objeto.</p>
+                            <p className="dropdown-item">Ningun objeto en el inventario</p>
                         )}
 
                         {modalObject.map(obj => (

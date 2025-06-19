@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useRef } from "react";
+import { createContext, useContext, useState, useRef ,useEffect} from "react";
 
 
 const GameContext = createContext();
@@ -16,6 +16,9 @@ export const GameProvider = ({ children }) => {
   const [tiempo, setTiempo] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const timerRef = useRef();
+  const [pickedUpObjects, setPickedUpObjects] = useState([])
+
+   const [isUserLoading, setIsUserLoading] = useState(true);
 
   // fetch que registra tiempo y nivelActual post/put revisar
   // falta adaptar las url a los endpoints cuando estén subidos.
@@ -58,6 +61,7 @@ export const GameProvider = ({ children }) => {
       localStorage.setItem("token", data.token);
       setToken(data.token);
       setUser(data.user);
+      setIsUserLoading(false)
       return true; // Indica éxito
     } else {
       alert("Login fallido");
@@ -69,6 +73,7 @@ export const GameProvider = ({ children }) => {
     setToken("");
     setUser(null);
     localStorage.removeItem("token");
+    setIsUserLoading(false)
     // No navegar aquí
   };
 
@@ -169,6 +174,43 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
     }
   };
 
+   useEffect(() => {
+        const loadUserProfile = async () => {
+            // 1. Si ya tenemos un usuario en el estado, y NO estamos en un proceso de carga
+            // (ej. después de un login que ya seteo el user), simplemente terminamos.
+            if (user && !isUserLoading) {
+                setIsUserLoading(false); 
+                return;
+            }
+
+            // 2. Si no hay token en localStorage, no hay perfil que cargar.
+            if (!token) {
+                setUser(null);
+                setIsUserLoading(false);
+                return;
+            }
+
+            // 3. Si hay un token pero no hay usuario (ej. recarga de página), intentamos cargar el perfil.
+            // Solo iniciamos la carga si user es null y hay un token.
+            if (!user && token) { // Condición clave para recargas
+                setIsUserLoading(true); 
+                try {
+                    // Llamada al endpoint /user/profile para obtener el objeto de usuario completo
+                    const userData = await apiCall(`${API_BASE}/api/user/profile`, "GET", null, token); 
+                    setUser(userData); 
+                } catch (error) {
+                    console.error("Error al cargar el perfil de usuario al iniciar:", error);
+                    // Si el token es inválido o hay un error, limpiar el token y el usuario
+                    logout(); 
+                } finally {
+                    setIsUserLoading(false); 
+                }
+            }
+        };
+
+        loadUserProfile();
+    }, [token, apiCall, user, setUser, setIsUserLoading, logout]); 
+
   // const registrarPistaUsada = (idPista) => {
   //   setPistasUsadas((prev) => [...prev, idPista]);
   // };
@@ -177,6 +219,9 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
     <GameContext.Provider
       value={{
         user,
+         setUser,
+        isUserLoading,
+        setIsUserLoading,
         token,
         login,
         logout,
@@ -196,6 +241,8 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
         timerRef,
         totalHintsUsed,
         setTotalHintsUsed,
+        pickedUpObjects,
+        setPickedUpObjects
       }}
     >
       {children}

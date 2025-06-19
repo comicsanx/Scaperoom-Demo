@@ -15,7 +15,7 @@ import { EnigmasData } from "../data/EnigmasData";
 
 
 export default function GameContainer() {
-  const { menuOpen, timerRef, setMenuOpen, hintsUsed, setHintsUsed } = useGame()
+  const { menuOpen, timerRef, setMenuOpen, hintsUsed, setHintsUsed ,pickedUpObjects, setPickedUpObjects} = useGame()
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,6 +32,12 @@ export default function GameContainer() {
   const [mailboxMessage, setMailboxMessage] = useState("")
   const id_key = 101
   const id_box_letter = 1
+
+  const handleObjectUsed = (objectId) => {
+    console.log(`Objeto (ID: ${objectId}) ha sido usado y se eliminará del inventario.`);
+    setPickedUpObjects(prevObjects => prevObjects.filter(id => id !== objectId));
+    setSelectedObject(null); 
+  };
 
   const handleEnigmaClick = (enigmaIdToOpen) => {
     console.log("handleEnigmaClick llamado con ID:", enigmaIdToOpen)
@@ -50,6 +56,7 @@ export default function GameContainer() {
     console.log("Clic en el buzón detectado.");
     if (selectedObject === id_key) {
       handleEnigmaClick(id_box_letter);
+      handleObjectUsed(id_key)
     } else {
       console.log("No tienes la llave seleccionada, o no es la llave correcta para el buzón.");
       setMailboxMessage("Parece que necesitas una llave para abrir esto.")

@@ -1,19 +1,29 @@
-.modalUser-avatar {
+/* .modalUser-avatar {
   width: 80px;
   height: 80px;
   object-fit: cover;
   border-radius: 50%;
-  border: 3px solid #6c757d; 
+  border: 3px solid #6c757d;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-}
-.modalUser-name{
+} */
 
-  font-family: 'Courier New', Courier, monospace;
+.profile-toggle-avatar {
+    width: 50px;   /* Tamaño deseado para el botón de imagen */
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%; /* Redonda */
+    cursor: pointer; /* Indica que es clicable */
+    border: 2px solid #6c757d; /* Borde sutil para la imagen del botón */
+    transition: all 0.2s ease-in-out; /* Animación al pasar el ratón */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra base para el botón */
+}
+.modalUser-name {
+  font-family: "Courier New", Courier, monospace;
   font-size: 1.5rem;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: #d4d4d4;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 .modalUser-hints {
@@ -26,54 +36,69 @@
   transition: all 0.3s ease;
   font-size: 16px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border: 1px solid transparent;
 }
 .modalUser-hints:hover {
   transform: scale(1.1);
   cursor: not-allowed;
 }
+.modalUse-hints-used i.fa-lightbulb {
+  color: #a0a0a0;
+  opacity: 0.6;
+  text-shadow: none;
+  transition: color 0.3s ease, opacity 0.3s ease, text-shadow 0.3s ease;
+}
 .modalUse-hints-used {
-  background-color: #6c757d;
-  color: white;
+    background-color: #f0f0f0; 
+     border-color: #ccc; 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3)
 }
 
-.modalUse-hints-unused{
- background-color: #28a745;
-color: white;
+.modalUse-hints-unused i.fa-lightbulb {
+  color: gold;
+  opacity: 1;
+  
+  transition: color 0.3s ease, opacity 0.3s ease, text-shadow 0.3s ease;
 }
+.modalUse-hints-unused {
+     border: 2px solid #28a745; 
+    
+   
+    box-shadow: 0 0 8px #28a745, 0 0 15px #38c172; 
+   
+  }
 /* css componente OBJECTS */
 
-
-.objectPosition{
+.objectPosition {
   position: absolute;
   top: 100px;
   left: 200px;
   border: none;
   background: transparent;
- 
 }
-.objectImg{
+.objectImg {
   width: 50px;
   height: 50px;
-  object-fit: contain
+  object-fit: contain;
 }
-.objectButtonDisable{
-     opacity: 0; 
-     border: none; 
-     background: transparent;
+.objectButtonDisable {
+  opacity: 0;
+  border: none;
+  background: transparent;
 }
 .objectModal {
   position: fixed;
   top: 20%;
   left: 50%;
-  background: rgba(101, 67, 33, 1); 
-  border: 2px solid #6b4226; 
+  background: rgba(101, 67, 33, 1);
+  border: 2px solid #6b4226;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(50, 30, 10, 0.4);
   padding: 15px 25px;
   max-width: 280px;
   z-index: 9999;
   animation: popIn 0.7s ease forwards;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .modal-content {
@@ -83,7 +108,7 @@ color: white;
 }
 
 .modal-content button {
-  background-color: #6a2e06; 
+  background-color: #6a2e06;
   border: none;
   color: white;
   font-size: 1rem;
@@ -104,7 +129,6 @@ color: white;
   }
 }
 
-
 .modal-content button:hover {
   background-color: #d48a4e;
   color: #222;
@@ -120,32 +144,29 @@ color: white;
 
 /* css componente INVENTORY */
 
-.inventoryImg{
+.inventoryImg {
   width: 30px;
   height: 30px;
   object-fit: contain;
   border-radius: 20px;
   background-color: rgb(235, 210, 178);
   margin-top: 20px;
-
 }
- .inventoryName{
+.inventoryName {
   font-size: 8px;
-} 
+}
 
 .inventoryContainer {
   position: fixed;
   bottom: 1%;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1050; 
-  
+  z-index: 1050;
 }
 
 .inventory_btn {
   z-index: 1040;
   position: relative;
-
 }
 
 .inventoryMenuObjects {
@@ -155,11 +176,10 @@ color: white;
   height: 70px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
   animation: slideUp 0.5s ease-out;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 @keyframes slideUp {
   from {
@@ -171,12 +191,11 @@ color: white;
     opacity: 1;
   }
 }
-.selected{
+.selected {
   outline: 3px solid rgb(24, 222, 27);
   background-color: #fff4d2;
   border-radius: 50px;
-   padding: 2px
-
+  padding: 2px;
 }
 .inventoryPenaltyMessage {
   position: fixed;

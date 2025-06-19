@@ -25,7 +25,7 @@ export const EnigmasData = {
         ],
         
         }
-        // Agrega más enigmas según sea necesario
+     
     ],
      "enigmasNivel2": [/* enigmas del nivel 2 */],
 
