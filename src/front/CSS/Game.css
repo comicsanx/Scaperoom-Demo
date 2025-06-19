@@ -1,10 +1,9 @@
-
 #PlayerInfo {
 left: -5%;
 top: 0%;
 width: 20%;
 height: 20%;
-background-image: url('./assets/img/Game_img/Game-Player-Button.png');
+background-image: url('../assets/img/Game_img/Game-Player-Button.png');
 background-color: transparent;
 background-size: contain;
 background-repeat: no-repeat;
@@ -18,7 +17,7 @@ left: 84%;
 top: -1.5%;
 width: 20%;
 height: 20%;
-background-image: url('./assets/img/Game_img/Game-ESC-Button.png');
+background-image: url('../assets/img/Game_img/Game-ESC-Button.png');
 background-color: transparent;
 background-size: contain;
 background-repeat: no-repeat;
