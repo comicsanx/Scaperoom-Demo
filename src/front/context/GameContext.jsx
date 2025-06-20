@@ -123,11 +123,13 @@ export const GameProvider = ({ children }) => {
       hasUserInteracted,
       audioReady: !!audio,
       currentAudioSrc: audio ? audio.src : 'N/A',
-      audioPaused: audio ? audio.paused : 'N/A'
+      audioPaused: audio ? audio.paused : 'N/A',
+      // nivelActual 
     });
-
+    //  const isMusicLevel = (nivelActual === 1 || nivelActual === 2);
 
     if (audio && audiusAudioUrl) { 
+      // if (isMusicEnabled && hasUserInteracted && isMusicLevel)
       if (isMusicEnabled && hasUserInteracted) {
         if (audio.paused || audio.src !== audiusAudioUrl) {
            if (audio.src !== audiusAudioUrl) {
@@ -153,7 +155,7 @@ export const GameProvider = ({ children }) => {
       } else {
 
         if (!audio.paused) {
-          console.log("[Audio Player] Pausando audio (isMusicEnabled o hasUserInteracted es false).");
+          console.log("[Audio Player] Pausando audio (música deshabilitada, sin interacción, o no es nivel de música).");
           audio.pause();
         }
       }
@@ -161,7 +163,7 @@ export const GameProvider = ({ children }) => {
         console.log("[Audio Player] No se puede gestionar audio: elemento de audio o audiusAudioUrl no disponibles.", { audio, audiusAudioUrl });
     }
     console.log("------------------------------------------");
-  }, [isMusicEnabled, hasUserInteracted, audiusAudioUrl, audioLogout, currentVolume]); // audiusAudioUrl como dependencia porque se carga asíncronamente
+  }, [isMusicEnabled, hasUserInteracted, audiusAudioUrl, audioLogout, currentVolume]); // nivelActual
 
   // fetch que registra tiempo y nivelActual post/put revisar
   // falta adaptar las url a los endpoints cuando estén subidos.
