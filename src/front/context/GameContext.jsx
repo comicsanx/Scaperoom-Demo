@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useRef } from "react";
+import { createContext, useContext, useState, useRef ,useEffect} from "react";
 
 
 const GameContext = createContext();
@@ -10,11 +10,16 @@ const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api"
 export const GameProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-  const [pistasUsadas, setPistasUsadas] = useState([]);
+  const [hintsUsed, setHintsUsed] = useState({});
+  const [totalHintsUsed, setTotalHintsUsed] = useState(0);
   const [nivelActual, setNivelActual] = useState(1);
   const [tiempo, setTiempo] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const timerRef = useRef();
+  const [pickedUpObjects, setPickedUpObjects] = useState([])
+  const [isUserLoading, setIsUserLoading] = useState(true);
+  const [ isGearboxCodeCorrect,setIsGearboxCodeCorrect] = useState(false);      
+  const [hasLookedRoom, setHasLookedRoom] = useState(false);
 
   // fetch que registra tiempo y nivelActual post/put revisar
   // falta adaptar las url a los endpoints cuando estén subidos.
@@ -57,6 +62,7 @@ export const GameProvider = ({ children }) => {
       localStorage.setItem("token", data.token);
       setToken(data.token);
       setUser(data.user);
+      setIsUserLoading(false)
       return true; // Indica éxito
     } else {
       alert("Login fallido");
@@ -68,6 +74,7 @@ export const GameProvider = ({ children }) => {
     setToken("");
     setUser(null);
     localStorage.removeItem("token");
+    setIsUserLoading(false)
     // No navegar aquí
   };
 
@@ -84,9 +91,7 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
   if (!res.ok) {
     throw new Error("Error en la API");
   }
-    if (!res.ok) {
-      throw new Error("Error en la API");
-    }
+   
 
     return await res.json();
   };
@@ -97,7 +102,7 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
       throw new Error("No hay usuario autenticado para eliminar.");
     }
     try {
-      await apiCall(`${API_BASE}/user/profile`, "DELETE")
+      await apiCall(`${API_BASE}/user/profile`, "DELETE", null, token)
       logout()
       return true
     } catch (error) {
@@ -113,7 +118,7 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
       throw new Error("No hay usuario autenticado para modiifcar.");
     }
     try {
-      const updateProfile = await apiCall(`${API_BASE}/user/profile`, "PUT", newProfile)
+      const updateProfile = await apiCall(`${API_BASE}/user/profile`, "PUT", newProfile, token)
 
       setUser(updateProfile)
       alert("Perfil actualizado exitosamente.");
@@ -170,14 +175,51 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
     }
   };
 
-  const registrarPistaUsada = (idPista) => {
-    setPistasUsadas((prev) => [...prev, idPista]);
-  };
+   useEffect(() => {
+        const loadUserProfile = async () => {
+           
+            if (user && !isUserLoading) {
+                setIsUserLoading(false); 
+                return;
+            }
+
+           
+            if (!token) {
+                setUser(null);
+                setIsUserLoading(false);
+                return;
+            }
+
+            if (!user && token) {
+                setIsUserLoading(true); 
+                try {
+                   
+                    const userData = await apiCall(`${API_BASE}/api/user/profile`, "GET", null, token); 
+                    setUser(userData); 
+                } catch (error) {
+                    console.error("Error al cargar el perfil de usuario al iniciar:", error);
+                    
+                    logout(); 
+                } finally {
+                    setIsUserLoading(false); 
+                }
+            }
+        };
+
+        loadUserProfile();
+    }, [token, apiCall, user, setUser, setIsUserLoading, logout]); 
+
+  // const registrarPistaUsada = (idPista) => {
+  //   setPistasUsadas((prev) => [...prev, idPista]);
+  // };
 
   return (
     <GameContext.Provider
       value={{
         user,
+         setUser,
+        isUserLoading,
+        setIsUserLoading,
         token,
         login,
         logout,
@@ -185,8 +227,8 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
         setNivelActual,
         tiempo,
         setTiempo,
-        pistasUsadas,
-        registrarPistaUsada,
+        hintsUsed,
+        setHintsUsed,
         apiCall,
         signup,
         saveGameProgress,
@@ -194,7 +236,15 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
         updateUserProfile,
         menuOpen,
         setMenuOpen,
-        timerRef
+        timerRef,
+        totalHintsUsed,
+        setTotalHintsUsed,
+        pickedUpObjects,
+        setPickedUpObjects,
+        hasLookedRoom,
+        setHasLookedRoom,
+        isGearboxCodeCorrect,
+        setIsGearboxCodeCorrect
       }}
     >
       {children}

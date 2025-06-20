@@ -1,4 +1,12 @@
-
+body, html {
+margin: 0;
+padding: 0;
+height: 100%;
+width: 100%;
+/* overflow: hidden; */
+background-color: #513325;
+z-index: 0;
+}
 
 .game-container-bg {
     position: relative;
@@ -102,4 +110,20 @@ border:none;
     z-index: 100;
     padding: 10px;
     border-radius: 5px;
+}
+.mailbox-message {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    background-color: rgba(0, 0, 0, 0.7); 
+    color: white; 
+    padding: 15px 25px;
+    border-radius: 8px;
+    z-index: 1000;
+    font-size: 1.2em;
+    text-align: center;
+    min-width: 250px;
+    max-width: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
