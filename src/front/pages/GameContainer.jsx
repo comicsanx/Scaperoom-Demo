@@ -61,11 +61,12 @@ export default function GameContainer() {
       <button id="plant"></button>
       <button onClick={() => navigate(`/level-victory`)} id="door"></button>
       <button id="letterbox"></button>
-      <button id="ESC"></button>
+      <button id="ESC" onClick={() => setMenuOpen(true)}></button>
       <button id="lock"></button>
       <button id="gearbox"></button>
       <button id="PlayerInfo"></button>
       <div className="menu-toggle">
+        <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
         <InfoModalUser className="info-modal-user" />
         <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
         <button onClick={handleHint} className="hint-button btn btn-warning mt-2">
@@ -74,10 +75,8 @@ export default function GameContainer() {
         {hintMessage && (
           <div className="alert alert-info mt-2">{hintMessage}</div>
         )}
-        {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
         {/* Aquí se colocarán puzzles, pistas, menú de objetos */}
         <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} />
-        <Pause open={menuOpen} />
       </div>
     </div>
   );
