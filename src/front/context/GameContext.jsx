@@ -23,20 +23,14 @@ export const GameProvider = ({ children }) => {
   const currentVolume = useRef(0.1);
   const [isMusicEnabled, setIsMusicEnabled] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
+  const [displayMusicVolume, setDisplayMusicVolume] = useState(currentVolume.current);
 
-  // const musicGroupMap = {
-  //   0: "a5Y5Q", // Rutas generales 
-  //   1: "ZZXVZya", // Nivel 1
-  //   2: "g95Gv", // Nivel 2
-  //   3: "32Z1aNv", // victoria
-  // }; Es demasiado lento. 
-
-  const SINGLE_AUDIUS_TRACK_ID = 'zK2Vq'; 
+  const SINGLE_AUDIUS_TRACK_ID = 'zK2Vq';
   const AUDIUS_DISCOVERY_PROVIDERS = [
     "https://discoveryprovider.audius.co",
     "https://discoveryprovider2.audius.co",
     "https://discoveryprovider3.audius.co"
-];
+  ];
 
   const logout = () => {
     setToken("");
@@ -45,52 +39,66 @@ export const GameProvider = ({ children }) => {
     // No navegar aquí
   };
 
-    const audioLogout = useCallback(() => {
-    setHasUserInteracted(false); 
-    setIsMusicEnabled(false); 
-    if (audioPlayerRef.current && !audioPlayerRef.current.paused) {
-      audioPlayerRef.current.pause();
-      audioPlayerRef.current.src = ""; 
-      audioPlayerRef.current.load(); 
+  const audioLogout = useCallback(() => {
+    setHasUserInteracted(false);
+    setIsMusicEnabled(false);
+    if (audioPlayerRef.current) {
+      if (!audioPlayerRef.current.paused) {
+        audioPlayerRef.current.pause();
+      }
+      audioPlayerRef.current.src = "";
+      audioPlayerRef.current.load();
+      console.warn("[GameContext] Audio se ha 'deslogueado' (reiniciando interacción de usuario para audio).");
     }
-    console.warn("Audio se ha 'deslogueado' (reiniciando interacción de usuario para audio).");
+  }, []);
+
+  const setMusicVolume = useCallback((newVolume) => {
+    const volume = Math.max(0, Math.min(1, newVolume));
+    currentVolume.current = volume;
+    setDisplayMusicVolume(volume);
+
+    if (audioPlayerRef.current) {
+      audioPlayerRef.current.volume = volume;
+    }
   }, []);
 
 
- useEffect(() => {
+  useEffect(() => {
     const fetchSingleMusicTrackDirectly = async () => {
-      setIsAudioLoading(true); 
+      setIsAudioLoading(true);
       setAudiusAudioUrl(null);
 
       let foundStreamUrl = null;
-       for (const providerUrl of AUDIUS_DISCOVERY_PROVIDERS) {
-      try {
-              console.log(`[GameContext] Intentando cargar la URL de la pista única desde el proveedor: ${providerUrl}`);
-              const response = await fetch(`${providerUrl}/v1/tracks/${SINGLE_AUDIUS_TRACK_ID}/stream`);
+      for (const providerUrl of AUDIUS_DISCOVERY_PROVIDERS) {
+        try {
+          console.log(`[GameContext] Intentando cargar la URL de la pista única desde el proveedor: ${providerUrl}`);
+          const response = await fetch(`${providerUrl}/v1/tracks/${SINGLE_AUDIUS_TRACK_ID}/stream`);
 
-              if (response.ok && response.url) {
-                  foundStreamUrl = response.url;
-                  console.log(`[GameContext] URL de Audius para pista única obtenida de ${providerUrl}: ${foundStreamUrl}`);
-                  break; // Si encontramos una URL válida, salimos del bucle
-              } else {
-                  console.warn(`[GameContext] Proveedor ${providerUrl} no pudo obtener la URL de stream o la respuesta no fue OK. Intentando con el siguiente...`);
-              }
-          } catch (error) {
-              console.warn(`[GameContext] Error al conectar con el proveedor ${providerUrl}:`, error);
+          if (response.ok && response.url) {
+            foundStreamUrl = response.url;
+            console.log(`[GameContext] URL de Audius para pista única obtenida de ${providerUrl}: ${foundStreamUrl}`);
+            break;
+          } else {
+            console.warn(`[GameContext] Proveedor ${providerUrl} no pudo obtener la URL de stream o la respuesta no fue OK. Intentando con el siguiente...`);
           }
+        } catch (error) {
+          console.warn(`[GameContext] Error al conectar con el proveedor ${providerUrl}:`, error);
+        }
       }
 
-      setAudiusAudioUrl(foundStreamUrl); // Establecemos la URL si se encontró
+      setAudiusAudioUrl(foundStreamUrl);
       if (!foundStreamUrl) {
-           console.warn("[GameContext] No se pudo obtener la URL de stream de ninguna de los proveedores de la lista.");
+        console.warn("[GameContext] No se pudo obtener la URL de stream de ninguna de los proveedores de la lista.");
       }
-      setIsAudioLoading(false); 
+      setIsAudioLoading(false);
     };
 
-    fetchSingleMusicTrackDirectly();
-  }, []);
+    if (!audiusAudioUrl && !isAudioLoading) {
+      fetchSingleMusicTrackDirectly();
+    }
+  }, [audiusAudioUrl, isAudioLoading]);
 
-   const makeRequest = useCallback(async (url, method = 'GET', body = null, token = '') => {
+  const makeRequest = useCallback(async (url, method = 'GET', body = null, token = '') => {
     const headers = {
       "Content-Type": "application/json",
     };
@@ -112,7 +120,7 @@ export const GameProvider = ({ children }) => {
     }
 
     return await res.json();
-  }, [API_BASE]); 
+  }, [API_BASE]);
 
   useEffect(() => {
     const audio = audioPlayerRef.current;
@@ -128,28 +136,28 @@ export const GameProvider = ({ children }) => {
     });
     //  const isMusicLevel = (nivelActual === 1 || nivelActual === 2);
 
-    if (audio && audiusAudioUrl) { 
+    if (audio && audiusAudioUrl) {
       // if (isMusicEnabled && hasUserInteracted && isMusicLevel)
       if (isMusicEnabled && hasUserInteracted) {
         if (audio.paused || audio.src !== audiusAudioUrl) {
-           if (audio.src !== audiusAudioUrl) {
-               audio.src = audiusAudioUrl;
-               console.log("[Audio Player] Asignando la única URL de audio y cargando.");
-               audio.load(); 
-           }
+          if (audio.src !== audiusAudioUrl) {
+            audio.src = audiusAudioUrl;
+            console.log("[Audio Player] Asignando la única URL de audio y cargando.");
+            audio.load();
+          }
 
-           console.log(`[Audio Player] ReadyState antes de play: ${audio.readyState}`);
-           setTimeout(() => {
-               audio.volume = currentVolume.current;
-               audio.loop = true; 
-               audio.muted = false;
-               console.log("[Audio Player] Intentando reproducir DESPUÉS del setTimeout...");
-               audio.play().then(() => {
-                   console.log("[Audio Player] REPRODUCCIÓN EXITOSA.");
-               }).catch(e => {
-                   console.warn("[Audio Player] FALLO EN LA REPRODUCCIÓN (con catch):", e.name, e.message, e);
-               });
-           }, 100); 
+          console.log(`[Audio Player] ReadyState antes de play: ${audio.readyState}`);
+          setTimeout(() => {
+            audio.volume = currentVolume.current;
+            audio.loop = true;
+            audio.muted = false;
+            console.log("[Audio Player] Intentando reproducir DESPUÉS del setTimeout...");
+            audio.play().then(() => {
+              console.log("[Audio Player] REPRODUCCIÓN EXITOSA.");
+            }).catch(e => {
+              console.warn("[Audio Player] FALLO EN LA REPRODUCCIÓN (con catch):", e.name, e.message, e);
+            });
+          }, 100);
         }
 
       } else {
@@ -160,7 +168,7 @@ export const GameProvider = ({ children }) => {
         }
       }
     } else {
-        console.log("[Audio Player] No se puede gestionar audio: elemento de audio o audiusAudioUrl no disponibles.", { audio, audiusAudioUrl });
+      console.log("[Audio Player] No se puede gestionar audio: elemento de audio o audiusAudioUrl no disponibles.", { audio, audiusAudioUrl });
     }
     console.log("------------------------------------------");
   }, [isMusicEnabled, hasUserInteracted, audiusAudioUrl, audioLogout, currentVolume]); // nivelActual
@@ -360,7 +368,7 @@ export const GameProvider = ({ children }) => {
         setTiempo,
         hintsUsed,
         setHintsUsed,
-        apiCall : makeRequest,
+        apiCall: makeRequest,
         signup,
         saveGameProgress,
         deleteUser,
@@ -378,7 +386,10 @@ export const GameProvider = ({ children }) => {
         isMusicEnabled,
         setIsMusicEnabled,
         hasUserInteracted,
-        setHasUserInteracted, 
+        setHasUserInteracted,
+        currentVolume,
+        setMusicVolume,
+        displayMusicVolume,
       }}
     >
       {children}
