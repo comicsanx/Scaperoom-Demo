@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useRef ,useEffect} from "react";
+import { createContext, useContext, useState, useRef, useEffect } from "react";
+import { EnigmasData } from "../data/EnigmasData";
 
 
 const GameContext = createContext();
@@ -10,21 +11,20 @@ const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api"
 export const GameProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-  // const [hintsUsed, setHintsUsed] = useState({});
-  // const [totalHintsUsed, setTotalHintsUsed] = useState(0);
+
   const [nivelActual, setNivelActual] = useState(1);
   const [tiempo, setTiempo] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const timerRef = useRef();
   const [pickedUpObjects, setPickedUpObjects] = useState([])
   const [isUserLoading, setIsUserLoading] = useState(true);
-  const [ isGearboxCodeCorrect,setIsGearboxCodeCorrect] = useState(false);      
+  const [isGearboxCodeCorrect, setIsGearboxCodeCorrect] = useState(false);
   const [hasLookedRoom, setHasLookedRoom] = useState(false);
 
   // fetch que registra tiempo y nivelActual post/put revisar
   // falta adaptar las url a los endpoints cuando estén subidos.
 
-
+  // ----------fetch de la web ------------------
 
   const signup = async (data) => {
     try {
@@ -78,20 +78,20 @@ export const GameProvider = ({ children }) => {
     // No navegar aquí
   };
 
-const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
-  const res = await fetch(API_BASE, {
-    method,
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
-    },
-    body: body ? JSON.stringify(body) : null,
-  });
+  const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
+    const res = await fetch(API_BASE, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: body ? JSON.stringify(body) : null,
+    });
 
-  if (!res.ok) {
-    throw new Error("Error en la API");
-  }
-   
+    if (!res.ok) {
+      throw new Error("Error en la API");
+    }
+
 
     return await res.json();
   };
@@ -111,9 +111,9 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
     }
   }
 
-  // newProfile es la variable que hay que poner en el componente para actualizar los datos
 
   const updateUserProfile = async (newProfile) => {
+    // newProfile es la variable que hay que poner en el componente para actualizar los datos
     if (!user || !user.id || !token) {
       throw new Error("No hay usuario autenticado para modiifcar.");
     }
@@ -175,49 +175,63 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
     }
   };
 
-   useEffect(() => {
-        const loadUserProfile = async () => {
-           
-            if (user && !isUserLoading) {
-                setIsUserLoading(false); 
-                return;
-            }
+  useEffect(() => {
+    const loadUserProfile = async () => {
 
-           
-            if (!token) {
-                setUser(null);
-                setIsUserLoading(false);
-                return;
-            }
+      if (user && !isUserLoading) {
+        setIsUserLoading(false);
+        return;
+      }
 
-            if (!user && token) {
-                setIsUserLoading(true); 
-                try {
-                   
-                    const userData = await apiCall(`${API_BASE}/api/user/profile`, "GET", null, token); 
-                    setUser(userData); 
-                } catch (error) {
-                    console.error("Error al cargar el perfil de usuario al iniciar:", error);
-                    
-                    logout(); 
-                } finally {
-                    setIsUserLoading(false); 
-                }
-            }
-        };
 
-        loadUserProfile();
-    }, [token, apiCall, user, setUser, setIsUserLoading, logout]); 
+      if (!token) {
+        setUser(null);
+        setIsUserLoading(false);
+        return;
+      }
 
-  // const registrarPistaUsada = (idPista) => {
-  //   setPistasUsadas((prev) => [...prev, idPista]);
-  // };
+      if (!user && token) {
+        setIsUserLoading(true);
+        try {
+
+          const userData = await apiCall(`${API_BASE}/api/user/profile`, "GET", null, token);
+          setUser(userData);
+        } catch (error) {
+          console.error("Error al cargar el perfil de usuario al iniciar:", error);
+
+          logout();
+        } finally {
+          setIsUserLoading(false);
+        }
+      }
+    };
+
+    loadUserProfile();
+  }, [token, apiCall, user, setUser, setIsUserLoading, logout]);
+
+
+  // -----obtener enigmas de cada nivel-------
+
+  const getCurrentEnigmas = () => {
+
+    switch (nivelActual) {
+      case 1:
+        return EnigmasData.enigmasNivel1;
+      case 2:
+        return EnigmasData.enigmasNivel2;
+
+      default:
+        return [];
+    }
+  };
+
+
 
   return (
     <GameContext.Provider
       value={{
         user,
-         setUser,
+        setUser,
         isUserLoading,
         setIsUserLoading,
         token,
@@ -227,8 +241,7 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
         setNivelActual,
         tiempo,
         setTiempo,
-        hintsUsed,
-        setHintsUsed,
+       
         apiCall,
         signup,
         saveGameProgress,
@@ -237,14 +250,13 @@ const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
         menuOpen,
         setMenuOpen,
         timerRef,
-        totalHintsUsed,
-        setTotalHintsUsed,
         pickedUpObjects,
         setPickedUpObjects,
         hasLookedRoom,
         setHasLookedRoom,
         isGearboxCodeCorrect,
-        setIsGearboxCodeCorrect
+        setIsGearboxCodeCorrect,
+        getCurrentEnigmas
       }}
     >
       {children}

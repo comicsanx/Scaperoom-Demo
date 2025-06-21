@@ -6,7 +6,7 @@ import { RouterProvider } from "react-router-dom";  // Import RouterProvider to 
 import { router } from "./routes";  // Import the router configuration
 import { BackendURL } from './components/BackendURL';
 import { GameProvider } from "./context/GameContext";
-
+import { HintsProvider} from "./context/HintsContext";
 const Main = () => {
 
 if (! import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_BACKEND_URL == "") return (
@@ -18,7 +18,9 @@ if (! import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_BACKEND_URL == ""
     <React.StrictMode>
       {/* GameProvider debe envolver al RouterProvider */}
       <GameProvider>
-        <RouterProvider router={router} />
+          <HintsProvider>
+            <RouterProvider router={router} />
+          </HintsProvider>
       </GameProvider>
     </React.StrictMode>
   );

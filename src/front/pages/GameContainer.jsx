@@ -20,9 +20,6 @@ export default function GameContainer() {
     menuOpen,
     timerRef,
     setMenuOpen,
-    hintsUsed,
-    setHintsUsed,
-    pickedUpObjects,
     setPickedUpObjects,
     isGearboxCodeCorrect,
     setIsGearboxCodeCorrect,
@@ -180,7 +177,9 @@ export default function GameContainer() {
 
           {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
           {showEnigma && currentEnigmaData &&(
-            <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }} enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved} />)}
+            <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }} 
+            enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved} 
+             timerRef={timerRef}/>)}
            {(mailboxMessage || gameMessage) && (
             <div className="mailbox-message">
               <p>{mailboxMessage || gameMessage}</p>
