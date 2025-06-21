@@ -25,7 +25,7 @@ export function Layout() {
 
   useEffect(() => {
         // Rutas donde la música DEBE estar activa (ej. Dashboard, GameContainer)
-        const musicRoutes = ['/dashboard', '/game']; // Ajusta esto a tus rutas exactas de juego
+        const musicRoutes = ['/level', '/level-2', '/level-victory', '/game-victory']; // Ajusta esto a tus rutas exactas de juego
 
         if (musicRoutes.includes(location.pathname)) {
             // Si estamos en una ruta de música y aún no está habilitada

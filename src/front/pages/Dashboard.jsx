@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useGame } from '../context/GameContext'; // <-- ¡Esta es la línea crucial que faltaba o estaba mal!
 
 export function Dashboard() {
     const { setIsMusicEnabled, setNivelActual, setHasUserInteracted, hasUserInteracted } = useGame();
     const navigate = useNavigate();
     const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api";
 
+    // Tu código comentado para fetching de ranking
     // useEffect(() => {
     //     fetch(`${API_BASE}/ranking/global`)
     //         .then(async res => {
@@ -21,40 +23,37 @@ export function Dashboard() {
     //         .catch(err => console.error("Error fetching ranking:", err));
     // }, []);
 
-    //  const handleStartNewGame = () => {
-    //     // **IMPORTANTE para la política de autoplay del navegador:**
-    //     // Nos aseguramos de que hasUserInteracted sea true con este clic,
-    //     // por si el usuario llega aquí directamente sin una interacción previa.
-    //     if (!hasUserInteracted) {
-    //         setHasUserInteracted(true);
-    //         console.log("[Dashboard] Interacción de usuario registrada al iniciar 'Nueva Partida'.");
-    //     }
+
+    const handleStartNewGame = () => {
+
+        if (!hasUserInteracted) {
+            setHasUserInteracted(true);
+            console.log("[Dashboard] Interacción de usuario registrada al iniciar 'Nueva Partida'.");
+        }
         
-    //     setIsMusicEnabled(true); 
-    //     setNivelActual(1); 
-    //     console.log("[Dashboard] Música activada y nivel establecido a 1 al iniciar 'Nueva Partida'.");
-    //     navigate(`/level`); 
-    // };
+        setIsMusicEnabled(true); 
+        setNivelActual(1); 
+        console.log("[Dashboard] Música activada y nivel establecido a 1 al iniciar 'Nueva Partida'.");
+        navigate(`/level`); 
+    };
 
-  
-    // const handleContinueGame = () => {
-
-    //     if (!hasUserInteracted) {
-    //         setHasUserInteracted(true);
-    //         console.log("[Dashboard] Interacción de usuario registrada al 'Continuar' partida.");
-    //     }
-    //     setIsMusicEnabled(true); 
-    //     setNivelActual(1); 
-    //     console.log("[Dashboard] Música activada y nivel establecido (ej. a 1) al 'Continuar' partida.");
-    //     navigate(`/level`); 
-    // };
+    const handleContinueGame = () => {
+        if (!hasUserInteracted) {
+            setHasUserInteracted(true);
+            console.log("[Dashboard] Interacción de usuario registrada al 'Continuar' partida.");
+        }
+        setIsMusicEnabled(true); 
+        setNivelActual(1); 
+        console.log("[Dashboard] Música activada y nivel establecido (ej. a 1) al 'Continuar' partida.");
+        navigate(`/level`); 
+    };
 
     return (
         <div>
             <h1>Escape Room</h1>
-            <button onClick={() => navigate(`/level`)}>Nueva Partida</button> {/* onclick a handleStartNewGame */}
+            <button onClick={handleStartNewGame}>Nueva Partida</button> {/* onClick ahora llama a la función */}
             <button>Cómo Jugar</button> 
-            <button>Continuar</button> {/* onclick a handleContinueGame */}
+            <button onClick={handleContinueGame}>Continuar</button> {/* onClick ahora llama a la función */}
             {/* falta definir rutas */}
         </div>
     );
