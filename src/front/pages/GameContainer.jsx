@@ -1,7 +1,3 @@
-import Timer from "../components/Timer";
-import { Objects } from "../components/Objects";
-import { ObjectsLevel1 } from "../data/ObjectsArray";
-import { InfoModalUser } from "../components/InfoModalUser";
 import { useRef, useState, useEffect } from "react";
 import "../CSS/level1.css";
 import "../CSS/Game.css";
@@ -9,13 +5,21 @@ import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
 
 import { useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext";
+import { ObjectsLevel1 } from "../data/ObjectsArray";
+import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
+import Timer from "../components/Timer";
+import { Objects } from "../components/Objects";
+import { InfoModalUser } from "../components/InfoModalUser";
 import { EnigmaModal } from "../components/EnigmaModal";
 import { EnigmasData } from "../data/EnigmasData";
+import Pause from "../components/Pause";
+import "../level1.css";
+import "../Game.css";
 
 
 
 export default function GameContainer() {
-  const { menuOpen, timerRef, setMenuOpen, hintsUsed, setHintsUsed ,pickedUpObjects, setPickedUpObjects} = useGame()
+  const { menuOpen, timerRef, setMenuOpen, hintsUsed, setHintsUsed, pickedUpObjects, setPickedUpObjects } = useGame()
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,7 +40,7 @@ export default function GameContainer() {
   const handleObjectUsed = (objectId) => {
     console.log(`Objeto (ID: ${objectId}) ha sido usado y se eliminará del inventario.`);
     setPickedUpObjects(prevObjects => prevObjects.filter(id => id !== objectId));
-    setSelectedObject(null); 
+    setSelectedObject(null);
   };
 
   const handleEnigmaClick = (enigmaIdToOpen) => {
@@ -85,17 +89,14 @@ export default function GameContainer() {
         className='object-zone'
         onClick={handleMailboxClick}
       ></button>
-      <button id="ESC"></button>
+      <button id="ESC" onClick={() => setMenuOpen(true)}></button>
       <button id="lock"></button>
       <button id="gearbox"></button>
       <button id="PlayerInfo"></button>
       <div className="menu-toggle">
-
+        <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
         <InfoModalUser className="info-modal-user" />
-
         <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
-
-
         {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
         {showEnigma && (
           <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }} enigmaId={currentEnigma} />)}
@@ -104,7 +105,6 @@ export default function GameContainer() {
             <p>{mailboxMessage}</p>
           </div>
         )}
-
         <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
       </div>
     </div>
