@@ -1,26 +1,18 @@
 import { useGame } from "../context/GameContext";
 import React, { useEffect, useState } from "react";
-import Game_img from "../assets/img/Game_img/Game-Player-Button.png";
-
-
+import Timer from "./Timer";
+import GameContainer from "../pages/GameContainer";
+import "../CSS/Game.css";
 
 import { Dropdown, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
-
-
-
 
 export const InfoModalUser = ({ showEnigma }) => {
 
   const {user, nivelActual, totalHintsUsed, isUserLoading  } = useGame()
 
-
-  
-
   if (showEnigma) {
     return null;
   }
-
-  
 
     if (isUserLoading) {
         return <p>Cargando información del jugador...</p>;
@@ -29,10 +21,7 @@ export const InfoModalUser = ({ showEnigma }) => {
         return <p>Información de usuario no disponible.</p>;
     }
 
- 
-
   function hintMessage(totalHintsUsed) {
-   
 
     if (totalHintsUsed === 0) {
       return 'Aún no has usado pistas, ¡la ayuda está lista cuando la necesites!';

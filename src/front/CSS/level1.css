@@ -1,0 +1,105 @@
+
+
+.game-container-bg {
+    position: relative;
+    width: 100%; 
+    height: 100%; 
+    overflow: hidden;
+    z-index: 1; 
+}  
+
+.bg-img {
+position: absolute;
+top: 0%;
+left: 0%;
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+z-index: 0;
+}
+
+.game-container-bg > *:not(.bg-img) {
+position: absolute;
+z-index: 2; 
+}
+
+#door {
+left: 68.45%;
+top: 19%;
+width: 19.15%;
+height: 59.2%;
+background-image: url('../assets/img/Level1_img/Level1-Door.png');
+background-color: transparent;
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+border: none;
+z-index: 1;
+}
+
+#lock {
+left: 70.14%;
+top: 46.7%;
+width: 2.34%;
+height: 5.04%;
+background-image: url('../assets/img/Level1_img/Level1-Lock.png');
+background-color: transparent;
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+border: none;
+z-index: 2;
+}
+
+#gearbox {
+left: 55.2%;
+top: 12.89%;
+width: 8.3%;
+height: 20%;
+background-image: url('../assets/img/Level1_img/Level1-Gearbox.png');
+background-color: transparent;
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+border: none;
+z-index: 1;
+}
+
+#plant {
+left: 9.9%;
+top: 32.1%;
+width: 10.13%;
+height: 45.5%;
+background-image: url('../assets/img/Level1_img/Level1-Plant.png');
+background-color: transparent;
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+border: none;
+z-index: 1;
+}
+
+#letterbox {
+left: 55.5%;
+top: 43.5%;
+width: 7.7%;
+height: 18%;
+background-image: url('../assets/img/Level1_img/Level1-Letterbox.png');
+background-color: transparent;
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+z-index: 1;
+border:none;
+}
+
+
+.menu-toggle {
+ position: absolute; 
+    top: 120px; 
+    left: 40px;  
+    z-index: 100;
+    padding: 10px;
+    border-radius: 5px;
+}
