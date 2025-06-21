@@ -81,11 +81,11 @@ export default function GameContainer() {
       handleObjectUsed(id_key)
     } else {
       console.log("No tienes la llave seleccionada, o no es la llave correcta para el buzón.");
-      setMailboxMessage("Parece que necesitas una llave para abrir esto.")
+      setMailboxMessage("Parece que necesitas algo para abrir esto.")
       setSelectedObject(null);
       setTimeout(() => {
         setMailboxMessage("");
-      }, 2000);
+      }, 3000);
     }
   };
   // Función para mirar por la mirilla
@@ -101,7 +101,7 @@ export default function GameContainer() {
     setTimeout(() => {
       setShowRoomImage(false);
       setGameMessage("");
-    }, 3000);
+    }, 4000);
   };
 
   // Función para el clic en el Cuadro de Luces
@@ -109,7 +109,7 @@ export default function GameContainer() {
     console.log("Clic en el cuadro de luces detectado.");
     if (!hasLookedRoom) {
       setGameMessage("Primero, debes mirar por la mirilla para comprobar la situación.");
-      setTimeout(() => setGameMessage(""), 3000);
+      setTimeout(() => setGameMessage(""), 4000);
       return;
     }
     handleEnigmaClick(id_gearbox)
@@ -121,7 +121,7 @@ export default function GameContainer() {
      if (isGearboxCodeCorrect && hasLookedRoom) {
             setGameMessage("¡La puerta se abre! Avanzando al siguiente nivel...");
             setTimeout(() => {         
-            }, 1500);
+            }, 3000);
             navigate(`/level-victory`);
         } else {
            
@@ -139,7 +139,7 @@ export default function GameContainer() {
             if (isCorrect) {
                 setIsGearboxCodeCorrect(true); 
                  setGameMessage("¡Conseguiste manipular el reloj!Compreba si el señor Geeks se ha ido a comer.");
-                 setTimeout(() => setGameMessage(""), 3000);
+                 setTimeout(() => setGameMessage(""), 4000);
             } else {
               
             }

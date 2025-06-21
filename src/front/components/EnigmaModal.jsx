@@ -60,15 +60,14 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved }) => {
         {enigma.img && (
           <img
             src={enigma.img}
-            alt={enigma.title}
             className="img-fluid mb-3"
-            style={{ borderRadius: "8px" }}
+            // style={{ borderRadius: "8px" }}
           />
 
         )}
         {enigma.id === 2 && (
           <Form.Group className="mb-3">
-            <Form.Label>Introduce el código:</Form.Label>
+            <Form.Label>Necesitas manipular el reloj para que el Sr Geeks crea que es la hora de la comida.</Form.Label>
             <Form.Control
               type="text"
               value={inputValue}
@@ -78,6 +77,7 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved }) => {
           </Form.Group>
         )}
         {message && <p className={`text-center ${message.includes('correcto') ? 'text-success' : 'text-danger'}`}>{message}</p>}
+        {enigma.description && <p>{enigma.description}</p>}
 
         <UsedHints enigmaId={enigma.id} isOpen={show} onClose={onHide} />
 

@@ -10,8 +10,8 @@ const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api"
 export const GameProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-  const [hintsUsed, setHintsUsed] = useState({});
-  const [totalHintsUsed, setTotalHintsUsed] = useState(0);
+  // const [hintsUsed, setHintsUsed] = useState({});
+  // const [totalHintsUsed, setTotalHintsUsed] = useState(0);
   const [nivelActual, setNivelActual] = useState(1);
   const [tiempo, setTiempo] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);

@@ -28,13 +28,13 @@ export default function UsedHints({ enigmaId, isOpen, onClose }) {
     let penalty = 0;
     let message = "";
     if (current === 0) {
-      message = "Primera pista: sin penalización.";
+      message = "Acceso gratuito concedido. Penalizaciones activas en las próximas pistas.";
     } else if (current === 1) {
       penalty = 2; // segundos
-      message = "Segunda pista: +2 segundos.";
+      message = "Cada pista revela... y roba. Has añadido 2 segundos.";
     } else if (current === 2) {
       penalty = 5;
-      message = "Tercera pista: +5 segundos.";
+      message = "El conocimiento tiene un precio. Esta pista te ha costado 5 segundos.";
     } else {
       message = "No hay más pistas disponibles.";
       setMessage(message);
