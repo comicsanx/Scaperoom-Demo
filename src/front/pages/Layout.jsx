@@ -24,25 +24,21 @@ export function Layout() {
   const location = useLocation();
 
   useEffect(() => {
-        // Rutas donde la música DEBE estar activa (ej. Dashboard, GameContainer)
-        const musicRoutes = ['/level', '/level-2', '/level-victory', '/game-victory']; // Ajusta esto a tus rutas exactas de juego
+
+        const musicRoutes = ['/level-1', '/level-2', '/level-victory', '/game-victory']; 
 
         if (musicRoutes.includes(location.pathname)) {
-            // Si estamos en una ruta de música y aún no está habilitada
             if (!isMusicEnabled) {
                 console.log(`[Layout] Entrando en ruta de música (${location.pathname}). Habilitando música.`);
                 setIsMusicEnabled(true);
             }
         } else {
-            // Si estamos en una ruta SIN música (ej. Home, Login, Signup)
             if (isMusicEnabled) {
                 console.log(`[Layout] Saliendo de ruta de música (${location.pathname}). Deshabilitando música.`);
                 setIsMusicEnabled(false);
             }
         }
 if (location.pathname === '/' && !hasUserInteracted && isMusicEnabled) {
-            // Si la música está habilitada desde el inicio (ej. por un botón)
-            // y aún no ha habido interacción, asegúrate de activar la interacción
             console.log("[Layout] Activando hasUserInteracted en la ruta '/' si la música está habilitada.");
             setHasUserInteracted(true);
         }
@@ -53,8 +49,6 @@ if (location.pathname === '/' && !hasUserInteracted && isMusicEnabled) {
             if (!hasUserInteracted) {
                 setHasUserInteracted(true);
                 console.log("[Layout] Primera interacción del usuario detectada. Música puede empezar a sonar.");
-                // Una vez que ha interactuado, podemos intentar reproducir la música si isMusicEnabled es true
-                // (esto lo gestiona el useEffect principal de audio en GameContext)
             }
         };
 
@@ -72,7 +66,7 @@ if (location.pathname === '/' && !hasUserInteracted && isMusicEnabled) {
         setIsMusicEnabled(newState);
 
         if (newState && !hasUserInteracted) {
-            setHasUserInteracted(true); // Activa la interacción si la música se activa manualmente
+            setHasUserInteracted(true);
             console.log("[Layout] Música activada por botón. hasUserInteracted = true.");
         } else if (!newState) {
             console.log("[Layout] Música desactivada por botón.");
@@ -82,7 +76,7 @@ if (location.pathname === '/' && !hasUserInteracted && isMusicEnabled) {
 
  const handleMusicVolumeChange = useCallback((event) => {
         const newVolume = parseFloat(event.target.value);
-        setMusicVolume(newVolume); // Usa la función del contexto para actualizar el volumen
+        setMusicVolume(newVolume);
         console.log(`[Layout] Volumen de música cambiado a: ${newVolume}`);
     }, [setMusicVolume]);
 
@@ -107,13 +101,12 @@ if (location.pathname === '/' && !hasUserInteracted && isMusicEnabled) {
                         min="0"
                         max="1"
                         step="0.01"
-                        value={displayMusicVolume} // Usa el estado para mostrar el valor actual
+                        value={displayMusicVolume}
                         onChange={handleMusicVolumeChange}
                     />
                     <span>{Math.round(displayMusicVolume * 100)}%</span>
                 </div>
             )}
-
       <div className="responsive-gestor-container">
         <Outlet />
       </div>

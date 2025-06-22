@@ -2,20 +2,15 @@ import { useRef, useState, useEffect } from "react";
 import "../CSS/level1.css";
 import "../CSS/Game.css";
 import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
-
 import { useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext";
 import { ObjectsLevel1 } from "../data/ObjectsArray";
-import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
 import Timer from "../components/Timer";
 import { Objects } from "../components/Objects";
 import { InfoModalUser } from "../components/InfoModalUser";
 import { EnigmaModal } from "../components/EnigmaModal";
 import { EnigmasData } from "../data/EnigmasData";
 import Pause from "../components/Pause";
-import "../level1.css";
-import "../Game.css";
-
 
 
 export default function GameContainer() {

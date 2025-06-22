@@ -6,6 +6,7 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./routes";
 import { BackendURL } from './components/BackendURL';
 import { GameProvider } from "./context/GameContext";
+import { SFXManager } from './components/SFXManager';
 
 const Main = () => {
 
@@ -16,7 +17,7 @@ if (! import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_BACKEND_URL == ""
   );
   return (
     <React.StrictMode>
-      <GameProvider>
+      <GameProvider SFXManagerComponent={SFXManager}>
         <RouterProvider router={router} />
       </GameProvider>
     </React.StrictMode>
