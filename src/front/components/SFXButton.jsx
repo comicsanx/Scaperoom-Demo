@@ -1,4 +1,3 @@
-// src/front/js/components/ButtonWithSFX.jsx
 import React from 'react';
 import { useGame } from '../context/GameContext'; 
 import { SFX_CONFIG } from '../data/SFXData';

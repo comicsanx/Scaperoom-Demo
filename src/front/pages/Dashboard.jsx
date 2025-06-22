@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useGame } from '../context/GameContext'; // <-- ¡Esta es la línea crucial que faltaba o estaba mal!
+import { useGame } from '../context/GameContext';
 import { ButtonWithSFX } from '../components/SFXButton'; 
 
 export function Dashboard() {
