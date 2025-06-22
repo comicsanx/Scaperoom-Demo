@@ -2,7 +2,7 @@
 // import { InfoModalUser } from "../components/InfoModalUser";
 // import { useRef, useState, useEffect } from "react";
 // importacion del css del nivel
-import "../Game.css";
+import "../CSS/Game.css";
 // importacion del background del nivel
 import { useNavigate } from "react-router-dom";
 
