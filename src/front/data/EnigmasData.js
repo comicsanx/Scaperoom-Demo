@@ -1,6 +1,9 @@
 import carta from '../assets/img/carta.jpg';
+import mapa from '../assets/img/level2_provisional/mapa.jpg';
+import calendario from '../assets/img/level2_provisional/calendario.jpg';
 
 export const EnigmasData = {
+     // falta cambiar esa imagen por la carta final
     "enigmasNivel1": [
         {
         id: 1,
@@ -15,6 +18,7 @@ export const EnigmasData = {
            
        
         },
+        // falta por introducir la imagen de panel abierto
         {
         id: 2,
         title: "¡Ya sabes de dónde viene el código!",
@@ -29,7 +33,48 @@ export const EnigmasData = {
         
         }
      
+     ],
+//    falta cambiar esa imagen por el mapa definitivo
+     "enigmasNivel2": [ {
+        id: 3,
+        title: "Documento Clasificado: Ruta Internacional ",
+        description: "El señor Geek viaja más que su maleta. Este mapa muestra los trayectos de su última gira internacional de negocios. ",
+        img: mapa,
+        hints: [
+      
+            "La línea puede parecer un garabato sin sentido, pero cada cruce de mar cuenta. Un continente no es una parada si no se pisa.",
+            "No te dejes engañar por curvas, escalas o zigzags. Cuenta solo los continentes distintos por los que realmente pasa la línea.",
+        ],
+           
+       
+        },
+        // falta cambiar calendario por el definitivo
+    {
+        id: 4,
+        title: "Un día señalado",
+        description: "Un solo día destacado en el calendario. Ni una palabra más.",
+        img: calendario,
+        hints: [
+      
+            "Los regalos esperan en silencio, pero la fecha habla por sí sola.",
+            "Las velas nunca mienten, aunque no las veas. Un susurro de celebración se esconde en ese día.",
+        ],
+              
+        },
+        {
+            // queda por fijar la solucion de la caja fuerte y la foto de ella
+        id: 5,
+        title: "Solo una combinación te separa del contenido de la caja fuerte",
+        img: 'caja fuerte',
+        solution: "queda por fijar",
+        description : 'Observa el brillo de la ciudad distante, luego mide el viaje de la tierra, escucha el eco revuelto del verso, recuerda el símbolo que te mira desde el lienzo, y el día que la fortuna celebra.',
+        hints: [
+            "Cinco caminos, cinco claves. El orden no lo dicta el azar, sino el recorrido que el arte, la tierra, la palabra y la suerte te han marcado. No saltes pasos.",
+            "Cada fragmento encierra un número. No mires lo obvio, mira lo que cambia. El código no está oculto… solo está disperso.",
+            
+        ],
+        
+        }
     ],
-     "enigmasNivel2": [/* enigmas del nivel 2 */],
 
     };

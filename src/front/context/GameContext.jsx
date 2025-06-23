@@ -23,7 +23,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
   const timerRef = useRef();
   const [pickedUpObjects, setPickedUpObjects] = useState([])
   const [isUserLoading, setIsUserLoading] = useState(true);
-
+  const [isSafeCodeCorrect, setIsSafeCodeCorrect] = useState(false);
   const [isGearboxCodeCorrect, setIsGearboxCodeCorrect] = useState(false);
   const [hasLookedRoom, setHasLookedRoom] = useState(false);
 
@@ -444,6 +444,8 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
         sfxVolume : displaySfxVolume,
         setSfxVolume,
         playSfx,
+        isSafeCodeCorrect, 
+        setIsSafeCodeCorrect
       }}
     >
       {SFXManagerComponent && (
