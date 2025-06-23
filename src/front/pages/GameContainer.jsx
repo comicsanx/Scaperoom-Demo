@@ -16,6 +16,20 @@ import despacho_lleno from "../assets/img/despacho_lleno.jpg";
 
 import Pause from "../components/Pause";
 
+//importación de avatares
+
+import Avatar_01 from '../assets/img/UI/Avatars/Avatar_01.png';
+import Avatar_02 from '../assets/img/UI/Avatars/Avatar_02.png';
+import Avatar_03 from '../assets/img/UI/Avatars/Avatar_03.png';
+import Default_Avatar from '../assets/img/UI/Avatars/default_avatar.png';
+
+const avatarMap = {
+    "Avatar_01.png": Avatar_01,
+    "Avatar_02.png": Avatar_02,
+    "Avatar_03.png": Avatar_03,
+    "default_avatar.png": Default_Avatar,
+};
+
 
 export default function GameContainer() {
 
@@ -28,8 +42,11 @@ export default function GameContainer() {
     setIsGearboxCodeCorrect,
     hasLookedRoom,
     setHasLookedRoom,
+    user,
   } = useGame()
 
+  //const para visibilidad de infomodal sin bootstrap
+  const [isInfoModalUserOpen, setIsInfoModalUserOpen] = useState(false);
 
 
   const navigate = useNavigate();
@@ -159,6 +176,11 @@ export default function GameContainer() {
 
     const currentEnigmaData = EnigmasData.enigmasNivel1.find(e => e.id === currentEnigma)
 
+    // Cargar el avatar del usuario
+     const avatarSrc = user && user.avatar_filename 
+        ? avatarMap[user.avatar_filename] || Default_Avatar 
+        : Default_Avatar;
+
     return (
       <div className="game-container-bg">
         <img src={Level1BG} className="bg-img" alt="BG Level1" />
@@ -172,13 +194,26 @@ export default function GameContainer() {
         <button id="ESC" onClick={() => setMenuOpen(true)}></button>
         <button id="lock" onClick={handlePeepholeClick}></button>
         <button id="gearbox" onClick={handleLightsPanelClick}></button>
-        <button id="PlayerInfo"></button>
-        <div className="Avatar-Position-Container">
-        <InfoModalUser className="info-modal-user" showEnigma={showEnigma}  />
-        </div>
+
+        {/* Botón de avatar (abre InfoModalUser) */}
+        <button 
+            id="PlayerInfo" // Usamos el ID existente
+            className="user-avatar-button-global" 
+            onClick={() => setIsInfoModalUserOpen(prev => !prev)} 
+            aria-label="Abrir informe de usuario"
+        >
+            <img src={avatarSrc} className="user-avatar-image" alt="Avatar de usuario"/>
+        </button>    
+         {/* render condicional para InfoModalUser */}
+{isInfoModalUserOpen && (
+                <InfoModalUser 
+                    isOpen={isInfoModalUserOpen} // Pasar el estado de visibilidad
+                    onClose={() => setIsInfoModalUserOpen(false)} // Función para cerrarlo
+                    showEnigma={showEnigma} // Todavía pasamos esta prop para la lógica interna de InfoModalUser
+                />
+            )}
         <div className="menu-toggle">
            <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
-
           <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
 
 

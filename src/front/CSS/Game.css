@@ -1,15 +1,21 @@
 #PlayerInfo {
-left: -5%;
+left: 0%;
 top: 0%;
-width: 20%;
-height: 20%;
+width: 20vw;
+height: 20vw;
+    max-width: 150px;
+    max-height: 150px;
 background-image: url('../assets/img/Game_img/Game-Player-Button.png');
 background-color: transparent;
 background-size: contain;
 background-repeat: no-repeat;
 background-position: center;
 border: none;
-z-index: 2;
+padding:0%;
+z-index: 101;
+display:flex;
+justify-content: center;
+align-items: center;
 }
 
 #ESC {
@@ -26,27 +32,33 @@ border: none;
 z-index: 2;
 }
 
-.avatar-position-container {
+/* Avatar */
+/* .user-avatar-button-global {
     position: absolute;
-    top: 30%; 
-    left: 2%;
-    z-index: 101;
-}
-.Avatar-Button {
-    /* width: 120px;
-    height: 120px; */
+    top: 5%;  
+    left: 2%; 
+    width: 3.5vw;
+    height: 3.5vw;
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
+    border: none;
+    padding: 0; 
+    background-color: transparent; 
+    z-index: 1001;
     display: flex;
     justify-content: center;
     align-items: center;
-
-}
-.Avatar {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+} */
+.user-avatar-image {
+  display: block;
+    width: 68%; 
+    height: 68%;
+    object-position: center center;
+    object-fit: cover; 
+    background-color: transparent; 
+    z-index: 102;
+    transform: translateY(-5.4%) translateX(-4%);
 }
 
 /* Modales */
