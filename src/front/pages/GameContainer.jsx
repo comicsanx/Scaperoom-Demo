@@ -203,6 +203,7 @@ export default function GameContainer() {
 
           <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
         </div>
+      </div>
 
 
 
