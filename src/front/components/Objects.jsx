@@ -33,7 +33,7 @@ export const Objects = ({objectsLevel = [], onPenalty,selectedObject, setSelecte
                     onClick={() => handlePickUp(object.id)}
                     disabled={pickedUpObjects.includes(object.id)}
                 >
-                    <img src={object.img} className= 'objectImg' alt={object.name} />
+                    <img src={object.img} className= 'objectImg' alt={object.name}/>
                 </button>
             ))}
 

@@ -1,3 +1,8 @@
+
+
+import { EnigmasData } from "../data/EnigmasData";
+
+
 import { createContext, useContext, useState, useRef, useEffect, useCallback } from "react";
 import { SFXManager } from '../components/SFXManager';
 import { SFX_CONFIG } from '../data/SFXData';
@@ -11,14 +16,17 @@ const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api"
 export const GameProvider = ({ children, SFXManagerComponent }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-  const [hintsUsed, setHintsUsed] = useState({});
-  const [totalHintsUsed, setTotalHintsUsed] = useState(0);
+
   const [nivelActual, setNivelActual] = useState(1);
   const [tiempo, setTiempo] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const timerRef = useRef();
   const [pickedUpObjects, setPickedUpObjects] = useState([])
   const [isUserLoading, setIsUserLoading] = useState(true);
+
+  const [isGearboxCodeCorrect, setIsGearboxCodeCorrect] = useState(false);
+  const [hasLookedRoom, setHasLookedRoom] = useState(false);
+
   const [audiusAudioUrl, setAudiusAudioUrl] = useState(null);
   const [isAudioLoading, setIsAudioLoading] = useState(false);
   const audioPlayerRef = useRef(null);
@@ -44,6 +52,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     // No navegar aquí
   };
 
+
   const audioLogout = useCallback(() => {
     setHasUserInteracted(false);
     setIsMusicEnabled(false);
@@ -61,6 +70,8 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     const volume = Math.max(0, Math.min(1, newVolume));
     currentVolume.current = volume;
     setDisplayMusicVolume(volume);
+
+
 
     if (audioPlayerRef.current) {
       audioPlayerRef.current.volume = volume;
@@ -193,6 +204,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
   // fetch que registra tiempo y nivelActual post/put revisar
   // falta adaptar las url a los endpoints cuando estén subidos.
 
+
   const signup = async (data) => {
     try {
       const res = await fetch(`${API_BASE}/api/signup`, {
@@ -242,6 +254,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+
       },
       body: body ? JSON.stringify(body) : null,
     });
@@ -249,6 +262,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     if (!res.ok) {
       throw new Error("Error en la API");
     }
+
 
     return await res.json();
   };
@@ -267,9 +281,9 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     }
   }
 
-  // newProfile es la variable que hay que poner en el componente para actualizar los datos
 
   const updateUserProfile = async (newProfile) => {
+    // newProfile es la variable que hay que poner en el componente para actualizar los datos
     if (!user || !user.id || !token) {
       throw new Error("No hay usuario autenticado para modiifcar.");
     }
@@ -365,9 +379,27 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     loadUserProfile();
   }, [token, apiCall, user, setUser, setIsUserLoading, logout]);
 
+
+  // -----obtener enigmas de cada nivel-------
+
+  const getCurrentEnigmas = () => {
+
+    switch (nivelActual) {
+      case 1:
+        return EnigmasData.enigmasNivel1;
+      case 2:
+        return EnigmasData.enigmasNivel2;
+
+      default:
+        return [];
+    }
+  };
+
+
   // const registrarPistaUsada = (idPista) => {
   //   setPistasUsadas((prev) => [...prev, idPista]);
   // };
+
 
   return (
     <GameContext.Provider
@@ -383,6 +415,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
         setNivelActual,
         tiempo,
         setTiempo,
+        apiCall,
         hintsUsed,
         setHintsUsed,
         apiCall: makeRequest,
@@ -393,10 +426,13 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
         menuOpen,
         setMenuOpen,
         timerRef,
-        totalHintsUsed,
-        setTotalHintsUsed,
         pickedUpObjects,
         setPickedUpObjects,
+        hasLookedRoom,
+        setHasLookedRoom,
+        isGearboxCodeCorrect,
+        setIsGearboxCodeCorrect,
+        getCurrentEnigmas,
         audiusAudioUrl,
         isAudioLoading,
         audioPlayerRef,
