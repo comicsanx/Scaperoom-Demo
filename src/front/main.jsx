@@ -6,7 +6,7 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./routes";
 import { BackendURL } from './components/BackendURL';
 import { GameProvider } from "./context/GameContext";
-
+import { HintsProvider} from "./context/HintsContext";
 const Main = () => {
 
 if (! import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_BACKEND_URL == "") return (
@@ -17,7 +17,9 @@ if (! import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_BACKEND_URL == ""
   return (
     <React.StrictMode>
       <GameProvider>
-        <RouterProvider router={router} />
+          <HintsProvider>
+            <RouterProvider router={router} />
+          </HintsProvider>
       </GameProvider>
     </React.StrictMode>
   );

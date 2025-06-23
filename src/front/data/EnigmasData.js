@@ -5,6 +5,7 @@ export const EnigmasData = {
         {
         id: 1,
         title: "Has encontrado el planning diario del señor Geeks...",
+        description: "El planning diario del Señor Geeks te dará pistas sobre su rutina y horarios.",
         img: carta,
         hints: [
       
@@ -16,11 +17,13 @@ export const EnigmasData = {
         },
         {
         id: 2,
-        title: "un cuadro de luces.",
-        img: carta,
+        title: "¡Ya sabes de dónde viene el código!",
+        img: 'panelabierto',
+        solution: "1545",
+        description : 'Probemos sabiamente...por cada error tendremos 5 segundos de penalización....',
         hints: [
-            "Piensa en cómo se representaría numéricamente en un reloj de 24 horas.",
             "quizás necesites una hora en concreto para resolverlo.",
+            "Piensa en cómo se representaría numéricamente en un reloj de 24 horas.",
             
         ],
         
