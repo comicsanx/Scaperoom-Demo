@@ -4,7 +4,8 @@ import { EnigmasData } from "../data/EnigmasData";
 
 
 import { createContext, useContext, useState, useRef, useEffect, useCallback } from "react";
-
+import { SFXManager } from '../components/SFXManager';
+import { SFX_CONFIG } from '../data/SFXData';
 
 const GameContext = createContext();
 
@@ -12,7 +13,7 @@ export const useGame = () => useContext(GameContext);
 
 const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api";
 
-export const GameProvider = ({ children }) => {
+export const GameProvider = ({ children, SFXManagerComponent }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
 
@@ -33,6 +34,9 @@ export const GameProvider = ({ children }) => {
   const [isMusicEnabled, setIsMusicEnabled] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const [displayMusicVolume, setDisplayMusicVolume] = useState(currentVolume.current);
+  const sfxVolume = useRef(0.5);
+  const [displaySfxVolume, setDisplaySfxVolume] = useState(sfxVolume.current);
+  const sfxManagerPlayRef = useRef(null); 
 
   const SINGLE_AUDIUS_TRACK_ID = 'zK2Vq';
   const AUDIUS_DISCOVERY_PROVIDERS = [
@@ -74,6 +78,18 @@ export const GameProvider = ({ children }) => {
     }
   }, []);
 
+  const setSfxVolume = useCallback((newVolume) => {
+    sfxVolume.current = newVolume;
+    setDisplaySfxVolume(newVolume);
+  }, []);
+
+  const playSfx = useCallback((sfxName, loop = false, localVolume = 1) => {
+    if (sfxManagerPlayRef.current) {
+      sfxManagerPlayRef.current(sfxName, loop, localVolume);
+    } else {
+      console.warn("[GameContext] SFXManager no está listo para reproducir:", sfxName);
+    }
+  }, [sfxManagerPlayRef]);
 
   useEffect(() => {
     const fetchSingleMusicTrackDirectly = async () => {
@@ -231,21 +247,6 @@ export const GameProvider = ({ children }) => {
       return false; // Indica fallo
     }
   };
-
-  const logout = () => {
-    setToken("");
-    setUser(null);
-    localStorage.removeItem("token");
-    setIsUserLoading(false)
-    // No navegar aquí
-  };
-
-  const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
-    const res = await fetch(API_BASE, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
 
   const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
     const res = await fetch(API_BASE + "/api/", {
@@ -414,14 +415,10 @@ export const GameProvider = ({ children }) => {
         setNivelActual,
         tiempo,
         setTiempo,
-
-       
         apiCall,
-
         hintsUsed,
         setHintsUsed,
         apiCall: makeRequest,
-
         signup,
         saveGameProgress,
         deleteUser,
@@ -431,13 +428,11 @@ export const GameProvider = ({ children }) => {
         timerRef,
         pickedUpObjects,
         setPickedUpObjects,
-
         hasLookedRoom,
         setHasLookedRoom,
         isGearboxCodeCorrect,
         setIsGearboxCodeCorrect,
-        getCurrentEnigmas
-
+        getCurrentEnigmas,
         audiusAudioUrl,
         isAudioLoading,
         audioPlayerRef,
@@ -448,9 +443,17 @@ export const GameProvider = ({ children }) => {
         currentVolume,
         setMusicVolume,
         displayMusicVolume,
-
+        sfxVolume : displaySfxVolume,
+        setSfxVolume,
+        playSfx,
       }}
     >
+      {SFXManagerComponent && (
+      <SFXManagerComponent
+                    sfxManagerPlayRef={sfxManagerPlayRef} // Le pasamos la ref
+                    sfxGlobalVolumeRef={sfxVolume} // Le pasamos la ref del volumen global
+                />
+      )}
       {children}
     </GameContext.Provider>
   );

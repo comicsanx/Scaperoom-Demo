@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useGame } from '../context/GameContext'; // <-- ¡Esta es la línea crucial que faltaba o estaba mal!
+import { useGame } from '../context/GameContext';
+import { ButtonWithSFX } from '../components/SFXButton'; 
 
 export function Dashboard() {
-    const { setIsMusicEnabled, setNivelActual, setHasUserInteracted, hasUserInteracted } = useGame();
+    const { setIsMusicEnabled, setNivelActual, nivelActual, setHasUserInteracted, hasUserInteracted, sfxVolume, setSfxVolume, displaySfxVolume } = useGame();
     const navigate = useNavigate();
     const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api";
 
@@ -34,7 +35,7 @@ export function Dashboard() {
         setIsMusicEnabled(true); 
         setNivelActual(1); 
         console.log("[Dashboard] Música activada y nivel establecido a 1 al iniciar 'Nueva Partida'.");
-        navigate(`/level`); 
+        navigate(`/level-1`); 
     };
 
     const handleContinueGame = () => {
@@ -43,18 +44,19 @@ export function Dashboard() {
             console.log("[Dashboard] Interacción de usuario registrada al 'Continuar' partida.");
         }
         setIsMusicEnabled(true); 
-        setNivelActual(1); 
+        setNivelActual(nivelActual); 
         console.log("[Dashboard] Música activada y nivel establecido (ej. a 1) al 'Continuar' partida.");
-        navigate(`/level`); 
+        navigate(`/level-${nivelActual}`); 
     };
 
     return (
         <div>
             <h1>Escape Room</h1>
-            <button onClick={handleStartNewGame}>Nueva Partida</button> {/* onClick ahora llama a la función */}
-            <button>Cómo Jugar</button> 
-            <button onClick={handleContinueGame}>Continuar</button> {/* onClick ahora llama a la función */}
-            {/* falta definir rutas */}
+            <ButtonWithSFX onClick={handleStartNewGame} sfxName="BUTTON_CLICK">Nueva Partida</ButtonWithSFX>
+            {/* <ButtonWithSFX onClick={handleHowToPlay} sfxName="BUTTON_CLICK">Cómo Jugar</ButtonWithSFX>  */}
+            Como jugar (ruta aun no definida)
+            <ButtonWithSFX onClick={handleContinueGame} sfxName="BUTTON_CLICK">Continuar</ButtonWithSFX>
+            <ButtonWithSFX sfxName="BUTTON_CLICK">Boton prueba SFX</ButtonWithSFX>
         </div>
     );
 }
