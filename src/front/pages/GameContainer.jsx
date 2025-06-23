@@ -173,10 +173,11 @@ export default function GameContainer() {
         <button id="lock" onClick={handlePeepholeClick}></button>
         <button id="gearbox" onClick={handleLightsPanelClick}></button>
         <button id="PlayerInfo"></button>
+        <div className="Avatar-Position-Container">
+        <InfoModalUser className="info-modal-user" showEnigma={showEnigma}  />
+        </div>
         <div className="menu-toggle">
            <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
-
-          <InfoModalUser className="info-modal-user" showEnigma={showEnigma}  />
 
           <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
 

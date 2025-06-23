@@ -26,16 +26,31 @@ border: none;
 z-index: 2;
 }
 
+.avatar-position-container {
+    position: absolute;
+    top: 30%; 
+    left: 2%;
+    z-index: 101;
+}
+.Avatar-Button {
+    /* width: 120px;
+    height: 120px; */
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.Avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 /* Modales */
 
-.modalUser-avatar {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid #6c757d; 
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-}
 .modalUser-name{
 
   font-family: 'Courier New', Courier, monospace;

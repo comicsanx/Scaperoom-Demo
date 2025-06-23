@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 import os
 import secrets
-from flask import Flask, request, jsonify, url_for, Blueprint, current_app
+from flask import Flask, request, jsonify, url_for, Blueprint, current_app, send_from_directory 
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from api.models import db, User, GameSession
@@ -12,7 +12,6 @@ from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from sqlalchemy import select, func
-from flask import Blueprint, request, jsonify
 from datetime import datetime, timedelta, timezone
 
 api = Blueprint('api', __name__)
@@ -29,14 +28,14 @@ def signup():
         email = request.json.get('email', None)
         username = request.json.get('username', None)
         password = request.json.get('password', None)
-        #avatar_filename = request.json.get('avatar_filename', None)
+        avatar_filename = request.json.get('avatar_filename', None)
 
-        if not email or not username or not password: #or not avatar_filename: 
-            return jsonify({'msg': 'Se necesita email, nombre de usuario, contraseña y avatar'}), 400
+        if not email or not username or not password or not avatar_filename: 
+            return jsonify({'msg': 'Se necesita email, nombre de usuario, avatar y contraseña'}), 400
         
-        # ALLOWED_AVATARS = ["avatar_01.png", "avatar_02.png", "avatar_03.png"]
-        # if avatar_filename not in ALLOWED_AVATARS:
-        #     return jsonify({"msg": "El avatar seleccionado no es válido"}), 400
+        ALLOWED_AVATARS = ["Avatar_01.png", "Avatar_02.png", "Avatar_03.png", "default_avatar.png"]
+        if avatar_filename not in ALLOWED_AVATARS:
+            return jsonify({"msg": "El avatar seleccionado no es válido"}), 400
 
         user_exists_email = db.session.execute(select(User).where(User.email == email)).scalar_one_or_none()
         if user_exists_email:
@@ -48,7 +47,7 @@ def signup():
             email=email,
             username=username,
             password_hash=hashed_password,
-            # avatar_filename=avatar_filename,
+            avatar_filename=avatar_filename,
             is_active=True
         )
 

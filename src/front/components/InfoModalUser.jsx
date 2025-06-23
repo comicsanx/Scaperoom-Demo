@@ -3,8 +3,18 @@ import React, { useEffect, useState } from "react";
 import Timer from "./Timer";
 import GameContainer from "../pages/GameContainer";
 import "../CSS/Game.css";
-
 import { Dropdown, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import Avatar_01 from '../assets/img/UI/Avatars/Avatar_01.png';
+import Avatar_02 from '../assets/img/UI/Avatars/Avatar_02.png';
+import Avatar_03 from '../assets/img/UI/Avatars/Avatar_03.png';
+import Default_Avatar from '../assets/img/UI/Avatars/default_avatar.png';
+
+const avatarMap = {
+  "Avatar_01.png": Avatar_01,
+  "Avatar_02.png": Avatar_02,
+  "Avatar_03.png": Avatar_03,
+  "default_avatar.png": Default_Avatar,
+};
 
 export const InfoModalUser = ({ showEnigma }) => {
 
@@ -38,24 +48,17 @@ export const InfoModalUser = ({ showEnigma }) => {
 
   const hints = [1, 2, 3];
 
-
-
-const avatarSrc = user.avatar_filename ? user.avatar_filename : Game_img;
+const avatarSrc = user.avatar_filename 
+    ? avatarMap[user.avatar_filename] || Default_Avatar 
+    : Default_Avatar; 
 
   return (
 
-
+<div className="PlayerMenu-toggle">
     <Dropdown drop="end">
-      <Dropdown.Toggle 
-                as="div" 
-                className="profile-toggle-container" 
-            >
-                <img
-                    src={avatarSrc}
-                    alt="Foto de perfil"
-                    className="rounded-circle profile-toggle-avatar"
-                />
-            </Dropdown.Toggle>
+      <Dropdown.Toggle className="Avatar-Button" as="div">
+                <img src={avatarSrc} className="Avatar" alt="Avatar"/> 
+      </Dropdown.Toggle>
 
       <Dropdown.Menu className="p-3">
         <h2>Informe Clasificado</h2>
@@ -96,5 +99,6 @@ const avatarSrc = user.avatar_filename ? user.avatar_filename : Game_img;
         </div>
       </Dropdown.Menu>
     </Dropdown>
+</div>
   );
 };
