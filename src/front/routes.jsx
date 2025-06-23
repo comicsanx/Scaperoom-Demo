@@ -34,7 +34,7 @@ export const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/level" element={<GameContainer />} />
+      <Route path="/level-1" element={<GameContainer />} />
       <Route path="/level-2" element={<GameContainer2 />} />
       <Route path="/forgot-password" element={<PassRecovery />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
