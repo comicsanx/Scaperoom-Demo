@@ -120,7 +120,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     }
     try {
 
-      await makeRequest(`/user/profile`, "DELETE", null, token);
+      await makeRequest(`/api/user/profile`, "DELETE", null, token);
       logout();
       return true;
     } catch (error) {
@@ -135,8 +135,15 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     }
     try {
 
-      const updatedProfile = await makeRequest(`/user/profile`, "PUT", newProfile, token);
-      setUser(updatedProfile);
+      const responseData = await makeRequest(`/api/user/profile`, "PUT", newProfile, token);
+      setUser(responseData.user);
+
+      if (responseData.token) {
+            localStorage.setItem("token", responseData.token);
+            setToken(responseData.token);
+            console.log("Token actualizado después de modificar perfil.");
+        }
+
       alert("Perfil actualizado exitosamente.");
       return true;
     } catch (error) {

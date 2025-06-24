@@ -109,8 +109,9 @@ def handle_user_profile():
                 user.username = new_username
 
             new_avatar_filename = data.get('avatar_filename', None)
+
             if new_avatar_filename is not None:
-                ALLOWED_AVATARS = ["avatar_01.png", "avatar_02.png", "avatar_03.png"]
+                ALLOWED_AVATARS = ["Avatar_01.png", "Avatar_02.png", "Avatar_03.png", "default_avatar.png"]
                 if new_avatar_filename not in ALLOWED_AVATARS:
                     return jsonify({"msg": "Nombre de archivo de avatar no válido."}), 400
                 user.avatar_filename = new_avatar_filename
@@ -139,7 +140,7 @@ def handle_user_profile():
         try:
             db.session.delete(user)
             db.session.commit()
-            return jsonify({"msg": "Usuario eliminado con éxito"}), 204 
+            return '', 204 
         except Exception as error:
             db.session.rollback()
             print(f"Error al eliminar el usuario: {error}")

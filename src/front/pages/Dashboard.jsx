@@ -2,9 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useGame } from '../context/GameContext';
 import { ButtonWithSFX } from '../components/SFXButton'; 
+import { UserProfile } from '../components/UserProfile';
+import '../CSS/General-UI.css';
 
 export function Dashboard() {
-    const { setIsMusicEnabled, setNivelActual, nivelActual, setHasUserInteracted, hasUserInteracted, sfxVolume, setSfxVolume, displaySfxVolume } = useGame();
+    const { setIsMusicEnabled, setNivelActual, nivelActual, setHasUserInteracted, hasUserInteracted, user, isUserLoading, token } = useGame();
     const navigate = useNavigate();
     const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api";
 
@@ -24,7 +26,34 @@ export function Dashboard() {
     //         .catch(err => console.error("Error fetching ranking:", err));
     // }, []);
 
+    // Necesario para el perfil del jugador
+    useEffect(() => {
+        if (!isUserLoading && !user) {
+            console.warn("No user found after loading, redirecting to home.");
+            navigate('/');
+        }
+    }, [isUserLoading, user, navigate]);
 
+    if (isUserLoading) {
+        return (
+            <div className="dashboard-container">
+                <div className="dashboard-section">
+                    <h1>Cargando perfil de usuario...</h1>
+                    <p>Por favor, espera un momento.</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!user) {
+        return null;
+    }
+
+    // para mostrar si ha jugado o no
+    const hasPlayed = user.gameSession && (user.gameSession.current_level > 0 || user.gameSession.accumulated_time > 0);
+
+
+    // Necesario para la navegación al juego
     const handleStartNewGame = () => {
 
         if (!hasUserInteracted) {
@@ -49,14 +78,53 @@ export function Dashboard() {
         navigate(`/level-${nivelActual}`); 
     };
 
+    //  const handleHowToPlay = () => {
+    //     // Navegar a tu ruta de "Cómo Jugar"
+    //     navigate('/how-to-play'); // Asume que tienes esta ruta
+    // };
+
     return (
-        <div>
-            <h1>Escape Room</h1>
-            <ButtonWithSFX onClick={handleStartNewGame} sfxName="BUTTON_CLICK">Nueva Partida</ButtonWithSFX>
-            {/* <ButtonWithSFX onClick={handleHowToPlay} sfxName="BUTTON_CLICK">Cómo Jugar</ButtonWithSFX>  */}
-            Como jugar (ruta aun no definida)
-            <ButtonWithSFX onClick={handleContinueGame} sfxName="BUTTON_CLICK">Continuar</ButtonWithSFX>
-            <ButtonWithSFX sfxName="BUTTON_CLICK">Boton prueba SFX</ButtonWithSFX>
+        <div className="dashboard-container container-fluid">
+            {/* Usamos las clases de Bootstrap para las filas y columnas */}
+            <div className="row justify-content-center align-items-center">
+                {/* Sección de Control de Juego */}
+                <div className="col-12 col-md-6 col-lg-5 dashboard-section game-controls">
+                    <h1>¡Bienvenido, {user.username}!</h1>
+                    <p>¡Prepárate para la aventura, agente!</p>
+                    <div className="btn-group-vertical"> {/* Grupo de botones vertical */}
+                        <ButtonWithSFX onClick={handleStartNewGame} sfxName="BUTTON_CLICK">
+                            Nueva Partida
+                        </ButtonWithSFX>
+
+                        {hasPlayed ? (
+                            <ButtonWithSFX onClick={handleContinueGame} sfxName="BUTTON_CLICK">
+                                Continuar Partida (Nivel {user.gameSession.current_level})
+                            </ButtonWithSFX>
+                        ) : (
+                            <ButtonWithSFX disabled sfxName="BUTTON_CLICK">
+                                Continuar Partida (No hay progreso)
+                            </ButtonWithSFX>
+                        )}
+
+{/* añadir onclick cuando se defina la ruta */}
+                        <ButtonWithSFX sfxName="BUTTON_CLICK"> 
+                            Cómo Jugar
+                        </ButtonWithSFX>
+
+                        {/* Botón de prueba SFX, puedes quitarlo después */}
+                        <ButtonWithSFX sfxName="BUTTON_CLICK">
+                            Boton prueba SFX
+                        </ButtonWithSFX>
+                    </div>
+                </div>
+
+                {/* Sección del Perfil de Usuario */}
+                {/* col-12 para móviles, col-md-6 para tablets/desktops, col-lg-5 para pantallas grandes */}
+                <div className="col-12 col-md-6 col-lg-5 dashboard-section user-profile-section">
+                    <h2>Tu Perfil</h2>
+                    <UserProfile />
+                </div>
+            </div>
         </div>
     );
 }
