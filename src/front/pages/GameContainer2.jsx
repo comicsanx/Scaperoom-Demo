@@ -1,5 +1,7 @@
 import { useRef, useState, useEffect } from "react";
+import "../CSS/level1.css";
 import "../CSS/Game.css";
+import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
 import { useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext";
 import { ObjectsLevel2 } from "../data/ObjectsArray";
@@ -14,7 +16,7 @@ import despacho_lleno from "../assets/img/despacho_lleno.jpg";
 
 import Pause from "../components/Pause";
 
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 export default function GameContainer2() {
     const navigate = useNavigate();
@@ -101,10 +103,19 @@ export default function GameContainer2() {
             }
         }
     }
+      // Función para aplicar penalización de tiempo
+
+    const handlePenalty = (seconds) => {
+      if (timerRef.current) {
+        timerRef.current.addSeconds(seconds);
+      }
+    };
+
+    const currentEnigmaData = EnigmasData.enigmasNivel2.find(e => e.id === currentEnigma)
 
     return (
         <div className="game-container2-bg">
-            <img src={Level1BG} className="bg-img" alt="BG Level1" />
+            <img src={Level1BG} className="bg-img" alt="BG Level2" />
             <button id="calendar"></button>
             <button id="map" onClick={''}></button>
             <button
@@ -147,7 +158,7 @@ export default function GameContainer2() {
                     </div>
                 )} */}
 
-                <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
+                <Objects objectsLevel={ObjectsLevel2} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
             </div>
         </div>
 

@@ -1,6 +1,6 @@
 import carta from '../assets/img/carta.jpg';
-import mapa from '../assets/img/level2_provisional/mapa.jpg';
-import calendario from '../assets/img/level2_provisional/calendario.jpg';
+import mapa from '../assets/img/level2_provisional/mapa.png';
+import calendario from '../assets/img/level2_provisional/calendario.png';
 
 export const EnigmasData = {
      // falta cambiar esa imagen por la carta final

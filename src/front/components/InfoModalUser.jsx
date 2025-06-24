@@ -6,10 +6,13 @@ import "../CSS/Game.css";
 import "../CSS/index.css";
 
 import { Dropdown, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { useHints } from "../context/HintsContext";
+
 
 export const InfoModalUser = ({ showEnigma }) => {
 
-  const {user, nivelActual, totalHintsUsed, isUserLoading  } = useGame()
+  const {user, nivelActual, isUserLoading  } = useGame()
+  const {totalHintsUsed} = useHints();
 
   if (showEnigma) {
     return null;
