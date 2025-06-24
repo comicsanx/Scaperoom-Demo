@@ -3,14 +3,13 @@ import React, { useEffect, useState } from "react";
 import Timer from "./Timer";
 import GameContainer from "../pages/GameContainer";
 import "../CSS/Game.css";
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
-import { Dropdown, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
-
-export const InfoModalUser = ({ showEnigma }) => {
+export const InfoModalUser = ({ showEnigma, isOpen, onClose }) => {
 
   const {user, nivelActual, totalHintsUsed, isUserLoading  } = useGame()
 
-  if (showEnigma) {
+  if (showEnigma || !isOpen) {
     return null;
   }
 
@@ -38,30 +37,13 @@ export const InfoModalUser = ({ showEnigma }) => {
 
   const hints = [1, 2, 3];
 
-
-
-const avatarSrc = user.avatar_filename ? user.avatar_filename : Game_img;
-
   return (
 
-
-    <Dropdown drop="end">
-      <Dropdown.Toggle 
-                as="div" 
-                className="profile-toggle-container" 
-            >
-                <img
-                    src={avatarSrc}
-                    alt="Foto de perfil"
-                    className="rounded-circle profile-toggle-avatar"
-                />
-            </Dropdown.Toggle>
-
-      <Dropdown.Menu className="p-3">
+<div className="info-modal-user-content">
+<button onClick={onClose} className="close-modal-button">X</button>
         <h2>Informe Clasificado</h2>
 
         <div className="d-flex align-items-center gap-3 mb-3">
-      
           <h3 className="modalUser-name">{user.username}</h3>
         </div>
 
@@ -94,7 +76,6 @@ const avatarSrc = user.avatar_filename ? user.avatar_filename : Game_img;
             );
           })}
         </div>
-      </Dropdown.Menu>
-    </Dropdown>
+</div>
   );
 };

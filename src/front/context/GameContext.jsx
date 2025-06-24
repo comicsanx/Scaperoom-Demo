@@ -1,8 +1,4 @@
-
-
 import { EnigmasData } from "../data/EnigmasData";
-
-
 import { createContext, useContext, useState, useRef, useEffect, useCallback } from "react";
 import { SFXManager } from '../components/SFXManager';
 import { SFX_CONFIG } from '../data/SFXData';
@@ -14,30 +10,39 @@ export const useGame = () => useContext(GameContext);
 const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api";
 
 export const GameProvider = ({ children, SFXManagerComponent }) => {
+
+  // --- 1. Estado Global del Juego (useState y useRef) ---
+  //1.1 constantes de usuario y autenticación
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-
-  const [nivelActual, setNivelActual] = useState(1);
-  const [tiempo, setTiempo] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const timerRef = useRef();
-  const [pickedUpObjects, setPickedUpObjects] = useState([])
   const [isUserLoading, setIsUserLoading] = useState(true);
 
+  //1.2 constantes generales de juego
+  const [nivelActual, setNivelActual] = useState(1);
+  const [tiempo, setTiempo] = useState(0);
+  const timerRef = useRef();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  //1.3 constantes de mecánicas
+  const [pickedUpObjects, setPickedUpObjects] = useState([])
   const [isGearboxCodeCorrect, setIsGearboxCodeCorrect] = useState(false);
   const [hasLookedRoom, setHasLookedRoom] = useState(false);
 
+  //1.4 constantes de audio y SFX
   const [audiusAudioUrl, setAudiusAudioUrl] = useState(null);
   const [isAudioLoading, setIsAudioLoading] = useState(false);
   const audioPlayerRef = useRef(null);
   const currentVolume = useRef(0.1);
+  const [displayMusicVolume, setDisplayMusicVolume] = useState(currentVolume.current);
   const [isMusicEnabled, setIsMusicEnabled] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
-  const [displayMusicVolume, setDisplayMusicVolume] = useState(currentVolume.current);
   const sfxVolume = useRef(0.5);
   const [displaySfxVolume, setDisplaySfxVolume] = useState(sfxVolume.current);
-  const sfxManagerPlayRef = useRef(null); 
+  const sfxManagerPlayRef = useRef(null);
 
+  // --- 2. Configuraciones y Constantes Externas ---
+
+  // Configuración de Audius (Música Principal)
   const SINGLE_AUDIUS_TRACK_ID = 'zK2Vq';
   const AUDIUS_DISCOVERY_PROVIDERS = [
     "https://discoveryprovider.audius.co",
@@ -45,14 +50,161 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     "https://discoveryprovider3.audius.co"
   ];
 
+  // --- 3. Funciones Utilitarias (API y generales) ---
+
+  // 3.1 Función centralizada para realizar solicitudes a la API Backend
+  const makeRequest = useCallback(async (url, method = 'GET', body = null, token = '') => {
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    const fullUrl = url.startsWith('http') ? url : `${API_BASE}${url}`;
+
+    const res = await fetch(fullUrl, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : null,
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({ message: "Error desconocido en la API" }));
+      throw new Error(errorData.message || "Error en la API");
+    }
+
+    return await res.json();
+  }, [API_BASE, token]);
+
+  // --- 4. Funciones de Autenticación y Gestión de Usuario (CRUD) ---
+
+  //4.1 logout
   const logout = () => {
     setToken("");
     setUser(null);
     localStorage.removeItem("token");
-    // No navegar aquí
+  };
+
+  //4.2 CRUD
+  const signup = async (data) => {
+    try {
+
+      await makeRequest("/api/signup", "POST", data);
+      alert("¡Registro exitoso! Ya puedes iniciar sesión.");
+      return true;
+    } catch (error) {
+      console.error("Error durante el registro:", error);
+      alert(error.message || "No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
+      return false;
+    }
+  };
+
+  const login = async (email, password) => {
+    try {
+
+      const data = await makeRequest("/api/login", "POST", { email, password });
+      localStorage.setItem("token", data.token);
+      setToken(data.token);
+      setUser(data.user);
+      return true;
+    } catch (error) {
+      alert(error.message || "Login fallido");
+      return false;
+    }
+  };
+
+  const deleteUser = async () => {
+    if (!user || !user.id || !token) {
+      throw new Error("No hay usuario autenticado para eliminar.");
+    }
+    try {
+
+      await makeRequest(`/user/profile`, "DELETE", null, token);
+      logout();
+      return true;
+    } catch (error) {
+      console.error("Error al eliminar usuario en la API:", error);
+      throw new Error(error.message);
+    }
+  };
+
+  const updateUserProfile = async (newProfile) => {
+    if (!user || !user.id || !token) {
+      throw new Error("No hay usuario autenticado para modificar.");
+    }
+    try {
+
+      const updatedProfile = await makeRequest(`/user/profile`, "PUT", newProfile, token);
+      setUser(updatedProfile);
+      alert("Perfil actualizado exitosamente.");
+      return true;
+    } catch (error) {
+      console.error("Error al actualizar usuario en la API:", error);
+      throw new Error(error.message);
+    }
   };
 
 
+  // --- 5. Funciones de Lógica de Juego ---
+
+  // 5.1 Gestión del progreso del juego
+  const saveGameProgress = useCallback(async (current_level, accumulated_time) => {
+    if (!user || !user.id || !token) {
+      console.error("No hay usuario autenticado.");
+      return false;
+    }
+    try {
+
+      const session = await makeRequest(`/gamesession/user/${user.id}`, "GET", null, token)
+        .then(data => data)
+        .catch(() => null);
+      let method, endpoint;
+
+      if (session && session.id) {
+        method = "PUT";
+        endpoint = `/gamesession/${session.id}`;
+      } else {
+        method = "POST";
+        endpoint = `/gamesession`;
+      }
+
+
+      await makeRequest(endpoint, method, {
+        current_level,
+        accumulated_time,
+        user_id: user.id
+      }, token);
+
+
+      setNivelActual(current_level);
+      setTiempo(accumulated_time);
+      return true;
+    } catch (error) {
+
+      console.error("Error al guardar progreso:", error);
+      alert(error.message || "No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
+      return false;
+    }
+  }, [user, token, makeRequest, setNivelActual, setTiempo]);
+
+  // 5.2 Obtencion de enigmas  
+  const getCurrentEnigmas = () => {
+
+    switch (nivelActual) {
+      case 1:
+        return EnigmasData.enigmasNivel1;
+      case 2:
+        return EnigmasData.enigmasNivel2;
+
+      default:
+        return [];
+    }
+  };
+
+  // --- 6. Funciones y Efectos de Audio/SFX ---
+
+  // 6.1 logout audio
   const audioLogout = useCallback(() => {
     setHasUserInteracted(false);
     setIsMusicEnabled(false);
@@ -66,23 +218,24 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     }
   }, []);
 
+  // 6.2 Volumen musica
   const setMusicVolume = useCallback((newVolume) => {
     const volume = Math.max(0, Math.min(1, newVolume));
     currentVolume.current = volume;
     setDisplayMusicVolume(volume);
-
-
 
     if (audioPlayerRef.current) {
       audioPlayerRef.current.volume = volume;
     }
   }, []);
 
+  // 6.3 Volumen SFX
   const setSfxVolume = useCallback((newVolume) => {
     sfxVolume.current = newVolume;
     setDisplaySfxVolume(newVolume);
   }, []);
 
+  // 6.3 Play SFX
   const playSfx = useCallback((sfxName, loop = false, localVolume = 1) => {
     if (sfxManagerPlayRef.current) {
       sfxManagerPlayRef.current(sfxName, loop, localVolume);
@@ -91,6 +244,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     }
   }, [sfxManagerPlayRef]);
 
+  // 6.4 Cargar la URL de la pista de Audius
   useEffect(() => {
     const fetchSingleMusicTrackDirectly = async () => {
       setIsAudioLoading(true);
@@ -126,30 +280,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     }
   }, [audiusAudioUrl, isAudioLoading]);
 
-  const makeRequest = useCallback(async (url, method = 'GET', body = null, token = '') => {
-    const headers = {
-      "Content-Type": "application/json",
-    };
-    if (token) {
-      headers["Authorization"] = `Bearer ${token}`;
-    }
-
-    const fullUrl = url.startsWith('http') ? url : `${API_BASE}${url}`;
-
-    const res = await fetch(fullUrl, {
-      method,
-      headers,
-      body: body ? JSON.stringify(body) : null,
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({ message: "Error desconocido en la API" }));
-      throw new Error(errorData.message || "Error en la API");
-    }
-
-    return await res.json();
-  }, [API_BASE]);
-
+  // 6.5 Play Música
   useEffect(() => {
     const audio = audioPlayerRef.current;
     console.log("------------------------------------------");
@@ -162,10 +293,8 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
       audioPaused: audio ? audio.paused : 'N/A',
       // nivelActual 
     });
-    //  const isMusicLevel = (nivelActual === 1 || nivelActual === 2);
 
     if (audio && audiusAudioUrl) {
-      // if (isMusicEnabled && hasUserInteracted && isMusicLevel)
       if (isMusicEnabled && hasUserInteracted) {
         if (audio.paused || audio.src !== audiusAudioUrl) {
           if (audio.src !== audiusAudioUrl) {
@@ -201,158 +330,13 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     console.log("------------------------------------------");
   }, [isMusicEnabled, hasUserInteracted, audiusAudioUrl, audioLogout, currentVolume]); // nivelActual
 
-  // fetch que registra tiempo y nivelActual post/put revisar
-  // falta adaptar las url a los endpoints cuando estén subidos.
-
-
-  const signup = async (data) => {
-    try {
-      const res = await fetch(`${API_BASE}/api/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        alert("¡Registro exitoso! Ya puedes iniciar sesión.")
-        return true;
-      } else {
-        alert("registro fallido");
-        return false;
-      }
-    }
-    catch (error) {
-      console.error("Error de conexión durante el registro:", error);
-      alert("No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
-      return false;
-    }
-  }
-
-  const login = async (email, password) => {
-    const res = await fetch(`${API_BASE}/api/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      localStorage.setItem("token", data.token);
-      setToken(data.token);
-      setUser(data.user);
-      return true; // Indica éxito
-    } else {
-      alert("Login fallido");
-      return false; // Indica fallo
-    }
-  };
-
-  const apiCall = async (API_BASE, method = 'GET', body = null, token = '') => {
-    const res = await fetch(API_BASE + "/api/", {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-
-      },
-      body: body ? JSON.stringify(body) : null,
-    });
-
-    if (!res.ok) {
-      throw new Error("Error en la API");
-    }
-
-
-    return await res.json();
-  };
-
-  const deleteUser = async () => {
-    if (!user || !user.id || !token) {
-      throw new Error("No hay usuario autenticado para eliminar.");
-    }
-    try {
-      await apiCall(`${API_BASE}/user/profile`, "DELETE")
-      logout()
-      return true
-    } catch (error) {
-      console.error("Error al eliminar usuario en la API:", error);
-      throw new Error(error.message)
-    }
-  }
-
-
-  const updateUserProfile = async (newProfile) => {
-    // newProfile es la variable que hay que poner en el componente para actualizar los datos
-    if (!user || !user.id || !token) {
-      throw new Error("No hay usuario autenticado para modiifcar.");
-    }
-    try {
-      const updateProfile = await apiCall(`${API_BASE}/user/profile`, "PUT", newProfile, token)
-
-      setUser(updateProfile)
-      alert("Perfil actualizado exitosamente.");
-      return true;
-    } catch (error) {
-      console.error("Error al eliminar usuario en la API:", error);
-      throw new Error(error.message)
-
-    }
-  }
-
-  const saveGameProgress = async (current_level, accumulated_time) => {
-    if (!user || !user.id || !token) {
-      console.error("No hay usuario autenticado.");
-      return false;
-    }
-    try {
-      const res = await fetch(`${API_BASE}/gamesession/user/${user.id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      const session = await res.ok ? await res.json() : null;
-
-      let method, endpoint;
-      if (session && session.id) {
-        method = "PUT";
-        endpoint = `${API_BASE}/gamesession/${session.id}`;
-      } else {
-        method = "POST";
-        endpoint = `${API_BASE}/gamesession`;
-      }
-
-      const saveRes = await fetch(endpoint, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          current_level,
-          accumulated_time,
-          user_id: user.id
-        })
-      });
-
-      if (!saveRes.ok) throw new Error("Error al guardar progreso");
-
-      setNivelActual(current_level);
-      setTiempo(accumulated_time);
-      return true;
-    } catch (error) {
-      console.error("Error al guardar progreso:", error);
-      alert("No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
-      return false;
-    }
-  };
-
+  // 6.6 Cargar usuario al inicializar la música
   useEffect(() => {
     const loadUserProfile = async () => {
-
       if (user && !isUserLoading) {
         setIsUserLoading(false);
         return;
       }
-
 
       if (!token) {
         setUser(null);
@@ -363,44 +347,20 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
       if (!user && token) {
         setIsUserLoading(true);
         try {
-
-          const userData = await apiCall(`${API_BASE}/api/user/profile`, "GET", null, token);
+          const userData = await makeRequest(`/api/user/profile`, "GET", null, token);
           setUser(userData);
         } catch (error) {
           console.error("Error al cargar el perfil de usuario al iniciar:", error);
-
           logout();
         } finally {
           setIsUserLoading(false);
         }
       }
     };
-
     loadUserProfile();
-  }, [token, apiCall, user, setUser, setIsUserLoading, logout]);
+  }, [token, makeRequest, user, setUser, setIsUserLoading, logout]);
 
-
-  // -----obtener enigmas de cada nivel-------
-
-  const getCurrentEnigmas = () => {
-
-    switch (nivelActual) {
-      case 1:
-        return EnigmasData.enigmasNivel1;
-      case 2:
-        return EnigmasData.enigmasNivel2;
-
-      default:
-        return [];
-    }
-  };
-
-
-  // const registrarPistaUsada = (idPista) => {
-  //   setPistasUsadas((prev) => [...prev, idPista]);
-  // };
-
-
+  
   return (
     <GameContext.Provider
       value={{
@@ -415,8 +375,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
         setNivelActual,
         tiempo,
         setTiempo,
-        apiCall,
-        apiCall: makeRequest,
+        makeRequest,
         signup,
         saveGameProgress,
         deleteUser,
@@ -441,16 +400,16 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
         currentVolume,
         setMusicVolume,
         displayMusicVolume,
-        sfxVolume : displaySfxVolume,
+        sfxVolume: displaySfxVolume,
         setSfxVolume,
         playSfx,
       }}
     >
       {SFXManagerComponent && (
-      <SFXManagerComponent
-                    sfxManagerPlayRef={sfxManagerPlayRef} // Le pasamos la ref
-                    sfxGlobalVolumeRef={sfxVolume} // Le pasamos la ref del volumen global
-                />
+        <SFXManagerComponent
+          sfxManagerPlayRef={sfxManagerPlayRef}
+          sfxGlobalVolumeRef={sfxVolume}
+        />
       )}
       {children}
     </GameContext.Provider>
