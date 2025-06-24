@@ -93,7 +93,7 @@ export default function GameContainer() {
   // Función para mirar por la mirilla
 
   const handlePeepholeClick = () => {
-     setHasLookedRoom(true);
+    setHasLookedRoom(true);
     console.log("Mirando por la mirilla...");
     const messageToShow = isGearboxCodeCorrect
       ? "¡La habitación está vacía!Es momento de pasar al despacho!."
@@ -120,91 +120,90 @@ export default function GameContainer() {
   // Función para click de la puerta final
   const handleDoorClick = () => {
     console.log("Clic en la puerta detectado.");
-     if (isGearboxCodeCorrect && hasLookedRoom) {
-            setGameMessage("¡La puerta se abre! Avanzando al siguiente nivel...");
-            setTimeout(() => {         
-            }, 3000);
-            navigate(`/level-victory`);
-        } else {
-           
-            setGameMessage("La puerta está cerrada. Debes asegurarte de que la habitación esté vacía.");
-            setTimeout(() => setGameMessage(""), 3000);
-        }
-    };
+    if (isGearboxCodeCorrect && hasLookedRoom) {
+      setGameMessage("¡La puerta se abre! Avanzando al siguiente nivel...");
+      setTimeout(() => {
+      }, 3000);
+      navigate(`/level-victory`);
+    } else {
 
-    //  Función para manejar la resolución de enigmas desde EnigmaModal
+      setGameMessage("La puerta está cerrada. Debes asegurarte de que la habitación esté vacía.");
+      setTimeout(() => setGameMessage(""), 3000);
+    }
+  };
+
+  //  Función para manejar la resolución de enigmas desde EnigmaModal
   const handleEnigmaSolved = (enigmaId, isCorrect) => {
-        setShowEnigma(false); 
-        setCurrentEnigma(null); 
+    setShowEnigma(false);
+    setCurrentEnigma(null);
 
-        if (enigmaId === id_gearbox) {
-            if (isCorrect) {
-                setIsGearboxCodeCorrect(true); 
-                 setGameMessage("¡Conseguiste manipular el reloj!Compreba si el señor Geeks se ha ido a comer.");
-                 setTimeout(() => setGameMessage(""), 4000);
-            } else {
-              
-            }
-        }
-}
+    if (enigmaId === id_gearbox) {
+      if (isCorrect) {
+        setIsGearboxCodeCorrect(true);
+        setGameMessage("¡Conseguiste manipular el reloj!Compreba si el señor Geeks se ha ido a comer.");
+        setTimeout(() => setGameMessage(""), 4000);
+      } else {
 
-
-    // Función para aplicar penalización de tiempo
-
-    const handlePenalty = (seconds) => {
-      if (timerRef.current) {
-        timerRef.current.addSeconds(seconds);
       }
-    };
-
-    const currentEnigmaData = EnigmasData.enigmasNivel1.find(e => e.id === currentEnigma)
-
-    return (
-      <div className="game-container-bg">
-        <img src={Level1BG} className="bg-img" alt="BG Level1" />
-        <button id="plant"></button>
-        <button id="door"onClick={handleDoorClick}></button>
-        <button
-          id="letterbox"
-          className='object-zone'
-          onClick={handleMailboxClick}
-        ></button>
-        <button id="ESC" onClick={() => setMenuOpen(true)}></button>
-        <button id="lock" onClick={handlePeepholeClick}></button>
-        <button id="gearbox" onClick={handleLightsPanelClick}></button>
-        <button id="PlayerInfo"></button>
-        <div className="menu-toggle">
-           <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
-
-          <InfoModalUser className="info-modal-user" showEnigma={showEnigma}  />
-
-          <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
-
-
-          {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
-          {showEnigma && currentEnigmaData &&(
-            <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }} 
-            enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved} 
-             timerRef={timerRef}/>)}
-           {(mailboxMessage || gameMessage) && (
-            <div className="mailbox-message">
-              <p>{mailboxMessage || gameMessage}</p>
-            </div>
-          )}
-           {showRoomImage && (
-                    <div className="image-room">
-                        <img
-                            src={isGearboxCodeCorrect ? despacho_vacio : despacho_lleno} 
-                            alt="Vista a través de la mirilla"
-                            className="view-image"
-                        />
-                    </div>
-                )}
-
-          <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
-        </div>
-
-
-
-    );
+    }
   }
+
+
+  // Función para aplicar penalización de tiempo
+
+  const handlePenalty = (seconds) => {
+    if (timerRef.current) {
+      timerRef.current.addSeconds(seconds);
+    }
+  };
+
+  const currentEnigmaData = EnigmasData.enigmasNivel1.find(e => e.id === currentEnigma)
+
+  return (
+    <div className="game-container-bg">
+      <img src={Level1BG} className="bg-img" alt="BG Level1" />
+      <button id="plant"></button>
+      <button id="door" onClick={handleDoorClick}></button>
+      <button
+        id="letterbox"
+        className='object-zone'
+        onClick={handleMailboxClick}
+      ></button>
+      <button id="ESC" onClick={() => setMenuOpen(true)}></button>
+      <button id="lock" onClick={handlePeepholeClick}></button>
+      <button id="gearbox" onClick={handleLightsPanelClick}></button>
+      <button id="PlayerInfo"></button>
+      <div className="menu-toggle">
+        <Pause
+          open={menuOpen}
+          onClose={() => setMenuOpen(false)}
+        />
+        <InfoModalUser className="info-modal-user" showEnigma={showEnigma} />
+        <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
+
+
+        {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
+        {showEnigma && currentEnigmaData && (
+          <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }}
+            enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved}
+            timerRef={timerRef} />)}
+        {(mailboxMessage || gameMessage) && (
+          <div className="mailbox-message">
+            <p>{mailboxMessage || gameMessage}</p>
+          </div>
+        )}
+        {showRoomImage && (
+          <div className="image-room">
+            <img
+              src={isGearboxCodeCorrect ? despacho_vacio : despacho_lleno}
+              alt="Vista a través de la mirilla"
+              className="view-image"
+            />
+          </div>
+        )}
+
+        <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} />
+      </div>
+    </div>
+  );
+}

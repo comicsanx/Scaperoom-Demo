@@ -416,8 +416,6 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
         tiempo,
         setTiempo,
         apiCall,
-        hintsUsed,
-        setHintsUsed,
         apiCall: makeRequest,
         signup,
         saveGameProgress,
