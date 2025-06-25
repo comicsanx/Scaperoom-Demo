@@ -1,6 +1,7 @@
 import carta from '../assets/img/carta.jpg';
 import mapa from '../assets/img/level2_provisional/mapa.png';
 import calendario from '../assets/img/level2_provisional/calendario.png';
+import poesia from '../assets/img/level2_provisional/poesía.png';
 
 export const EnigmasData = {
      // falta cambiar esa imagen por la carta final
@@ -36,7 +37,7 @@ export const EnigmasData = {
      ],
 //    falta cambiar esa imagen por el mapa definitivo
      "enigmasNivel2": [ {
-        id: 3,
+        id: 203,
         title: "Documento Clasificado: Ruta Internacional ",
         description: "El señor Geek viaja más que su maleta. Este mapa muestra los trayectos de su última gira internacional de negocios. ",
         img: mapa,
@@ -50,7 +51,7 @@ export const EnigmasData = {
         },
         // falta cambiar calendario por el definitivo
     {
-        id: 4,
+        id: 204,
         title: "Un día señalado",
         description: "Un solo día destacado en el calendario. Ni una palabra más.",
         img: calendario,
@@ -63,14 +64,27 @@ export const EnigmasData = {
         },
         {
             // queda por fijar la solucion de la caja fuerte y la foto de ella
-        id: 5,
+        id: 205,
         title: "Solo una combinación te separa del contenido de la caja fuerte",
-        img: 'caja fuerte',
+        img: 'caja fuerte abierta',
         solution: "queda por fijar",
         description : 'Observa el brillo de la ciudad distante, luego mide el viaje de la tierra, escucha el eco revuelto del verso, recuerda el símbolo que te mira desde el lienzo, y el día que la fortuna celebra.',
         hints: [
             "Cinco caminos, cinco claves. El orden no lo dicta el azar, sino el recorrido que el arte, la tierra, la palabra y la suerte te han marcado. No saltes pasos.",
             "Cada fragmento encierra un número. No mires lo obvio, mira lo que cambia. El código no está oculto… solo está disperso.",
+            
+        ],
+        
+        },
+        {
+            //poner imagen de libro por dentro
+        id: 206,
+        title: "Pensamientos encriptados de un genio algo raro",
+        img: poesia,
+        description : 'Parece que el Sr. Geeks ha dejado un mensaje oculto en sus pensamientos más profundos. ¿Podrás descifrarlo?',
+        hints: [
+           ' “El Sr. Geeks no era un hombre directo… sus secretos viajan en las primeras palabras de sus pensamientos.”',
+          '  Las primeras letras de cada verso forman más que palabras forman el camino.',
             
         ],
         

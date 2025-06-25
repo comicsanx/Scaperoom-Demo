@@ -10,7 +10,10 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
 
-  const enigma = EnigmasData.enigmasNivel1.find((e) => e.id === enigmaId);
+  let enigma = EnigmasData.enigmasNivel1.find((e) => e.id === enigmaId);
+  if (!enigma) {
+    enigma = EnigmasData.enigmasNivel2.find((e) => e.id === enigmaId);
+  }
 
   useEffect(() => {
     if (show) {
@@ -30,26 +33,38 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
   };
 
   const handleSubmit = () => {
-    if (enigma.id === 2) {
-      if (inputValue === enigma.solution) {
+     if (enigma.solution && inputValue === enigma.solution) {
+      setMessage(
+        "¡Código correcto!"
+      );
+  
+      if (enigma.id === 2) {
         setMessage(
           "¡Código correcto! Ya has manipulado el reloj...deberías echar un vistazo por la mirilla para comprobar si el señor Geeks está en su despacho."
         );
+      } else if (enigma.id === 205) { 
+        setMessage(
+          "¡Código correcto! Has descubierto el código de la caja fuerte del Sr Geeks. ¡Enhorabuena!"
+        );
+      }
         setTimeout(() => {
           onEnigmaSolved(enigma.id, true);
           onHide();
         }, 4000);
-      } else {
-        setMessage(
-          "Código incorrecto. Este error te trae 5 segundos de penalización..."
-        );
+      } else if (enigma.solution) {
+      setMessage(
+        "Código incorrecto. Este error te trae 5 segundos de penalización..."
+      );
+
 
         if (timerRef.current && timerRef.current.addSeconds) {
           timerRef.current.addSeconds(5);
           console.log("Penalización de 5 segundos aplicada por respuesta incorrecta.");
         }
       }
-    } else {
+      else { setTimeout(() => {
+        onHide(); 
+      }, 4000); 
       
     }
   }; 
@@ -69,7 +84,7 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
         )}
         {enigma.id === 2 && (
           <Form.Group className="mb-3">
-            <Form.Label>Necesitas manipular el reloj para que el Sr Geeks crea que es la hora de la comida.</Form.Label>
+           
             <Form.Control
               type="text"
               value={inputValue}
@@ -85,7 +100,7 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
 
       </Modal.Body>
       <Modal.Footer>
-        {enigma.id === 2 && (
+        {enigma.solution && (
           <Button variant="primary" onClick={handleSubmit}>
             Enviar Código
           </Button>

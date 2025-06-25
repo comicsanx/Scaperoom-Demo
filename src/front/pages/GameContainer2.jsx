@@ -11,8 +11,7 @@ import { InfoModalUser } from "../components/InfoModalUser";
 import { EnigmaModal } from "../components/EnigmaModal";
 import { EnigmasData } from "../data/EnigmasData";
 
-import despacho_vacio from "../assets/img/despacho_vacio.jpg";
-import despacho_lleno from "../assets/img/despacho_lleno.jpg";
+import letra_pequeña from "../assets/img/level2_provisional/letra_pequeña.jpg";
 
 import Pause from "../components/Pause";
 
@@ -26,6 +25,7 @@ export default function GameContainer2() {
         setMenuOpen,
         isSafeCodeCorrect,
         setIsSafeCodeCorrect,
+        setPickedUpObjects,
     } = useGame()
 
     useEffect(() => {
@@ -40,14 +40,18 @@ export default function GameContainer2() {
     const [showEnigma, setShowEnigma] = useState(false);
     const [currentEnigma, setCurrentEnigma] = useState(null);
     const [bookMessage, setBookMessage] = useState("")
+    const [noReadBook, setNoReadBook] = useState(false);
 
     const [gameMessage, setGameMessage] = useState("");
 
     const id_clinex = 102
     const id_magnifying_glass = 103
-    const id_telescope = 1
-    const id_book = 2
-    const id_safe = 3
+    const id_telescope = 207
+    const id_book = 206 
+    const id_safe = 205
+    const id_calendar = 204
+    const id_map = 203
+
 
     // función para manejar el objeto seleccionado
 
@@ -56,20 +60,33 @@ export default function GameContainer2() {
         setPickedUpObjects(prevObjects => prevObjects.filter(id => id !== objectId));
         setSelectedObject(null);
     };
+// funcion para abrir los enigmas
 
+    // const handleEnigmaClick = (enigmaIdToOpen) => {
+    //     console.log("handleEnigmaClick llamado con ID:", enigmaIdToOpen)
+    //     console.log("Enigmas Nivel 2 disponibles:", EnigmasData.enigmasNivel2)
+    //     const enigma = EnigmasData.enigmasNivel2.find(e => e.id === enigmaIdToOpen);
+    //     if (enigma) {
+    //         setCurrentEnigma(enigmaIdToOpen);
+    //         setShowEnigma(true);
+    //         console.log(`Abriendo enigma ${enigmaIdToOpen}`)
+    //     } else {
+    //         console.log(`ERROR: Enigma ${enigmaIdToOpen} no encontrado.`);
+    //     }
+    //     setSelectedObject(null)
+
+    // }
+
+    // Función para abrir cualquier enigma
     const handleEnigmaClick = (enigmaIdToOpen) => {
-        console.log("handleEnigmaClick llamado con ID:", enigmaIdToOpen)
-        const enigma = EnigmasData.enigmasNivel2.find(e => e.id === enigmaIdToOpen);
-        if (enigma) {
-            setCurrentEnigma(enigmaIdToOpen);
-            setShowEnigma(true);
-            console.log(`Abriendo enigma ${enigmaIdToOpen}`)
-        } else {
-            console.log(`ERROR: Enigma ${enigmaIdToOpen} no encontrado.`);
-        }
-        setSelectedObject(null)
+        console.log("handleEnigmaClick llamado con ID:", enigmaIdToOpen);
+        
+        setCurrentEnigma(enigmaIdToOpen); 
+        setShowEnigma(true);
+        console.log(`Abriendo enigma ${enigmaIdToOpen}`);
+        setSelectedObject(null); // Deseleccionar el objeto
+    };
 
-    }
     // Función para abrir enigma libro
 
     const handleBookClick = () => {
@@ -80,15 +97,32 @@ export default function GameContainer2() {
         } else {
             console.log("No tienes la lupa seleccionada.");
             setBookMessage("¿consigues leer lo que pone?")
+            setNoReadBook(true);
             setSelectedObject(null);
             setTimeout(() => {
+                setNoReadBook(false);
                 setBookMessage("");
-            }, 3000);
+            }, 5000);
+        }
+    };
+
+    // funcion para enigma de telescopio
+      const handleTelescopeClick = () => {
+        console.log("Clic en el telescopio detectado. Objeto seleccionado:", selectedObject);
+        if (selectedObject === id_clinex) {
+            handleEnigmaClick(id_telescope); 
+             handleObjectUsed(id_clinex); 
+        } else {
+            setGameMessage("El telescopio está sucio. Necesitas algo para limpiarlo.");
+            setSelectedObject(null);
+            setTimeout(() => setGameMessage(""), 4000);
+            // Aquí podrías mostrar una imagen del telescopio sucio si tuvieras una
         }
     };
 
 
-    //  Función para manejar la resolución de enigmas desde EnigmaModal
+
+    //  Función para manejar la resolución de enigma final desde EnigmaModal
     const handleEnigmaSolved = (enigmaId, isCorrect) => {
         setShowEnigma(false);
         setCurrentEnigma(null);
@@ -115,20 +149,46 @@ export default function GameContainer2() {
 
     return (
         <div className="game-container2-bg">
-            <img src={Level1BG} className="bg-img" alt="BG Level2" />
-            <button id="calendar"></button>
-            <button id="map" onClick={''}></button>
+            {/* <img src={Level1BG} className="bg-img" alt="BG Level2" /> */}
+            <button id="calendar">calendario</button>
+            <button id="map" onClick={''}>bola del mundo</button>
             <button
                 id="telescope"
                 className='object-zone'
                 onClick={''}
-            ></button>
+            >telescopio</button>
+
+            {/* funciones del libro */}
             <button
                 id="book"
                 className='object-zone'
-                onClick={''}
-            ></button>
-            <button id="ESC" onClick={() => setMenuOpen(true)}></button>
+                onClick={handleBookClick}
+            >libro</button>
+             {bookMessage && (
+        <div className="game-message-overlay">
+          <p>{bookMessage}</p>
+        </div>
+      )}
+
+      {/* Imagen del libro ilegible*/}
+      {noReadBook && (
+        <div className="enigma-image-overlay"> 
+          <img src={letra_pequeña} alt="Texto ilegible del libro" className="enigma-zoom-image" />
+        </div>
+      )}
+
+      {/* Modal del Enigma (cuando se usa la lupa) */}
+      {showEnigma && currentEnigmaData && (
+        <EnigmaModal
+          show={showEnigma}
+          onHide={() => setShowEnigma(false)}
+          enigmaId={currentEnigma}
+          enigmaData={currentEnigmaData} 
+         
+       
+        />
+      )}
+            <button id="ESC" onClick={() => setMenuOpen(true)}>salir</button>
             <button id="PlayerInfo"></button>
             <div className="menu-toggle">
                 <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
@@ -137,26 +197,6 @@ export default function GameContainer2() {
 
                 <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
 
-
-
-                {showEnigma && currentEnigmaData && (
-                    <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }}
-                        enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved}
-                        timerRef={timerRef} />)}
-                {/* {(mailboxMessage || gameMessage) && (
-            <div className="mailbox-message">
-              <p>{mailboxMessage || gameMessage}</p>
-            </div>
-          )}
-           {showRoomImage && (
-                    <div className="image-room">
-                        <img
-                            src={isGearboxCodeCorrect ? despacho_vacio : despacho_lleno} 
-                            alt="Vista a través de la mirilla"
-                            className="view-image"
-                        />
-                    </div>
-                )} */}
 
                 <Objects objectsLevel={ObjectsLevel2} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
             </div>
