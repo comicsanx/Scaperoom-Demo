@@ -2,6 +2,7 @@ import carta from '../assets/img/carta.jpg';
 import mapa from '../assets/img/level2_provisional/mapa.png';
 import calendario from '../assets/img/level2_provisional/calendario.png';
 import poesia from '../assets/img/level2_provisional/poesía.png';
+import edificio from '../assets/img/level2_provisional/edificio.png';
 
 export const EnigmasData = {
      // falta cambiar esa imagen por la carta final
@@ -83,8 +84,21 @@ export const EnigmasData = {
         img: poesia,
         description : 'Parece que el Sr. Geeks ha dejado un mensaje oculto en sus pensamientos más profundos. ¿Podrás descifrarlo?',
         hints: [
-           ' “El Sr. Geeks no era un hombre directo… sus secretos viajan en las primeras palabras de sus pensamientos.”',
+           ' El Sr. Geeks no era un hombre directo… sus secretos viajan en las primeras palabras de sus pensamientos.',
           '  Las primeras letras de cada verso forman más que palabras forman el camino.',
+            
+        ],
+        
+        },
+         {
+            //poner imagen de ciudad, o la imagen que se vaya a usar y adaptar el titulo y las pistas
+        id: 207,
+        title: "poner titulo dependiendo de la imagen",
+        img: edificio,
+        description : 'Misterioso, elegante, y sugiere que hay un orden oculto tras lo visual.',
+        hints: [
+           ' depende de la imagen',
+          '  depende de la imagen.',
             
         ],
         

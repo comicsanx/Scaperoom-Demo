@@ -12,6 +12,7 @@ import { EnigmaModal } from "../components/EnigmaModal";
 import { EnigmasData } from "../data/EnigmasData";
 
 import letra_pequeña from "../assets/img/level2_provisional/letra_pequeña.jpg";
+import imagen_borrosa from "../assets/img/level2_provisional/imagen_borrosa.jpg";
 
 import Pause from "../components/Pause";
 
@@ -40,7 +41,7 @@ export default function GameContainer2() {
     const [showEnigma, setShowEnigma] = useState(false);
     const [currentEnigma, setCurrentEnigma] = useState(null);
     const [bookMessage, setBookMessage] = useState("")
-    const [noReadBook, setNoReadBook] = useState(false);
+    const [selectPictureCorrect, setSelectPictureCorrect] = useState(false);
 
     const [gameMessage, setGameMessage] = useState("");
 
@@ -97,10 +98,10 @@ export default function GameContainer2() {
         } else {
             console.log("No tienes la lupa seleccionada.");
             setBookMessage("¿consigues leer lo que pone?")
-            setNoReadBook(true);
+            setSelectPictureCorrect(true);
             setSelectedObject(null);
             setTimeout(() => {
-                setNoReadBook(false);
+                setSelectPictureCorrect(false);
                 setBookMessage("");
             }, 5000);
         }
@@ -114,9 +115,12 @@ export default function GameContainer2() {
              handleObjectUsed(id_clinex); 
         } else {
             setGameMessage("El telescopio está sucio. Necesitas algo para limpiarlo.");
+            setSelectPictureCorrect(true);
             setSelectedObject(null);
-            setTimeout(() => setGameMessage(""), 4000);
-            // Aquí podrías mostrar una imagen del telescopio sucio si tuvieras una
+           setTimeout(() => {
+                setSelectPictureCorrect(false);
+                setBookMessage("");
+            }, 5000);
         }
     };
 
@@ -155,8 +159,32 @@ export default function GameContainer2() {
             <button
                 id="telescope"
                 className='object-zone'
-                onClick={''}
+                onClick={handleTelescopeClick}
             >telescopio</button>
+             {bookMessage && (
+        <div className="game-message-overlay">
+          <p>{gameMessage}</p>
+        </div>
+      )}
+
+      {/* Imagen del libro ilegible*/}
+      {selectPictureCorrect && (
+        <div className="enigma-image-overlay"> 
+          <img src={imagen_borrosa} alt="imagen borrosa" className="enigma-zoom-image" />
+        </div>
+      )}
+
+      {/* Modal del Enigma (cuando se usa la la gamuza) */}
+      {showEnigma && currentEnigmaData && (
+        <EnigmaModal
+          show={showEnigma}
+          onHide={() => setShowEnigma(false)}
+          enigmaId={currentEnigma}
+          enigmaData={currentEnigmaData} 
+         
+       
+        />
+      )}
 
             {/* funciones del libro */}
             <button
@@ -171,7 +199,7 @@ export default function GameContainer2() {
       )}
 
       {/* Imagen del libro ilegible*/}
-      {noReadBook && (
+      {selectPictureCorrect && (
         <div className="enigma-image-overlay"> 
           <img src={letra_pequeña} alt="Texto ilegible del libro" className="enigma-zoom-image" />
         </div>
