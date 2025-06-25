@@ -1,0 +1,14 @@
+.user-profile-card{
+    background-color: #CA7842;
+    color: #4B352A;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.player-name, .game-stats {
+    font-family: "Righteous", sans-serif;
+}
+
+.player-email-display, .no-game-data{
+    font-family: "Open Sans", sans-serif;
+}

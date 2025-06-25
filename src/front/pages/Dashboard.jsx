@@ -10,7 +10,6 @@ export function Dashboard() {
     const navigate = useNavigate();
     const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api";
 
-    // Tu código comentado para fetching de ranking
     // useEffect(() => {
     //     fetch(`${API_BASE}/ranking/global`)
     //         .then(async res => {
@@ -85,13 +84,10 @@ export function Dashboard() {
 
     return (
         <div className="dashboard-container container-fluid">
-            {/* Usamos las clases de Bootstrap para las filas y columnas */}
             <div className="row justify-content-center align-items-center">
-                {/* Sección de Control de Juego */}
-                <div className="col-12 col-md-6 col-lg-5 dashboard-section game-controls">
-                    <h1>¡Bienvenido, {user.username}!</h1>
-                    <p>¡Prepárate para la aventura, agente!</p>
-                    <div className="btn-group-vertical"> {/* Grupo de botones vertical */}
+                <UserProfile />
+                <div className="col-13 col-md-3 col-lg-5 dashboard-section game-controls">
+                    <div className="btn-group-vertical"> 
                         <ButtonWithSFX onClick={handleStartNewGame} sfxName="BUTTON_CLICK">
                             Nueva Partida
                         </ButtonWithSFX>
@@ -106,25 +102,16 @@ export function Dashboard() {
                             </ButtonWithSFX>
                         )}
 
-{/* añadir onclick cuando se defina la ruta */}
                         <ButtonWithSFX sfxName="BUTTON_CLICK"> 
                             Cómo Jugar
                         </ButtonWithSFX>
 
-                        {/* Botón de prueba SFX, puedes quitarlo después */}
                         <ButtonWithSFX sfxName="BUTTON_CLICK">
                             Boton prueba SFX
                         </ButtonWithSFX>
                     </div>
                 </div>
-
-                {/* Sección del Perfil de Usuario */}
-                {/* col-12 para móviles, col-md-6 para tablets/desktops, col-lg-5 para pantallas grandes */}
-                <div className="col-12 col-md-6 col-lg-5 dashboard-section user-profile-section">
-                    <h2>Tu Perfil</h2>
-                    <UserProfile />
                 </div>
             </div>
-        </div>
     );
 }

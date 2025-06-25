@@ -115,8 +115,7 @@ export function UserProfile() {
     };
 
     return (
-        <div className="user-profile-card">
-            <h2>Mi Perfil</h2>
+        <div className="user-profile-card col-3 container mt-3 p-5 d-flex flex-column align-items-center">
 
             {feedbackMessage && (
                 <div className={`feedback-message ${feedbackType === 'success' ? 'success' : 'error'}`}>
@@ -129,11 +128,11 @@ export function UserProfile() {
                     <div className="avatar-container">
                         <img src={getAvatarUrl(user.avatar_filename)} alt="Avatar de usuario" className="avatar-img" />
                     </div>
-                    <p className="player-name">{user.username}</p>
-                    <p className="player-email-display">{user.email}</p>
+                    <h1 className="player-name mb-0 mt-3">{user.username}</h1>
+                    <p className="player-email-display mt-0">{user.email}</p>
 
-                    <div className="game-stats">
-                        <h3>Estadísticas de Juego:</h3>
+                    <div className="game-stats mt-5">
+                        <h3>Estadísticas</h3>
                         {user.gameSession ? (
                             <>
                                 <p>Nivel Actual: <span className="stat-value">{user.gameSession.current_level}</span></p>
@@ -141,11 +140,13 @@ export function UserProfile() {
                                 {/* Añade más estadísticas si las tienes en user.gameSession */}
                             </>
                         ) : (
-                            <p className="no-game-data">No hay datos de juego registrados aún.</p>
+                            <p className="no-game-data">No hay datos de juego</p>
                         )}
                     </div>
-                    <button onClick={() => setIsEditing(true)} className="edit-profile-btn">Editar Perfil</button>
-                    <button onClick={handleDeleteAccount} className="delete-btn">Eliminar Cuenta</button>
+                    <div className=" buttons-edit d-flex justify-content-center gap-3 mt-5">
+                    <button onClick={() => setIsEditing(true)} className="edit-profile-btn d-flex">Editar Perfil</button>
+                    <button onClick={handleDeleteAccount} className="delete-btn d-flex">Eliminar Cuenta</button>
+                    </div>
                 </div>
             ) : (
                 <form className="profile-edit-mode" onSubmit={handleSave}>
