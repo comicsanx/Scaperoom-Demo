@@ -24,10 +24,10 @@ import Avatar_03 from '../assets/img/UI/Avatars/Avatar_03.png';
 import Default_Avatar from '../assets/img/UI/Avatars/default_avatar.png';
 
 const avatarMap = {
-    "Avatar_01.png": Avatar_01,
-    "Avatar_02.png": Avatar_02,
-    "Avatar_03.png": Avatar_03,
-    "default_avatar.png": Default_Avatar,
+  "Avatar_01.png": Avatar_01,
+  "Avatar_02.png": Avatar_02,
+  "Avatar_03.png": Avatar_03,
+  "default_avatar.png": Default_Avatar,
 };
 
 
@@ -110,7 +110,7 @@ export default function GameContainer() {
   // Función para mirar por la mirilla
 
   const handlePeepholeClick = () => {
-     setHasLookedRoom(true);
+    setHasLookedRoom(true);
     console.log("Mirando por la mirilla...");
     const messageToShow = isGearboxCodeCorrect
       ? "¡La habitación está vacía!Es momento de pasar al despacho!."
@@ -137,111 +137,105 @@ export default function GameContainer() {
   // Función para click de la puerta final
   const handleDoorClick = () => {
     console.log("Clic en la puerta detectado.");
-     if (isGearboxCodeCorrect && hasLookedRoom) {
-            setGameMessage("¡La puerta se abre! Avanzando al siguiente nivel...");
-            setTimeout(() => {         
-            }, 3000);
-            navigate(`/level-victory`);
-        } else {
-           
-            setGameMessage("La puerta está cerrada. Debes asegurarte de que la habitación esté vacía.");
-            setTimeout(() => setGameMessage(""), 3000);
-        }
-    };
+    if (isGearboxCodeCorrect && hasLookedRoom) {
+      setGameMessage("¡La puerta se abre! Avanzando al siguiente nivel...");
+      setTimeout(() => {
+      }, 3000);
+      navigate(`/level-victory`);
+    } else {
 
-    //  Función para manejar la resolución de enigmas desde EnigmaModal
+      setGameMessage("La puerta está cerrada. Debes asegurarte de que la habitación esté vacía.");
+      setTimeout(() => setGameMessage(""), 3000);
+    }
+  };
+
+  //  Función para manejar la resolución de enigmas desde EnigmaModal
   const handleEnigmaSolved = (enigmaId, isCorrect) => {
-        setShowEnigma(false); 
-        setCurrentEnigma(null); 
+    setShowEnigma(false);
+    setCurrentEnigma(null);
 
-        if (enigmaId === id_gearbox) {
-            if (isCorrect) {
-                setIsGearboxCodeCorrect(true); 
-                 setGameMessage("¡Conseguiste manipular el reloj!Compreba si el señor Geeks se ha ido a comer.");
-                 setTimeout(() => setGameMessage(""), 4000);
-            } else {
-              
-            }
-        }
-}
+    if (enigmaId === id_gearbox) {
+      if (isCorrect) {
+        setIsGearboxCodeCorrect(true);
+        setGameMessage("¡Conseguiste manipular el reloj!Compreba si el señor Geeks se ha ido a comer.");
+        setTimeout(() => setGameMessage(""), 4000);
+      } else {
 
-
-    // Función para aplicar penalización de tiempo
-
-    const handlePenalty = (seconds) => {
-      if (timerRef.current) {
-        timerRef.current.addSeconds(seconds);
       }
-    };
-
-    const currentEnigmaData = EnigmasData.enigmasNivel1.find(e => e.id === currentEnigma)
-
-    // Cargar el avatar del usuario
-     const avatarSrc = user && user.avatar_filename 
-        ? avatarMap[user.avatar_filename] || Default_Avatar 
-        : Default_Avatar;
-
-    return (
-      <div className="game-container-bg">
-        <img src={Level1BG} className="bg-img" alt="BG Level1" />
-        <button id="plant"></button>
-        <button id="door"onClick={handleDoorClick}></button>
-        <button
-          id="letterbox"
-          className='object-zone'
-          onClick={handleMailboxClick}
-        ></button>
-        <button id="ESC" onClick={() => setMenuOpen(true)}></button>
-        <button id="lock" onClick={handlePeepholeClick}></button>
-        <button id="gearbox" onClick={handleLightsPanelClick}></button>
-
-        {/* Botón de avatar (abre InfoModalUser) */}
-        <button 
-            id="PlayerInfo" // Usamos el ID existente
-            className="user-avatar-button-global" 
-            onClick={() => setIsInfoModalUserOpen(prev => !prev)} 
-            aria-label="Abrir informe de usuario"
-        >
-            <img src={avatarSrc} className="user-avatar-image" alt="Avatar de usuario"/>
-        </button>    
-         {/* render condicional para InfoModalUser */}
-{isInfoModalUserOpen && (
-                <InfoModalUser 
-                    isOpen={isInfoModalUserOpen} // Pasar el estado de visibilidad
-                    onClose={() => setIsInfoModalUserOpen(false)} // Función para cerrarlo
-                    showEnigma={showEnigma} // Todavía pasamos esta prop para la lógica interna de InfoModalUser
-                />
-            )}
-        <div className="menu-toggle">
-           <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
-          <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
-
-
-          {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
-          {showEnigma && currentEnigmaData &&(
-            <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }} 
-            enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved} 
-             timerRef={timerRef}/>)}
-           {(mailboxMessage || gameMessage) && (
-            <div className="mailbox-message">
-              <p>{mailboxMessage || gameMessage}</p>
-            </div>
-          )}
-           {showRoomImage && (
-                    <div className="image-room">
-                        <img
-                            src={isGearboxCodeCorrect ? despacho_vacio : despacho_lleno} 
-                            alt="Vista a través de la mirilla"
-                            className="view-image"
-                        />
-                    </div>
-                )}
-
-          <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
-        </div>
-        </div>
-
-
-
-    );
+    }
   }
+
+
+  // Función para aplicar penalización de tiempo
+
+  const handlePenalty = (seconds) => {
+    if (timerRef.current) {
+      timerRef.current.addSeconds(seconds);
+    }
+  };
+
+  const currentEnigmaData = EnigmasData.enigmasNivel1.find(e => e.id === currentEnigma)
+
+  // Cargar el avatar del usuario
+  const avatarSrc = user && user.avatar_filename
+    ? avatarMap[user.avatar_filename] || Default_Avatar
+    : Default_Avatar;
+
+  return (
+    <div className="game-container-bg">
+      <img src={Level1BG} className="bg-img" alt="BG Level1" />
+      <button id="plant"></button>
+      <button id="door" onClick={handleDoorClick}></button>
+      <button
+        id="letterbox"
+        className='object-zone'
+        onClick={handleMailboxClick}
+      ></button>
+      <button id="ESC" onClick={() => setMenuOpen(true)}></button>
+      <button id="lock" onClick={handlePeepholeClick}></button>
+      <button id="gearbox" onClick={handleLightsPanelClick}></button>
+
+      {/* Botón de avatar (abre InfoModalUser) */}
+      <button
+        id="PlayerInfo" // Usamos el ID existente
+        className="user-avatar-button-global"
+        onClick={() => setIsInfoModalUserOpen(prev => !prev)}
+        aria-label="Abrir informe de usuario"
+      >
+        <img src={avatarSrc} className="user-avatar-image" alt="Avatar de usuario" />
+      </button>
+      {/* render condicional para InfoModalUser */}
+      {isInfoModalUserOpen && (
+        <InfoModalUser
+          isOpen={isInfoModalUserOpen} // Pasar el estado de visibilidad
+          onClose={() => setIsInfoModalUserOpen(false)} // Función para cerrarlo
+          showEnigma={showEnigma} // Todavía pasamos esta prop para la lógica interna de InfoModalUser
+        />
+      )}
+      <div className="menu-toggle">
+        <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
+        <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
+        {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
+        {showEnigma && currentEnigmaData && (
+          <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }}
+            enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved}
+            timerRef={timerRef} />)}
+        {(mailboxMessage || gameMessage) && (
+          <div className="mailbox-message">
+            <p>{mailboxMessage || gameMessage}</p>
+          </div>
+        )}
+        {showRoomImage && (
+          <div className="image-room">
+            <img
+              src={isGearboxCodeCorrect ? despacho_vacio : despacho_lleno}
+              alt="Vista a través de la mirilla"
+              className="view-image"
+            />
+          </div>
+        )}
+        <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
+      </div>
+    </div>
+  );
+}
