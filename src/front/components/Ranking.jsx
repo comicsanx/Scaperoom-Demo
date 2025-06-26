@@ -6,7 +6,7 @@ import '../CSS/General-UI.css';
 
 export function Ranking() {
 return (
- <div className="ranking-container container mt-3 p-5 d-flex flex-column align-items-center">
+ <div className="ranking-container container mt-5 p-5 d-flex flex-column align-items-center">
     <h1>Ranking</h1>
 </div>
 )

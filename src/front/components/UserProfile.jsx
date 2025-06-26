@@ -115,7 +115,7 @@ export function UserProfile() {
     };
 
     return (
-        <div className="user-profile-card container mt-3 p-5 d-flex flex-column align-items-center">
+        <div className="user-profile-card container mt-5 p-5 d-flex flex-column align-items-center">
 
             {feedbackMessage && (
                 <div className={`feedback-message ${feedbackType === 'success' ? 'success' : 'error'}`}>

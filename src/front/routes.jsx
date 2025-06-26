@@ -17,6 +17,7 @@ import { PassRecovery } from "./pages/PassRecovery";
 import { ResetPassword } from "./pages/NewPasswordForm";
 import { GameVictory } from "./pages/GameVictory";
 import { LevelVictory } from "./pages/LevelVictory";
+import HowToPlay from "./components/HowToPlay";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,6 +42,7 @@ export const router = createBrowserRouter(
       <Route path="/credits" element={<Credits />} />
       <Route path="/level-victory" element={<LevelVictory />} />
       <Route path="/game-victory" element={<GameVictory />} />
+      <Route path="/how-to-play" element={<HowToPlay />} />
     </Route>
   )
 );

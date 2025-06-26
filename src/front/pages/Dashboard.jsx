@@ -5,6 +5,7 @@ import { ButtonWithSFX } from '../components/SFXButton';
 import { UserProfile } from '../components/UserProfile';
 import { Ranking } from '../components/Ranking';
 import '../CSS/General-UI.css';
+import Logo from '../assets/img/UI/General_UI/Logo.png';
 
 export function Dashboard() {
     const { setIsMusicEnabled, setNivelActual, nivelActual, setHasUserInteracted, hasUserInteracted, user, isUserLoading, token } = useGame();
@@ -78,43 +79,54 @@ export function Dashboard() {
         navigate(`/level-${nivelActual}`);
     };
 
-    //  const handleHowToPlay = () => {
-    //     // Navegar a tu ruta de "Cómo Jugar"
-    //     navigate('/how-to-play'); // Asume que tienes esta ruta
-    // };
+     const handleHowToPlay = () => {
+        navigate('/how-to-play');
+
+     }
 
     return (
-        <div className="dashboard-container container">
-            <div className="row">
-                <div className="col-md-4">
+        <div className="dashboard-container container-fluid d-flex justify-content-center align-items-center vh-100 mt-5">
+            <div className="row w-100 h-100">
+                <div className="col-lg-3 col-md-4 col-sm-2 col-xs-2 d-flex flex-column mt-5">
                         <UserProfile />
                 </div>
-                <div className=" col-md-4 game-controls"> 
-                    {/* Logo */}
-                    <div className="btn-group-vertical justify-content-center align-items-center">
-                        <ButtonWithSFX onClick={handleStartNewGame} sfxName="BUTTON_CLICK">
-                            Nueva Partida
+
+                <div className="col-xs-4 col-sm-4 col-md-4 col-lg-6 game-controls d-flex flex-column">
+
+                    <div className="row w-100">
+
+                    <div className="logo-container col-12 text-center mb-auto mt-5 mx-auto px-5">
+                        <img src={Logo} alt="Scaperoom Logo" className="Scaperoom-Logo img-fluid" />
+                    </div>
+
+                    <div className="btn-group-vertical d-flex justify-content-center align-items-center">
+                        <div className="button-group col-lg-6 col-md-12 col-sm-12 col-xs-12 mt-5">
+                        <ButtonWithSFX onClick={handleStartNewGame} sfxName="BUTTON_CLICK" 
+                        className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
+                          <h2>Nueva Partida</h2>
                         </ButtonWithSFX>
                         {hasPlayed ? (
-                            <ButtonWithSFX onClick={handleContinueGame} sfxName="BUTTON_CLICK">
-                                Continuar Partida (Nivel {user.gameSession.current_level})
+                            <ButtonWithSFX onClick={handleContinueGame} sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
+                               <h2>Continuar</h2> 
                             </ButtonWithSFX>
                         ) : (
-                            <ButtonWithSFX disabled sfxName="BUTTON_CLICK">
-                                Continuar Partida (No hay progreso)
+                            <ButtonWithSFX disabled sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
+                                <h2>Continuar</h2>
                             </ButtonWithSFX>
                         )}
 
-                        <ButtonWithSFX sfxName="BUTTON_CLICK"> 
-                            Cómo Jugar
+                        <ButtonWithSFX onClick={handleHowToPlay} sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100"> 
+                            <h2>Cómo Jugar</h2>
                         </ButtonWithSFX>
 
-                        <ButtonWithSFX sfxName="BUTTON_CLICK">
-                            Boton prueba SFX
+                        <ButtonWithSFX sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
+                            <h2>Boton prueba SFX</h2>
                         </ButtonWithSFX>
+                        </div>
+                    </div>
                     </div>
                 </div>
-                <div className="col-md-4">      
+                <div className="col-lg-3 col-md-4 col-sm-2 col-xs-2 d-flex flex-column mt-5">      
                     <Ranking />
                 </div >
             </div >

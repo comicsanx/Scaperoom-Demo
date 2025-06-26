@@ -20,10 +20,9 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #333; 
-    color: #fff;
-    font-family: Arial, sans-serif;
-    font-size: 20px;
+    font-family: "Righteous", sans-serif;
+    color: #CA7842;
+    background-color: #B2CD9C;
     text-align: center;
     flex-direction: column;
     justify-content: center; 
