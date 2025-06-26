@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useGame } from '../context/GameContext';
-import { ButtonWithSFX } from '../components/SFXButton'; 
+import { ButtonWithSFX } from '../components/SFXButton';
 import { UserProfile } from '../components/UserProfile';
+import { Ranking } from '../components/Ranking';
 import '../CSS/General-UI.css';
 
 export function Dashboard() {
@@ -59,11 +60,11 @@ export function Dashboard() {
             setHasUserInteracted(true);
             console.log("[Dashboard] Interacción de usuario registrada al iniciar 'Nueva Partida'.");
         }
-        
-        setIsMusicEnabled(true); 
-        setNivelActual(1); 
+
+        setIsMusicEnabled(true);
+        setNivelActual(1);
         console.log("[Dashboard] Música activada y nivel establecido a 1 al iniciar 'Nueva Partida'.");
-        navigate(`/level-1`); 
+        navigate(`/level-1`);
     };
 
     const handleContinueGame = () => {
@@ -71,10 +72,10 @@ export function Dashboard() {
             setHasUserInteracted(true);
             console.log("[Dashboard] Interacción de usuario registrada al 'Continuar' partida.");
         }
-        setIsMusicEnabled(true); 
-        setNivelActual(nivelActual); 
+        setIsMusicEnabled(true);
+        setNivelActual(nivelActual);
         console.log("[Dashboard] Música activada y nivel establecido (ej. a 1) al 'Continuar' partida.");
-        navigate(`/level-${nivelActual}`); 
+        navigate(`/level-${nivelActual}`);
     };
 
     //  const handleHowToPlay = () => {
@@ -83,15 +84,17 @@ export function Dashboard() {
     // };
 
     return (
-        <div className="dashboard-container container-fluid">
-            <div className="row justify-content-center align-items-center">
-                <UserProfile />
-                <div className="col-13 col-md-3 col-lg-5 dashboard-section game-controls">
-                    <div className="btn-group-vertical"> 
+        <div className="dashboard-container container">
+            <div className="row">
+                <div className="col-md-4">
+                        <UserProfile />
+                </div>
+                <div className=" col-md-4 game-controls"> 
+                    {/* Logo */}
+                    <div className="btn-group-vertical justify-content-center align-items-center">
                         <ButtonWithSFX onClick={handleStartNewGame} sfxName="BUTTON_CLICK">
                             Nueva Partida
                         </ButtonWithSFX>
-
                         {hasPlayed ? (
                             <ButtonWithSFX onClick={handleContinueGame} sfxName="BUTTON_CLICK">
                                 Continuar Partida (Nivel {user.gameSession.current_level})
@@ -111,7 +114,11 @@ export function Dashboard() {
                         </ButtonWithSFX>
                     </div>
                 </div>
-                </div>
-            </div>
+                <div className="col-md-4">      
+                    <Ranking />
+                </div >
+            </div >
+        </div >
+            
     );
 }

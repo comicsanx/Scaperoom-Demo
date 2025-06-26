@@ -12,3 +12,8 @@
 .player-email-display, .no-game-data{
     font-family: "Open Sans", sans-serif;
 }
+
+.ranking-container{
+    background-color: #B2CD9C;
+    color: #4B352A;
+}

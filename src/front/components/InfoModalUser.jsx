@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Timer from "./Timer";
 import GameContainer from "../pages/GameContainer";
 import "../CSS/Game.css";
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { OverlayTrigger, Tooltip, Dropdown, Button, } from 'react-bootstrap'
 
 export const InfoModalUser = ({ showEnigma, isOpen, onClose }) => {
 

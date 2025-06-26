@@ -139,10 +139,10 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
       setUser(responseData.user);
 
       if (responseData.token) {
-            localStorage.setItem("token", responseData.token);
-            setToken(responseData.token);
-            console.log("Token actualizado después de modificar perfil.");
-        }
+        localStorage.setItem("token", responseData.token);
+        setToken(responseData.token);
+        console.log("Token actualizado después de modificar perfil.");
+      }
 
       alert("Perfil actualizado exitosamente.");
       return true;
@@ -367,7 +367,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     loadUserProfile();
   }, [token, makeRequest, user, setUser, setIsUserLoading, logout]);
 
-  
+
   return (
     <GameContext.Provider
       value={{
