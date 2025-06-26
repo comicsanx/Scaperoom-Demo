@@ -18,7 +18,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
   const [isUserLoading, setIsUserLoading] = useState(true);
 
   //1.2 constantes generales de juego
-  const [nivelActual, setNivelActual] = useState(1);
+  const [nivelActual, setNivelActual] = useState(0);
   const [tiempo, setTiempo] = useState(0);
   const timerRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);

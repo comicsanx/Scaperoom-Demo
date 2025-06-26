@@ -28,6 +28,8 @@ export default function GameContainer() {
     setIsGearboxCodeCorrect,
     hasLookedRoom,
     setHasLookedRoom,
+    setNivelActual,
+    nivelActual
   } = useGame()
 
 
@@ -35,12 +37,14 @@ export default function GameContainer() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    
+          setNivelActual(1);
     const handleEsc = (e) => {
       if (e.key === "Escape") setMenuOpen((prev) => !prev);
     };
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
-  }, []);
+  }, [  setNivelActual]);
 
   const [selectedObject, setSelectedObject] = useState(null);
   const [showEnigma, setShowEnigma] = useState(false);
