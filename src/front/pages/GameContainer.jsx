@@ -181,7 +181,7 @@ export default function GameContainer() {
           <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
 
 
-          {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
+         
           {showEnigma && currentEnigmaData &&(
             <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }} 
             enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved} 

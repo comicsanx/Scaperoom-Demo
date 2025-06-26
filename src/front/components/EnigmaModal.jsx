@@ -4,6 +4,8 @@ import UsedHints from "./UsedHints";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 
+// NO CAMBIAR FRASE 'CODIGO INCORRECTO', SI SE CAMBIA CAMBIARLA IGUAL EN LA CONDICION DE ERROR ABAJO
+
 export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }) => {
   console.log("EnigmaModal: Renderizando con show:", show, "y enigmaId:", enigmaId);
 
@@ -79,21 +81,40 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
           <img
             src={enigma.img}
             className="img-fluid mb-3"
-            alt={enigma.title}
+           
           />
         )}
-        {enigma.id === 2 && (
-          <Form.Group className="mb-3">
-           
-            <Form.Control
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="Ej: 1234"
-            />
-          </Form.Group>
-        )}
-        {message && <p className={`text-center ${message.includes('correcto') ? 'text-success' : 'text-danger'}`}>{message}</p>}
+        {enigma.solution && ( 
+  <Form.Group className="mb-3">
+   
+    <Form.Label>
+      {enigma.id === 2
+         ? "Introduce el código de la caja de luces:" 
+         : enigma.id === 205
+         ? "Introduce el código de la caja fuerte:"  
+         : enigma.description || "Introduce el código:" 
+              }
+    </Form.Label>
+    <Form.Control
+      type="text"
+      value={inputValue}
+      onChange={handleInputChange}
+      placeholder="Ej: 1234"
+    />
+  </Form.Group>
+)}
+        
+{/*  
+         {message && (
+        <p className={`text-center ${message.includes('correcto') ? 'text-success' : (message.includes('incorrecto') ? 'text-danger' : '')}`}>
+          {message}
+        </p>
+      )} */}
+      {message && (
+  <p className={`text-center ${message === "Código incorrecto. Este error te trae 5 segundos de penalización..." ? 'text-danger' : 'text-success'}`}>
+    {message}
+  </p>
+)}
         {enigma.description && <p>{enigma.description}</p>}
 
         <UsedHints enigmaId={enigma.id} isOpen={show} onClose={onHide} />
@@ -102,11 +123,11 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
       <Modal.Footer>
         {enigma.solution && (
           <Button variant="primary" onClick={handleSubmit}>
-            Enviar Código
+            Comprobar Código
           </Button>
         )}
         <Button variant="secondary" onClick={onHide}>
-          Cerrar
+          <p>X</p>
         </Button>
       </Modal.Footer>
     </Modal>

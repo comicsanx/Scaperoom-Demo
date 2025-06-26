@@ -3,6 +3,7 @@ import mapa from '../assets/img/level2_provisional/mapa.png';
 import calendario from '../assets/img/level2_provisional/calendario.png';
 import poesia from '../assets/img/level2_provisional/poesía.png';
 import edificio from '../assets/img/level2_provisional/edificio.png';
+import caja_fuerte from '../assets/img/level2_provisional/caja_fuerte.png';
 
 export const EnigmasData = {
      // falta cambiar esa imagen por la carta final
@@ -67,8 +68,8 @@ export const EnigmasData = {
             // queda por fijar la solucion de la caja fuerte y la foto de ella
         id: 205,
         title: "Solo una combinación te separa del contenido de la caja fuerte",
-        img: 'caja fuerte abierta',
-        solution: "queda por fijar",
+        img: caja_fuerte,
+        solution: "1234o",
         description : 'Observa el brillo de la ciudad distante, luego mide el viaje de la tierra, escucha el eco revuelto del verso, recuerda el símbolo que te mira desde el lienzo, y el día que la fortuna celebra.',
         hints: [
             "Cinco caminos, cinco claves. El orden no lo dicta el azar, sino el recorrido que el arte, la tierra, la palabra y la suerte te han marcado. No saltes pasos.",
