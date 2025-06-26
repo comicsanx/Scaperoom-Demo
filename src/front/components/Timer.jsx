@@ -1,6 +1,8 @@
 import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import useChrono from "../hooks/useChrono";
 
+
+
 const Timer = forwardRef(function Timer({ menuOpen }, ref) {
     const { seconds, start, pause, addSeconds } = useChrono(true);
     const pausedByMenu = useRef(false);
@@ -21,7 +23,9 @@ const Timer = forwardRef(function Timer({ menuOpen }, ref) {
 
     return (
         <div>
-        {seconds}
+            {String(Math.floor(seconds / 3600)).padStart(2, '0')}:
+            {String(Math.floor((seconds % 3600) / 60)).padStart(2, '0')}:
+            {String(seconds % 60).padStart(2, '0')}
         </div>
     );
 });
