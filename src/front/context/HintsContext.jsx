@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
 import { useGame } from "./GameContext";
+import { EnigmasData } from '../data/EnigmasData';
 
 
 export const HintsContext = createContext();
@@ -7,7 +8,7 @@ export const useHints = () => useContext(HintsContext);
 
 export const HintsProvider = ({ children }) => {
 
-    const { timerRef ,getCurrentEnigmas, nivelActual } = useGame();
+    const { timerRef , nivelActual } = useGame();
 
     const [hintsUsed, setHintsUsed] = useState({}); 
     const [totalHintsUsed, setTotalHintsUsed] = useState(0); 
@@ -24,8 +25,11 @@ export const HintsProvider = ({ children }) => {
         let penalty = 0;
         let canGiveHint = false;
 
-        const currentLevelEnigmas = getCurrentEnigmas();
-        const enigma = currentLevelEnigmas.find(e => e.id === enigmaId);
+       
+         let enigma = EnigmasData.enigmasNivel1.find(e => e.id === enigmaId);
+        if (!enigma) {
+            enigma = EnigmasData.enigmasNivel2.find(e => e.id === enigmaId);
+        }
         if (!enigma) {
             message = "Error: Enigma no encontrado para solicitar pista.";
             setCurrentHintMessage(message);

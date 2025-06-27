@@ -18,13 +18,14 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
   const [isUserLoading, setIsUserLoading] = useState(true);
 
   //1.2 constantes generales de juego
-  const [nivelActual, setNivelActual] = useState(1);
+  const [nivelActual, setNivelActual] = useState(0);
   const [tiempo, setTiempo] = useState(0);
   const timerRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
 
   //1.3 constantes de mecánicas
   const [pickedUpObjects, setPickedUpObjects] = useState([])
+  const [isSafeCodeCorrect, setIsSafeCodeCorrect] = useState(false);
   const [isGearboxCodeCorrect, setIsGearboxCodeCorrect] = useState(false);
   const [hasLookedRoom, setHasLookedRoom] = useState(false);
 
@@ -163,24 +164,23 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     }
     try {
 
-      const session = await makeRequest(`/gamesession/user/${user.id}`, "GET", null, token)
+      const session = await makeRequest(`/api/gamesession/user/${user.id}`, "GET", null, token)
         .then(data => data)
         .catch(() => null);
       let method, endpoint;
 
       if (session && session.id) {
         method = "PUT";
-        endpoint = `/gamesession/${session.id}`;
+        endpoint = `/api/gamesession/${session.id}`;
       } else {
         method = "POST";
-        endpoint = `/gamesession`;
+        endpoint = `/api/gamesession`;
       }
 
 
       await makeRequest(endpoint, method, {
         current_level,
         accumulated_time,
-        user_id: user.id
       }, token);
 
 
@@ -410,6 +410,8 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
         sfxVolume: displaySfxVolume,
         setSfxVolume,
         playSfx,
+        isSafeCodeCorrect, 
+        setIsSafeCodeCorrect
       }}
     >
       {SFXManagerComponent && (

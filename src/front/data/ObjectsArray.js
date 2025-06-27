@@ -1,4 +1,6 @@
 import llave from "../assets/img/llave.png"
+import balleta  from "../assets/img/level2_provisional/balleta.png"
+import lupa from "../assets/img/level2_provisional/lupa.png"
     // id : 'llave',
     // name : 'llave maestra:',
     // img : 'foto png con fondo trnasparente ( será la forma del boton)',
@@ -18,33 +20,22 @@ export const ObjectsLevel1 = [{
 export const ObjectsLevel2 = [
  {
 
-    id : '',
-    name : '',
-    img : '',
+    id : 102,
+    name : 'gamuza',
+    img : balleta,
     className :'',
-    useIn : '',
-    message : ''
+    useIn : 'telescopio',
+    message : 'Buscale una utilidad a la gamuza, ¡quizás te sorprenda!'
 
 },
  {
 
-    id : '',
-    name : '',
-    img : '',
+    id : 103,
+    name : 'lupa',
+    img : lupa,
     className :'',
-    useIn : '',
-    message : ''
-}, {
-
-    id : '',
-    name : '',
-    img : '',
-    className :'',
-    useIn : '',
-    message : ''
-}
-
-
-
+    useIn : 'libro',
+    message : 'quizás puedas ver algo mejor con la lupa, ¡inténtalo!'
+}, 
 
 ]
