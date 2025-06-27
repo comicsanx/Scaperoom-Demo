@@ -63,7 +63,7 @@ z-index: 2;
 
 /* Modales */
 
-.modalUser-name{
+/* .modalUser-name{
 
   font-family: 'Courier New', Courier, monospace;
   font-size: 1.5rem;
@@ -96,7 +96,7 @@ z-index: 2;
 .modalUse-hints-unused{
  background-color: #28a745;
 color: white;
-}
+} */
 
 
 .modal-content {

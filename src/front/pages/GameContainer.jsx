@@ -44,7 +44,7 @@ export default function GameContainer() {
     setHasLookedRoom,
 
     setNivelActual,
-    nivelActual
+    nivelActual,
     user,
     tiempo,
     setTiempo,
@@ -140,7 +140,8 @@ export default function GameContainer() {
       setTimeout(() => setGameMessage(""), 4000);
       return;
     }
-    handleEnigmaClick(id_gearbox)
+    handleEnigmaClick(id_gearbox);
+    setHasLookedRoom(false);
   }
 
   // Función para click de la puerta final
