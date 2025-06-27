@@ -31,6 +31,9 @@ export default function GameContainer2() {
     setPickedUpObjects,
     nivelActual,
     setNivelActual,
+    tiempo,
+    setTiempo,
+    saveGameProgress,
 
   } = useGame()
 
@@ -203,7 +206,7 @@ const handleMapClick = () => {
       <div className="menu-toggle">
         <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
         <InfoModalUser className="info-modal-user" showEnigma={showEnigma} />
-        <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
+        <Timer className="timer" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
         <Objects objectsLevel={ObjectsLevel2} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
       </div>
      

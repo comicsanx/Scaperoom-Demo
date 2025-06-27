@@ -1,17 +1,40 @@
-#toggle-music-button {
-	margin-top: 20px;
-	padding: 10px 20px;
-	font-size: 1em;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
+.user-profile-card{
+    background-color: #CA7842;
+    color: #4B352A;
+    font-weight: 400;
+    font-style: normal;
 }
 
-.music-on {
-  background-color: #27ae60;
+.player-name, .game-stats {
+    font-family: "Righteous", sans-serif;
 }
 
-.music-off {
-  background-color: #c0392b;
+.player-email-display, .no-game-data{
+    font-family: "Open Sans", sans-serif;
+}
+
+.ranking-container{
+    background-color: #B2CD9C;
+    color: #4B352A;
+}
+
+.ClassicButton {
+    font-family: "Righteous", sans-serif;
+    color: #CA7842;
+    background-color: #B2CD9C;
+
+    background-image: radial-gradient(circle at 0% 50%, #F0F2BD 0%, #F0F2BD 100%); 
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    background-position: left center;
+    overflow: hidden;
+    position: relative; 
+    transition: background-size 0.6s ease-in, color 0.5s ease-in, background-color 0.5s ease-in;
+}
+
+.ClassicButton:hover {
+    background-size: 300% 100%;
+    background-color: #F0F2BD;
+    color: #4B352A;
+    border-color: #B2CD9C;
 }

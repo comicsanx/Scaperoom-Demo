@@ -1,9 +1,9 @@
 import { useGame } from "../context/GameContext";
 import React, { useEffect, useState } from "react";
-import Timer from "./Timer";
+// import Timer from "./Timer";
 import GameContainer from "../pages/GameContainer";
-import "../CSS/Game.css";
-import "../CSS/index.css";
+// import "../CSS/Game.css";
+// import "../CSS/index.css";
 
 import { Dropdown, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useHints } from "../context/HintsContext";
