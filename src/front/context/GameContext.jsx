@@ -18,13 +18,14 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
   const [isUserLoading, setIsUserLoading] = useState(true);
 
   //1.2 constantes generales de juego
-  const [nivelActual, setNivelActual] = useState(1);
+  const [nivelActual, setNivelActual] = useState(0);
   const [tiempo, setTiempo] = useState(0);
   const timerRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
 
   //1.3 constantes de mecánicas
   const [pickedUpObjects, setPickedUpObjects] = useState([])
+  const [isSafeCodeCorrect, setIsSafeCodeCorrect] = useState(false);
   const [isGearboxCodeCorrect, setIsGearboxCodeCorrect] = useState(false);
   const [hasLookedRoom, setHasLookedRoom] = useState(false);
 
@@ -402,6 +403,8 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
         sfxVolume: displaySfxVolume,
         setSfxVolume,
         playSfx,
+        isSafeCodeCorrect, 
+        setIsSafeCodeCorrect
       }}
     >
       {SFXManagerComponent && (

@@ -56,7 +56,7 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
                setTimeout(() => {
                     setSelectedObject(null); 
                     if (typeof onPenalty === "function") {
-                        onPenalty(4);
+                        onPenalty(2);
                     }
                 }, 0);
                 return 0;
