@@ -1,15 +1,17 @@
 import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import useChrono from "../hooks/useChrono";
 
-
-
-const Timer = forwardRef(function Timer({ menuOpen }, ref) {
+const Timer = forwardRef(function Timer({ menuOpen, tiempo, setTiempo }, ref) {
     const { seconds, start, pause, addSeconds } = useChrono(true);
     const pausedByMenu = useRef(false);
 
     useImperativeHandle(ref, () => ({
         addSeconds
     }));
+
+    useEffect(() => {
+        setTiempo(seconds);
+    }, [seconds, setTiempo]);
 
     useEffect(() => {
         if (menuOpen) {
