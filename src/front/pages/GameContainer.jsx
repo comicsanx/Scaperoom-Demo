@@ -16,6 +16,20 @@ import despacho_lleno from "../assets/img/despacho_lleno.jpg";
 
 import Pause from "../components/Pause";
 
+//importación de avatares
+
+import Avatar_01 from '../assets/img/UI/Avatars/Avatar_01.png';
+import Avatar_02 from '../assets/img/UI/Avatars/Avatar_02.png';
+import Avatar_03 from '../assets/img/UI/Avatars/Avatar_03.png';
+import Default_Avatar from '../assets/img/UI/Avatars/default_avatar.png';
+
+const avatarMap = {
+  "Avatar_01.png": Avatar_01,
+  "Avatar_02.png": Avatar_02,
+  "Avatar_03.png": Avatar_03,
+  "default_avatar.png": Default_Avatar,
+};
+
 
 export default function GameContainer() {
 
@@ -28,10 +42,18 @@ export default function GameContainer() {
     setIsGearboxCodeCorrect,
     hasLookedRoom,
     setHasLookedRoom,
+
     setNivelActual,
     nivelActual
+    user,
+    tiempo,
+    setTiempo,
+    saveGameProgress
+
   } = useGame()
 
+  //const para visibilidad de infomodal sin bootstrap
+  const [isInfoModalUserOpen, setIsInfoModalUserOpen] = useState(false);
 
 
   const navigate = useNavigate();
@@ -97,7 +119,7 @@ export default function GameContainer() {
   // Función para mirar por la mirilla
 
   const handlePeepholeClick = () => {
-     setHasLookedRoom(true);
+    setHasLookedRoom(true);
     console.log("Mirando por la mirilla...");
     const messageToShow = isGearboxCodeCorrect
       ? "¡La habitación está vacía!Es momento de pasar al despacho!."
@@ -124,42 +146,43 @@ export default function GameContainer() {
   // Función para click de la puerta final
   const handleDoorClick = () => {
     console.log("Clic en la puerta detectado.");
-     if (isGearboxCodeCorrect && hasLookedRoom) {
-            setGameMessage("¡La puerta se abre! Avanzando al siguiente nivel...");
-            setTimeout(() => {         
-            }, 3000);
-            navigate(`/level-victory`);
-        } else {
-           
-            setGameMessage("La puerta está cerrada. Debes asegurarte de que la habitación esté vacía.");
-            setTimeout(() => setGameMessage(""), 3000);
-        }
-    };
+    if (isGearboxCodeCorrect && hasLookedRoom) {
+      setGameMessage("¡La puerta se abre! Avanzando al siguiente nivel...");
+      saveGameProgress(1, tiempo);
+      setTimeout(() => {
+      }, 3000);
+      navigate(`/level-victory`);
+    } else {
 
-    //  Función para manejar la resolución de enigmas desde EnigmaModal
+      setGameMessage("La puerta está cerrada. Debes asegurarte de que la habitación esté vacía.");
+      setTimeout(() => setGameMessage(""), 3000);
+    }
+  };
+
+  //  Función para manejar la resolución de enigmas desde EnigmaModal
   const handleEnigmaSolved = (enigmaId, isCorrect) => {
-        setShowEnigma(false); 
-        setCurrentEnigma(null); 
+    setShowEnigma(false);
+    setCurrentEnigma(null);
 
-        if (enigmaId === id_gearbox) {
-            if (isCorrect) {
-                setIsGearboxCodeCorrect(true); 
-                 setGameMessage("¡Conseguiste manipular el reloj!Compreba si el señor Geeks se ha ido a comer.");
-                 setTimeout(() => setGameMessage(""), 4000);
-            } else {
-              
-            }
-        }
-}
+    if (enigmaId === id_gearbox) {
+      if (isCorrect) {
+        setIsGearboxCodeCorrect(true);
+        setGameMessage("¡Conseguiste manipular el reloj!Compreba si el señor Geeks se ha ido a comer.");
+        setTimeout(() => setGameMessage(""), 4000);
+      } else {
 
-
-    // Función para aplicar penalización de tiempo
-
-    const handlePenalty = (seconds) => {
-      if (timerRef.current) {
-        timerRef.current.addSeconds(seconds);
       }
-    };
+    }
+  }
+
+
+  // Función para aplicar penalización de tiempo
+
+  const handlePenalty = (seconds) => {
+    if (timerRef.current) {
+      timerRef.current.addSeconds(seconds);
+    }
+  };
 
     const currentEnigmaData = EnigmasData.enigmasNivel1.find(e => e.id === currentEnigma)
 
@@ -182,7 +205,7 @@ export default function GameContainer() {
 
           <InfoModalUser className="info-modal-user" showEnigma={showEnigma}  />
 
-          <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
+            <Timer className="timer" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
 
 
          

@@ -136,7 +136,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     }
     try {
 
-      const updatedProfile = await makeRequest(`/user/profile`, "PUT", newProfile, token);
+      const updatedProfile = await makeRequest(`/api/user/profile`, "PUT", newProfile, token);
       setUser(updatedProfile);
       alert("Perfil actualizado exitosamente.");
       return true;
@@ -157,24 +157,23 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     }
     try {
 
-      const session = await makeRequest(`/gamesession/user/${user.id}`, "GET", null, token)
+      const session = await makeRequest(`/api/gamesession/user/${user.id}`, "GET", null, token)
         .then(data => data)
         .catch(() => null);
       let method, endpoint;
 
       if (session && session.id) {
         method = "PUT";
-        endpoint = `/gamesession/${session.id}`;
+        endpoint = `/api/gamesession/${session.id}`;
       } else {
         method = "POST";
-        endpoint = `/gamesession`;
+        endpoint = `/api/gamesession`;
       }
 
 
       await makeRequest(endpoint, method, {
         current_level,
         accumulated_time,
-        user_id: user.id
       }, token);
 
 
