@@ -104,12 +104,7 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
   </Form.Group>
 )}
         
-{/*  
-         {message && (
-        <p className={`text-center ${message.includes('correcto') ? 'text-success' : (message.includes('incorrecto') ? 'text-danger' : '')}`}>
-          {message}
-        </p>
-      )} */}
+
       {message && (
   <p className={`text-center ${message === "Código incorrecto. Este error te trae 5 segundos de penalización..." ? 'text-danger' : 'text-success'}`}>
     {message}
