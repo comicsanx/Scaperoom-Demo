@@ -70,6 +70,7 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
       
     }
   }; 
+  
 
   return ( 
     <Modal show={show} onHide={onHide} centered backdrop="static">

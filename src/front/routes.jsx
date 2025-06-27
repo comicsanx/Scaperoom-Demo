@@ -17,6 +17,7 @@ import { PassRecovery } from "./pages/PassRecovery";
 import { ResetPassword } from "./pages/NewPasswordForm";
 import { GameVictory } from "./pages/GameVictory";
 import { LevelVictory } from "./pages/LevelVictory";
+
 import HowToPlay from "./components/HowToPlay";
 
 export const router = createBrowserRouter(

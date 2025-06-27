@@ -5,6 +5,7 @@ import poesia from '../assets/img/level2_provisional/poesía.png';
 import edificio from '../assets/img/level2_provisional/edificio.png';
 import caja_fuerte from '../assets/img/level2_provisional/caja_fuerte.png';
 
+
 export const EnigmasData = {
      // falta cambiar esa imagen por la carta final
     "enigmasNivel1": [
@@ -104,6 +105,8 @@ export const EnigmasData = {
         ],
         
         }
+          
     ],
 
     };
+   
