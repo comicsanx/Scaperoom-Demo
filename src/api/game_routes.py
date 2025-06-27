@@ -136,8 +136,9 @@ def get_gamesession_by_user(user_id):
 @game_api.route('/gamesession', methods=['POST'])
 @jwt_required()
 def create_gamesession():
+    current_user_id = get_jwt_identity()
     data = request.get_json()
-    user_id = data.get('user_id')
+    user_id = current_user_id
     current_level = data.get('current_level', 1)
     accumulated_time = data.get('accumulated_time', 0.0)
 

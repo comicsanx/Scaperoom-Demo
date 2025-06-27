@@ -43,6 +43,9 @@ export default function GameContainer() {
     hasLookedRoom,
     setHasLookedRoom,
     user,
+    tiempo,
+    setTiempo,
+    saveGameProgress
   } = useGame()
 
   //const para visibilidad de infomodal sin bootstrap
@@ -139,6 +142,7 @@ export default function GameContainer() {
     console.log("Clic en la puerta detectado.");
     if (isGearboxCodeCorrect && hasLookedRoom) {
       setGameMessage("¡La puerta se abre! Avanzando al siguiente nivel...");
+      saveGameProgress(1, tiempo);
       setTimeout(() => {
       }, 3000);
       navigate(`/level-victory`);
@@ -214,7 +218,7 @@ export default function GameContainer() {
       )}
       <div className="menu-toggle">
         <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
-        <Timer className="timer" menuOpen={menuOpen} ref={timerRef} />
+        <Timer className="timer" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
         {/* {menuOpen && <MenuAjustes onClose={() => setMenuOpen(false)} />} */}
         {showEnigma && currentEnigmaData && (
           <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }}
