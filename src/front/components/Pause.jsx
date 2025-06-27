@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import HowToPlay from './HowToPlay';
+import { useNavigate } from 'react-router-dom';
+import { useGame } from '../context/GameContext';
 
 const Pause = ({ open, onClose, onAbandon }) => {
     const [musicOn, setMusicOn] = useState(true);
     const [effectsOn, setEffectsOn] = useState(true);
     const [showHowToPlay, setShowHowToPlay] = useState(false);
+    const navigate = useNavigate();
+    const { logout } = useGame();
+
+// boton de logout
+    const handleLogoutClick = () => {
+    logout(); 
+    navigate('/login'); 
+};
+
 
     // Si se cierra el menú de pausa, también se cierra el modal de ayuda
     useEffect(() => {
@@ -27,9 +38,12 @@ const Pause = ({ open, onClose, onAbandon }) => {
                             Efectos: {effectsOn ? "ON" : "OFF"}
                         </button>
                         <button onClick={onAbandon} className="btn btn-danger">Abandonar</button>
+                        <button onClick={handleLogoutClick}>Cerrar Sesión</button>
                     </div>
                     <button onClick={onClose} className="btn btn-outline-dark mt-4">Cerrar</button>
                 </div>
+                
+                
             </div>
             <HowToPlay open={showHowToPlay} onClose={() => setShowHowToPlay(false)} />
         </>

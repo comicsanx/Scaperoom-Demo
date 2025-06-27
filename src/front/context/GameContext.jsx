@@ -80,347 +80,397 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
 
   // --- 4. Funciones de Autenticación y Gestión de Usuario (CRUD) ---
 
-  //4.1 logout
-  const logout = () => {
+ 
+
+//4.2 CRUD
+const signup = async (data) => {
+  try {
+
+    await makeRequest("/api/signup", "POST", data);
+    alert("¡Registro exitoso! Ya puedes iniciar sesión.");
+    return true;
+  } catch (error) {
+    console.error("Error durante el registro:", error);
+    alert(error.message || "No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
+    return false;
+  }
+};
+
+const login = async (email, password) => {
+  try {
+
+    const data = await makeRequest("/api/login", "POST", { email, password });
+    localStorage.setItem("token", data.token);
+    setToken(data.token);
+    setUser(data.user);
+    return true;
+  } catch (error) {
+    alert(error.message || "Login fallido");
+    return false;
+  }
+};
+
+const deleteUser = async () => {
+  if (!user || !user.id || !token) {
+    throw new Error("No hay usuario autenticado para eliminar.");
+  }
+  try {
+
+    await makeRequest(`/api/user/profile`, "DELETE", null, token);
+    logout();
+    return true;
+  } catch (error) {
+    console.error("Error al eliminar usuario en la API:", error);
+    throw new Error(error.message);
+  }
+};
+
+const updateUserProfile = async (newProfile) => {
+  if (!user || !user.id || !token) {
+    throw new Error("No hay usuario autenticado para modificar.");
+  }
+  try {
+
+    const responseData = await makeRequest(`/api/user/profile`, "PUT", newProfile, token);
+    setUser(responseData.user);
+
+    if (responseData.token) {
+      localStorage.setItem("token", responseData.token);
+      setToken(responseData.token);
+      console.log("Token actualizado después de modificar perfil.");
+    }
+
+    alert("Perfil actualizado exitosamente.");
+    return true;
+  } catch (error) {
+    console.error("Error al actualizar usuario en la API:", error);
+    throw new Error(error.message);
+  }
+};
+
+
+// --- 5. Funciones de Lógica de Juego ---
+
+// 5.1 Gestión del progreso del juego
+const saveGameProgress = useCallback(async (current_level, accumulated_time) => {
+  if (!user || !user.id || !token) {
+    console.error("No hay usuario autenticado.");
+    return false;
+  }
+  try {
+
+    const session = await makeRequest(`/api/gamesession/user/${user.id}`, "GET", null, token)
+      .then(data => data)
+      .catch(() => null);
+    let method, endpoint;
+
+    if (session && session.id) {
+      method = "PUT";
+      endpoint = `/api/gamesession/${session.id}`;
+    } else {
+      method = "POST";
+      endpoint = `/api/gamesession`;
+    }
+
+
+    await makeRequest(endpoint, method, {
+      current_level,
+      accumulated_time,
+    }, token);
+
+
+    setNivelActual(current_level);
+    setTiempo(accumulated_time);
+    return true;
+  } catch (error) {
+
+    console.error("Error al guardar progreso:", error);
+    alert(error.message || "No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
+    return false;
+  }
+}, [user, token, makeRequest, setNivelActual, setTiempo]);
+
+// 5.2 Obtencion de enigmas  
+const getCurrentEnigmas = () => {
+
+  switch (nivelActual) {
+    case 1:
+      return EnigmasData.enigmasNivel1;
+    case 2:
+      return EnigmasData.enigmasNivel2;
+
+    default:
+      return [];
+  }
+};
+
+// --- 6. Funciones y Efectos de Audio/SFX ---
+
+// 6.1 logout audio
+const audioLogout = useCallback(() => {
+  setHasUserInteracted(false);
+  setIsMusicEnabled(false);
+  if (audioPlayerRef.current) {
+    if (!audioPlayerRef.current.paused) {
+      audioPlayerRef.current.pause();
+    }
+    audioPlayerRef.current.src = "";
+    audioPlayerRef.current.load();
+    console.warn("[GameContext] Audio se ha 'deslogueado' (reiniciando interacción de usuario para audio).");
+  }
+}, []);
+
+ //4.1 logout
+  const logout = useCallback(() => {
     setToken("");
     setUser(null);
     localStorage.removeItem("token");
-  };
+    setNivelActual(0);
+    setTiempo(0);
+    setPickedUpObjects([]);
+    setIsSafeCodeCorrect(false);
+    setIsGearboxCodeCorrect(false);
+    setHasLookedRoom(false);
+    setMenuOpen(false);
+    audioLogout();
 
-  //4.2 CRUD
-  const signup = async (data) => {
-    try {
-
-      await makeRequest("/api/signup", "POST", data);
-      alert("¡Registro exitoso! Ya puedes iniciar sesión.");
-      return true;
-    } catch (error) {
-      console.error("Error durante el registro:", error);
-      alert(error.message || "No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
-      return false;
-    }
-  };
-
-  const login = async (email, password) => {
-    try {
-
-      const data = await makeRequest("/api/login", "POST", { email, password });
-      localStorage.setItem("token", data.token);
-      setToken(data.token);
-      setUser(data.user);
-      return true;
-    } catch (error) {
-      alert(error.message || "Login fallido");
-      return false;
-    }
-  };
-
-  const deleteUser = async () => {
-    if (!user || !user.id || !token) {
-      throw new Error("No hay usuario autenticado para eliminar.");
-    }
-    try {
-
-      await makeRequest(`/api/user/profile`, "DELETE", null, token);
-      logout();
-      return true;
-    } catch (error) {
-      console.error("Error al eliminar usuario en la API:", error);
-      throw new Error(error.message);
-    }
-  };
-
-  const updateUserProfile = async (newProfile) => {
-    if (!user || !user.id || !token) {
-      throw new Error("No hay usuario autenticado para modificar.");
-    }
-    try {
-
-      const responseData = await makeRequest(`/api/user/profile`, "PUT", newProfile, token);
-      setUser(responseData.user);
-
-      if (responseData.token) {
-        localStorage.setItem("token", responseData.token);
-        setToken(responseData.token);
-        console.log("Token actualizado después de modificar perfil.");
-      }
-
-      alert("Perfil actualizado exitosamente.");
-      return true;
-    } catch (error) {
-      console.error("Error al actualizar usuario en la API:", error);
-      throw new Error(error.message);
-    }
-  };
+    console.log("Sesión de usuario y estados de juego reseteados. Progreso en DB intacto.");
+  }, [audioLogout]); 
 
 
-  // --- 5. Funciones de Lógica de Juego ---
+// 6.2 Volumen musica
+const setMusicVolume = useCallback((newVolume) => {
+  const volume = Math.max(0, Math.min(1, newVolume));
+  currentVolume.current = volume;
+  setDisplayMusicVolume(volume);
 
-  // 5.1 Gestión del progreso del juego
-  const saveGameProgress = useCallback(async (current_level, accumulated_time) => {
-    if (!user || !user.id || !token) {
-      console.error("No hay usuario autenticado.");
-      return false;
-    }
-    try {
+  if (audioPlayerRef.current) {
+    audioPlayerRef.current.volume = volume;
+  }
+}, []);
 
-      const session = await makeRequest(`/api/gamesession/user/${user.id}`, "GET", null, token)
-        .then(data => data)
-        .catch(() => null);
-      let method, endpoint;
+// 6.3 Volumen SFX
+const setSfxVolume = useCallback((newVolume) => {
+  sfxVolume.current = newVolume;
+  setDisplaySfxVolume(newVolume);
+}, []);
 
-      if (session && session.id) {
-        method = "PUT";
-        endpoint = `/api/gamesession/${session.id}`;
-      } else {
-        method = "POST";
-        endpoint = `/api/gamesession`;
-      }
+// 6.3 Play SFX
+const playSfx = useCallback((sfxName, loop = false, localVolume = 1) => {
+  if (sfxManagerPlayRef.current) {
+    sfxManagerPlayRef.current(sfxName, loop, localVolume);
+  } else {
+    console.warn("[GameContext] SFXManager no está listo para reproducir:", sfxName);
+  }
+}, [sfxManagerPlayRef]);
 
+// 6.4 Cargar la URL de la pista de Audius
+useEffect(() => {
+  const fetchSingleMusicTrackDirectly = async () => {
+    setIsAudioLoading(true);
+    setAudiusAudioUrl(null);
 
-      await makeRequest(endpoint, method, {
-        current_level,
-        accumulated_time,
-      }, token);
+    let foundStreamUrl = null;
+    for (const providerUrl of AUDIUS_DISCOVERY_PROVIDERS) {
+      try {
+        console.log(`[GameContext] Intentando cargar la URL de la pista única desde el proveedor: ${providerUrl}`);
+        const response = await fetch(`${providerUrl}/v1/tracks/${SINGLE_AUDIUS_TRACK_ID}/stream`);
 
-
-      setNivelActual(current_level);
-      setTiempo(accumulated_time);
-      return true;
-    } catch (error) {
-
-      console.error("Error al guardar progreso:", error);
-      alert(error.message || "No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
-      return false;
-    }
-  }, [user, token, makeRequest, setNivelActual, setTiempo]);
-
-  // 5.2 Obtencion de enigmas  
-  const getCurrentEnigmas = () => {
-
-    switch (nivelActual) {
-      case 1:
-        return EnigmasData.enigmasNivel1;
-      case 2:
-        return EnigmasData.enigmasNivel2;
-
-      default:
-        return [];
-    }
-  };
-
-  // --- 6. Funciones y Efectos de Audio/SFX ---
-
-  // 6.1 logout audio
-  const audioLogout = useCallback(() => {
-    setHasUserInteracted(false);
-    setIsMusicEnabled(false);
-    if (audioPlayerRef.current) {
-      if (!audioPlayerRef.current.paused) {
-        audioPlayerRef.current.pause();
-      }
-      audioPlayerRef.current.src = "";
-      audioPlayerRef.current.load();
-      console.warn("[GameContext] Audio se ha 'deslogueado' (reiniciando interacción de usuario para audio).");
-    }
-  }, []);
-
-  // 6.2 Volumen musica
-  const setMusicVolume = useCallback((newVolume) => {
-    const volume = Math.max(0, Math.min(1, newVolume));
-    currentVolume.current = volume;
-    setDisplayMusicVolume(volume);
-
-    if (audioPlayerRef.current) {
-      audioPlayerRef.current.volume = volume;
-    }
-  }, []);
-
-  // 6.3 Volumen SFX
-  const setSfxVolume = useCallback((newVolume) => {
-    sfxVolume.current = newVolume;
-    setDisplaySfxVolume(newVolume);
-  }, []);
-
-  // 6.3 Play SFX
-  const playSfx = useCallback((sfxName, loop = false, localVolume = 1) => {
-    if (sfxManagerPlayRef.current) {
-      sfxManagerPlayRef.current(sfxName, loop, localVolume);
-    } else {
-      console.warn("[GameContext] SFXManager no está listo para reproducir:", sfxName);
-    }
-  }, [sfxManagerPlayRef]);
-
-  // 6.4 Cargar la URL de la pista de Audius
-  useEffect(() => {
-    const fetchSingleMusicTrackDirectly = async () => {
-      setIsAudioLoading(true);
-      setAudiusAudioUrl(null);
-
-      let foundStreamUrl = null;
-      for (const providerUrl of AUDIUS_DISCOVERY_PROVIDERS) {
-        try {
-          console.log(`[GameContext] Intentando cargar la URL de la pista única desde el proveedor: ${providerUrl}`);
-          const response = await fetch(`${providerUrl}/v1/tracks/${SINGLE_AUDIUS_TRACK_ID}/stream`);
-
-          if (response.ok && response.url) {
-            foundStreamUrl = response.url;
-            console.log(`[GameContext] URL de Audius para pista única obtenida de ${providerUrl}: ${foundStreamUrl}`);
-            break;
-          } else {
-            console.warn(`[GameContext] Proveedor ${providerUrl} no pudo obtener la URL de stream o la respuesta no fue OK. Intentando con el siguiente...`);
-          }
-        } catch (error) {
-          console.warn(`[GameContext] Error al conectar con el proveedor ${providerUrl}:`, error);
+        if (response.ok && response.url) {
+          foundStreamUrl = response.url;
+          console.log(`[GameContext] URL de Audius para pista única obtenida de ${providerUrl}: ${foundStreamUrl}`);
+          break;
+        } else {
+          console.warn(`[GameContext] Proveedor ${providerUrl} no pudo obtener la URL de stream o la respuesta no fue OK. Intentando con el siguiente...`);
         }
+      } catch (error) {
+        console.warn(`[GameContext] Error al conectar con el proveedor ${providerUrl}:`, error);
       }
-
-      setAudiusAudioUrl(foundStreamUrl);
-      if (!foundStreamUrl) {
-        console.warn("[GameContext] No se pudo obtener la URL de stream de ninguna de los proveedores de la lista.");
-      }
-      setIsAudioLoading(false);
-    };
-
-    if (!audiusAudioUrl && !isAudioLoading) {
-      fetchSingleMusicTrackDirectly();
     }
-  }, [audiusAudioUrl, isAudioLoading]);
 
-  // 6.5 Play Música
-  useEffect(() => {
-    const audio = audioPlayerRef.current;
-    console.log("------------------------------------------");
-    console.log("Estado de audio en useEffect (inicio):", {
-      isMusicEnabled,
+    setAudiusAudioUrl(foundStreamUrl);
+    if (!foundStreamUrl) {
+      console.warn("[GameContext] No se pudo obtener la URL de stream de ninguna de los proveedores de la lista.");
+    }
+    setIsAudioLoading(false);
+  };
+
+  if (!audiusAudioUrl && !isAudioLoading) {
+    fetchSingleMusicTrackDirectly();
+  }
+}, [audiusAudioUrl, isAudioLoading]);
+
+// 6.5 Play Música
+useEffect(() => {
+  const audio = audioPlayerRef.current;
+  console.log("------------------------------------------");
+  console.log("Estado de audio en useEffect (inicio):", {
+    isMusicEnabled,
+    audiusAudioUrl,
+    hasUserInteracted,
+    audioReady: !!audio,
+    currentAudioSrc: audio ? audio.src : 'N/A',
+    audioPaused: audio ? audio.paused : 'N/A',
+    // nivelActual 
+  });
+
+  if (audio && audiusAudioUrl) {
+    if (isMusicEnabled && hasUserInteracted) {
+      if (audio.paused || audio.src !== audiusAudioUrl) {
+        if (audio.src !== audiusAudioUrl) {
+          audio.src = audiusAudioUrl;
+          console.log("[Audio Player] Asignando la única URL de audio y cargando.");
+          audio.load();
+        }
+
+        console.log(`[Audio Player] ReadyState antes de play: ${audio.readyState}`);
+        setTimeout(() => {
+          audio.volume = currentVolume.current;
+          audio.loop = true;
+          audio.muted = false;
+          console.log("[Audio Player] Intentando reproducir DESPUÉS del setTimeout...");
+          audio.play().then(() => {
+            console.log("[Audio Player] REPRODUCCIÓN EXITOSA.");
+          }).catch(e => {
+            console.warn("[Audio Player] FALLO EN LA REPRODUCCIÓN (con catch):", e.name, e.message, e);
+          });
+        }, 100);
+      }
+
+    } else {
+
+      if (!audio.paused) {
+        console.log("[Audio Player] Pausando audio (música deshabilitada, sin interacción, o no es nivel de música).");
+        audio.pause();
+      }
+    }
+  } else {
+    console.log("[Audio Player] No se puede gestionar audio: elemento de audio o audiusAudioUrl no disponibles.", { audio, audiusAudioUrl });
+  }
+  console.log("------------------------------------------");
+}, [isMusicEnabled, hasUserInteracted, audiusAudioUrl, audioLogout, currentVolume]); // nivelActual
+
+// 6.6 Cargar usuario al inicializar la música
+useEffect(() => {
+  const loadUserProfile = async () => {
+    if (user && !isUserLoading) {
+      setIsUserLoading(false);
+      return;
+    }
+
+    if (!token) {
+      setUser(null);
+      setIsUserLoading(false);
+      return;
+    }
+
+    if (!user && token) {
+      setIsUserLoading(true);
+      try {
+        const userData = await makeRequest(`/api/user/profile`, "GET", null, token);
+        setUser(userData);
+
+        //  try {
+        //                 const sessionData = await makeRequest(`/api/gamesession/user/${userData.id}`, "GET", null, token);
+        //                 if (sessionData) {
+        //                     setNivelActual(sessionData.current_level);
+        //                     setTiempo(sessionData.accumulated_time);
+        //                     console.log("Progreso del juego cargado:", sessionData);
+        //                 } else {
+        //                     // Si no hay sesión guardada, iniciar desde el nivel por defecto
+        //                     setNivelActual(0); // O el nivel inicial de tu juego
+        //                     setTiempo(0);
+        //                     console.log("No se encontró progreso guardado, iniciando juego nuevo.");
+        //                 }
+        //             } catch (gameProgressError) {
+        //                 console.error("Error al cargar progreso del juego:", gameProgressError);
+                       
+        //                 setNivelActual(0); 
+        //                 setTiempo(0);
+        //             }
+
+
+      } catch (error) {
+        console.error("Error al cargar el perfil de usuario al iniciar:", error);
+        logout();
+      } finally {
+        setIsUserLoading(false);
+      }
+    }
+  };
+  loadUserProfile();
+}, [token, makeRequest, user, setUser, setIsUserLoading, logout ]); 
+//meter en la dependencia ,setNivelActual, setTiempo
+//funcion que se ejecuta al cerrar la pestaña o refrescar la página
+//para forzar el logout y resetear todo lo de la sesión
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            console.log("Evento 'beforeunload' detectado. Forzando logout de SESIÓN...");
+           
+            logout();
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [logout]);
+
+
+return (
+  <GameContext.Provider
+    value={{
+      user,
+      setUser,
+      isUserLoading,
+      setIsUserLoading,
+      token,
+      login,
+      logout,
+      nivelActual,
+      setNivelActual,
+      tiempo,
+      setTiempo,
+      makeRequest,
+      signup,
+      saveGameProgress,
+      deleteUser,
+      updateUserProfile,
+      menuOpen,
+      setMenuOpen,
+      timerRef,
+      pickedUpObjects,
+      setPickedUpObjects,
+      hasLookedRoom,
+      setHasLookedRoom,
+      isGearboxCodeCorrect,
+      setIsGearboxCodeCorrect,
+      getCurrentEnigmas,
       audiusAudioUrl,
+      isAudioLoading,
+      audioPlayerRef,
+      isMusicEnabled,
+      setIsMusicEnabled,
       hasUserInteracted,
-      audioReady: !!audio,
-      currentAudioSrc: audio ? audio.src : 'N/A',
-      audioPaused: audio ? audio.paused : 'N/A',
-      // nivelActual 
-    });
-
-    if (audio && audiusAudioUrl) {
-      if (isMusicEnabled && hasUserInteracted) {
-        if (audio.paused || audio.src !== audiusAudioUrl) {
-          if (audio.src !== audiusAudioUrl) {
-            audio.src = audiusAudioUrl;
-            console.log("[Audio Player] Asignando la única URL de audio y cargando.");
-            audio.load();
-          }
-
-          console.log(`[Audio Player] ReadyState antes de play: ${audio.readyState}`);
-          setTimeout(() => {
-            audio.volume = currentVolume.current;
-            audio.loop = true;
-            audio.muted = false;
-            console.log("[Audio Player] Intentando reproducir DESPUÉS del setTimeout...");
-            audio.play().then(() => {
-              console.log("[Audio Player] REPRODUCCIÓN EXITOSA.");
-            }).catch(e => {
-              console.warn("[Audio Player] FALLO EN LA REPRODUCCIÓN (con catch):", e.name, e.message, e);
-            });
-          }, 100);
-        }
-
-      } else {
-
-        if (!audio.paused) {
-          console.log("[Audio Player] Pausando audio (música deshabilitada, sin interacción, o no es nivel de música).");
-          audio.pause();
-        }
-      }
-    } else {
-      console.log("[Audio Player] No se puede gestionar audio: elemento de audio o audiusAudioUrl no disponibles.", { audio, audiusAudioUrl });
-    }
-    console.log("------------------------------------------");
-  }, [isMusicEnabled, hasUserInteracted, audiusAudioUrl, audioLogout, currentVolume]); // nivelActual
-
-  // 6.6 Cargar usuario al inicializar la música
-  useEffect(() => {
-    const loadUserProfile = async () => {
-      if (user && !isUserLoading) {
-        setIsUserLoading(false);
-        return;
-      }
-
-      if (!token) {
-        setUser(null);
-        setIsUserLoading(false);
-        return;
-      }
-
-      if (!user && token) {
-        setIsUserLoading(true);
-        try {
-          const userData = await makeRequest(`/api/user/profile`, "GET", null, token);
-          setUser(userData);
-        } catch (error) {
-          console.error("Error al cargar el perfil de usuario al iniciar:", error);
-          logout();
-        } finally {
-          setIsUserLoading(false);
-        }
-      }
-    };
-    loadUserProfile();
-  }, [token, makeRequest, user, setUser, setIsUserLoading, logout]);
-
-
-  return (
-    <GameContext.Provider
-      value={{
-        user,
-        setUser,
-        isUserLoading,
-        setIsUserLoading,
-        token,
-        login,
-        logout,
-        nivelActual,
-        setNivelActual,
-        tiempo,
-        setTiempo,
-        makeRequest,
-        signup,
-        saveGameProgress,
-        deleteUser,
-        updateUserProfile,
-        menuOpen,
-        setMenuOpen,
-        timerRef,
-        pickedUpObjects,
-        setPickedUpObjects,
-        hasLookedRoom,
-        setHasLookedRoom,
-        isGearboxCodeCorrect,
-        setIsGearboxCodeCorrect,
-        getCurrentEnigmas,
-        audiusAudioUrl,
-        isAudioLoading,
-        audioPlayerRef,
-        isMusicEnabled,
-        setIsMusicEnabled,
-        hasUserInteracted,
-        setHasUserInteracted,
-        currentVolume,
-        setMusicVolume,
-        displayMusicVolume,
-        sfxVolume: displaySfxVolume,
-        setSfxVolume,
-        playSfx,
-        isSafeCodeCorrect, 
-        setIsSafeCodeCorrect
-      }}
-    >
-      {SFXManagerComponent && (
-        <SFXManagerComponent
-          sfxManagerPlayRef={sfxManagerPlayRef}
-          sfxGlobalVolumeRef={sfxVolume}
-        />
-      )}
-      {children}
-    </GameContext.Provider>
-  );
+      setHasUserInteracted,
+      currentVolume,
+      setMusicVolume,
+      displayMusicVolume,
+      sfxVolume: displaySfxVolume,
+      setSfxVolume,
+      playSfx,
+      isSafeCodeCorrect,
+      setIsSafeCodeCorrect
+    }}
+  >
+    {SFXManagerComponent && (
+      <SFXManagerComponent
+        sfxManagerPlayRef={sfxManagerPlayRef}
+        sfxGlobalVolumeRef={sfxVolume}
+      />
+    )}
+    {children}
+  </GameContext.Provider>
+);
 };
