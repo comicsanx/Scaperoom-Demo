@@ -82,31 +82,6 @@ if (location.pathname === '/' && !hasUserInteracted && isMusicEnabled) {
 
   return (
     <>
-
-       <audio ref={audioPlayerRef} loop>
-                <source src={audiusAudioUrl || ''} type="audio/mpeg" />
-                Tu navegador no soporta la reproducción de audio.
-            </audio>
-{location.pathname === '/' && (
-     <button id="toggle-music-button" className={isMusicEnabled ? "music-on" : "music-off"} onClick={toggleMusicButtonHandler}>
-                    {isMusicEnabled ? '🔇 Desactivar Música' : '🎵 Activar Música'}
-                </button>
-      )}
-      {isMusicEnabled && audiusAudioUrl && (
-       <div style={{ position: 'absolute', bottom: '20px', left: '20px', zIndex: 1000, color: 'white' }}>
-                    <label htmlFor="music-volume">Volumen Música:</label>
-                    <input
-                        type="range"
-                        id="music-volume"
-                        min="0"
-                        max="1"
-                        step="0.01"
-                        value={displayMusicVolume}
-                        onChange={handleMusicVolumeChange}
-                    />
-                    <span>{Math.round(displayMusicVolume * 100)}%</span>
-                </div>
-            )}
       <div className="responsive-gestor-container">
         <Outlet />
       </div>
