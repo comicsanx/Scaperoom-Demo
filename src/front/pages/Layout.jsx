@@ -7,25 +7,21 @@ import '../CSS/General-UI.css';
 import RotateDeviceImage from '../assets/img/rotate-device.png';
 
 export function Layout() {
-  const {
-    isAudioLoading,
-    audioPlayerRef,
-    isMusicEnabled,
-    setIsMusicEnabled,
-     hasUserInteracted, 
-    setHasUserInteracted,
-    audiusAudioUrl,
-    currentVolume,
-    setMusicVolume,
-    displayMusicVolume,
-    logout,
-  } = useGame();
+    const {
+        audioPlayerRef,
+        isMusicEnabled,
+        setIsMusicEnabled,
+        hasUserInteracted,
+        setHasUserInteracted,
+        audiusAudioUrl,
+        logout,
+    } = useGame();
 
-  const location = useLocation();
+    const location = useLocation();
 
-  useEffect(() => {
+    useEffect(() => {
 
-        const musicRoutes = ['/level-1', '/level-2', '/level-victory', '/game-victory']; 
+        const musicRoutes = ['/level-1', '/level-2', '/level-victory', '/game-victory'];
 
         if (musicRoutes.includes(location.pathname)) {
             if (!isMusicEnabled) {
@@ -38,13 +34,13 @@ export function Layout() {
                 setIsMusicEnabled(false);
             }
         }
-if (location.pathname === '/' && !hasUserInteracted && isMusicEnabled) {
+        if (location.pathname === '/' && !hasUserInteracted && isMusicEnabled) {
             console.log("[Layout] Activando hasUserInteracted en la ruta '/' si la música está habilitada.");
             setHasUserInteracted(true);
         }
-         }, [location.pathname, isMusicEnabled, setIsMusicEnabled, hasUserInteracted, setHasUserInteracted]);
+    }, [location.pathname, isMusicEnabled, setIsMusicEnabled, hasUserInteracted, setHasUserInteracted]);
 
- useEffect(() => {
+    useEffect(() => {
         const handleFirstInteraction = () => {
             if (!hasUserInteracted) {
                 setHasUserInteracted(true);
@@ -61,7 +57,7 @@ if (location.pathname === '/' && !hasUserInteracted && isMusicEnabled) {
         };
     }, [hasUserInteracted, setHasUserInteracted]);
 
-     const toggleMusicButtonHandler = useCallback(() => {
+    const toggleMusicButtonHandler = useCallback(() => {
         const newState = !isMusicEnabled;
         setIsMusicEnabled(newState);
 
@@ -73,49 +69,26 @@ if (location.pathname === '/' && !hasUserInteracted && isMusicEnabled) {
         }
     }, [isMusicEnabled, setIsMusicEnabled, hasUserInteracted, setHasUserInteracted]);
 
-
- const handleMusicVolumeChange = useCallback((event) => {
-        const newVolume = parseFloat(event.target.value);
-        setMusicVolume(newVolume);
-        console.log(`[Layout] Volumen de música cambiado a: ${newVolume}`);
-    }, [setMusicVolume]);
-
-  return (
-    <>
-
-       <audio ref={audioPlayerRef} loop>
+    return (
+        <>
+            <audio ref={audioPlayerRef} loop>
                 <source src={audiusAudioUrl || ''} type="audio/mpeg" />
                 Tu navegador no soporta la reproducción de audio.
             </audio>
-{location.pathname === '/' && (
-     <button id="toggle-music-button" className={isMusicEnabled ? "music-on" : "music-off"} onClick={toggleMusicButtonHandler}>
+            {location.pathname === '/' && (
+                <button id="toggle-music-button" className={isMusicEnabled ? "music-on" : "music-off"} onClick={toggleMusicButtonHandler}>
                     {isMusicEnabled ? '🔇 Desactivar Música' : '🎵 Activar Música'}
                 </button>
-      )}
-      {isMusicEnabled && audiusAudioUrl && (
-       <div style={{ position: 'absolute', bottom: '20px', left: '20px', zIndex: 1000, color: 'white' }}>
-                    <label htmlFor="music-volume">Volumen Música:</label>
-                    <input
-                        type="range"
-                        id="music-volume"
-                        min="0"
-                        max="1"
-                        step="0.01"
-                        value={displayMusicVolume}
-                        onChange={handleMusicVolumeChange}
-                    />
-                    <span>{Math.round(displayMusicVolume * 100)}%</span>
-                </div>
             )}
-      <div className="responsive-gestor-container">
-        <Outlet />
-      </div>
+            <div className="responsive-gestor-container">
+                <Outlet />
+            </div>
 
-      <div className="orientation-message">
-        <img src={RotateDeviceImage} alt="Por favor, gira tu dispositivo" />
-        <p>Por favor, gira tu dispositivo para una mejor experiencia de juego.</p>
-        <p>¡Gira tu pantalla a horizontal!</p>
-      </div>
-    </>
-  );
+            <div className="orientation-message">
+                <img src={RotateDeviceImage} alt="Por favor, gira tu dispositivo" />
+                <p>Por favor, gira tu dispositivo para una mejor experiencia de juego.</p>
+                <p>¡Gira tu pantalla a horizontal!</p>
+            </div>
+        </>
+    );
 }

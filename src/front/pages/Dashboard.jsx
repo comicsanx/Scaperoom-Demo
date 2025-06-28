@@ -1,16 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGame } from '../context/GameContext';
 import { ButtonWithSFX } from '../components/SFXButton';
 import { UserProfile } from '../components/UserProfile';
 import { Ranking } from '../components/Ranking';
 import '../CSS/General-UI.css';
 import Logo from '../assets/img/UI/General_UI/Logo.png';
+import HowToPlay from '../components/HowToPlay';
 
 export function Dashboard() {
     const { setIsMusicEnabled, setNivelActual, nivelActual, setHasUserInteracted, hasUserInteracted, user, isUserLoading, token } = useGame();
     const navigate = useNavigate();
     const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api";
+    const [showHowToPlay, setShowHowToPlay] = useState(false);
 
     // useEffect(() => {
     //     fetch(`${API_BASE}/ranking/global`)
@@ -79,11 +81,6 @@ export function Dashboard() {
         navigate(`/level-${nivelActual}`);
     };
 
-     const handleHowToPlay = () => {
-        navigate('/how-to-play');
-
-     }
-
     return (
         <div className="dashboard-container container-fluid d-flex justify-content-center align-items-center vh-100 mt-5">
             <div className="row w-100 h-100">
@@ -115,7 +112,7 @@ export function Dashboard() {
                             </ButtonWithSFX>
                         )}
 
-                        <ButtonWithSFX onClick={handleHowToPlay} sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100"> 
+                        <ButtonWithSFX onClick={() => setShowHowToPlay(true)} sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100"> 
                             <h2>Cómo Jugar</h2>
                         </ButtonWithSFX>
 
@@ -129,8 +126,8 @@ export function Dashboard() {
                 <div className="col-lg-3 col-md-4 col-sm-2 col-xs-2 d-flex flex-column mt-5">      
                     <Ranking />
                 </div >
+                <HowToPlay open={showHowToPlay} onClose={() => setShowHowToPlay(false)} />
             </div >
         </div >
-            
     );
 }
