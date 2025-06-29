@@ -37,7 +37,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
   const [displayMusicVolume, setDisplayMusicVolume] = useState(currentVolume.current);
   const [isMusicEnabled, setIsMusicEnabled] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
-  const sfxVolume = useRef(0.5);
+  const sfxVolume = useRef(1);
   const [displaySfxVolume, setDisplaySfxVolume] = useState(sfxVolume.current);
   const sfxManagerPlayRef = useRef(null);
 

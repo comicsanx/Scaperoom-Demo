@@ -3,10 +3,13 @@ import { useGame } from "../context/GameContext";
 import { useState, useEffect } from "react";
 import {useHints} from "../context/HintsContext";
 import { EnigmasData } from "../data/EnigmasData";
+import {ButtonWithSFX} from "./SFXButton";
+
+
 
 export default function UsedHints({ enigmaId, isOpen, onClose }) {
   const {  hintsUsed, totalHintsUsed, currentHintMessage, requestHint} = useHints();
-  // const { getCurrentEnigmas } = useGame()
+
   const [localMessage, setLocalMessage] = useState("");
 
   if (!isOpen) return null;
@@ -32,6 +35,7 @@ export default function UsedHints({ enigmaId, isOpen, onClose }) {
   const canAskForMoreHints = currentHintsForThisEnigma < hints.length && totalHintsUsed < 3;
 
 const handleHint = () => { 
+    
       const hintGiven = requestHint(enigmaId);
       if (!hintGiven) {
           setLocalMessage(currentHintMessage);
@@ -49,14 +53,14 @@ const handleHint = () => {
     
   return (
     <div>
-      <button className="btn btn-warning" onClick={handleHint} disabled={!canAskForMoreHints}>
+      <ButtonWithSFX sfxName="USE_HINT" className="ClassicButton SmallButton" onClick={handleHint} disabled={!canAskForMoreHints}>
         Pedir pista
-      </button>
+      </ButtonWithSFX>
        {currentHintMessage && <p className="mt-2 text-warning">{currentHintMessage}</p>} 
             {!currentHintMessage && localMessage && <p className="mt-2 text-warning">{localMessage}</p>}
             
             {currentHintsForThisEnigma > 0 && (
-                <p className="mt-2">Pista: {hints[currentHintsForThisEnigma - 1]}</p>
+                <p className="mt-2">{hints[currentHintsForThisEnigma - 1]}</p>
             )}
         </div>
     );
