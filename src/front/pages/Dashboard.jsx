@@ -91,18 +91,18 @@ export function Dashboard() {
   };
 
   return (
-    <div className="dashboard-container container-fluid d-flex justify-content-center align-items-center vh-100 mt-5">
+    <div className="dashboard-container container-fluid d-flex justify-content-center align-items-center vh-100 mt-3">
       <div className="row w-100 h-100">
-        <div className="col-lg-3 col-md-4 col-sm-2 col-xs-2 d-flex flex-column mt-5">
+        <div className="dashboard-lateral col-3 d-flex flex-column">
           <UserProfile />
         </div>
-        <div className="col-xs-4 col-sm-4 col-md-4 col-lg-6 game-controls d-flex flex-column">
+        <div className="col-6 game-controls d-flex flex-column">
           <div className="row w-100">
-            <div className="logo-container col-12 text-center mb-auto mt-5 mx-auto px-5">
+            <div className="logo-container col-12 text-center">
               <img src={Logo} alt="Scaperoom Logo" className="Scaperoom-Logo img-fluid" />
             </div>
             <div className="btn-group-vertical d-flex justify-content-center align-items-center">
-              <div className="button-group col-lg-6 col-md-12 col-sm-12 col-xs-12 mt-5">
+              <div className="button-group righteous col-6 mt-5">
                 {!hasPlayed ? (
                   <ButtonWithSFX onClick={handleStartNewGame} sfxName="BUTTON_CLICK"
                     className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
@@ -113,11 +113,9 @@ export function Dashboard() {
                     <h2>Continuar</h2>
                   </ButtonWithSFX>
                 )}
-
                 <ButtonWithSFX onClick={() => setShowHowToPlay(true)} sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
                   <h2>Cómo Jugar</h2>
                 </ButtonWithSFX>
-
                 <ButtonWithSFX sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
                   <h2>Boton prueba SFX</h2>
                 </ButtonWithSFX>
@@ -125,7 +123,7 @@ export function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="col-lg-3 col-md-4 col-sm-2 col-xs-2 d-flex flex-column mt-5">
+        <div className="dashboard-lateral col-3 d-flex flex-column">
           <Ranking />
         </div >
         <HowToPlay open={showHowToPlay} onClose={() => setShowHowToPlay(false)} />
