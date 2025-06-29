@@ -13,13 +13,9 @@ import { EnigmasData } from "../data/EnigmasData";
 import letra_pequeña from "../assets/img/level2_provisional/letra_pequeña.jpg";
 import imagen_borrosa from "../assets/img/level2_provisional/imagen_borrosa.jpg";
 import Pause from "../components/Pause";
+import pantalla_final from '../assets/img/level2_provisional/pantalla_final.png';
 
 // LAS CLASES QUE SE LLAMEN 'object-zone' NO SE LES PUEDE CAMBIAR EL NOMBRE
-
-
-
-// import { useNavigate } from "react-router-dom";
-
 export default function GameContainer2() {
   const navigate = useNavigate();
   const {
@@ -33,29 +29,25 @@ export default function GameContainer2() {
     setNivelActual,
     tiempo,
     setTiempo,
-    saveGameProgress,
-
+    saveGameProgress
   } = useGame()
 
   useEffect(() => {
-    
-          setNivelActual(2);
+    setNivelActual(2);
     const handleEsc = (e) => {
       if (e.key === "Escape") setMenuOpen((prev) => !prev);
     };
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
-  }, [  setNivelActual]);
+  }, [setNivelActual]);
 
   const [selectedObject, setSelectedObject] = useState(null);
   const [showEnigma, setShowEnigma] = useState(false);
   const [currentEnigma, setCurrentEnigma] = useState(null);
-
   const [selectPictureCorrectBook, setSelectPictureCorrectBook] = useState(false);
   const [selectPictureCorrectTelescope, setSelectPictureCorrectTelescope] = useState(false);
-
+  const [showFinalImage, setShowFinalImage] = useState(false);
   const [gameMessage, setGameMessage] = useState("");
-
   const id_clinex = 102
   const id_magnifying_glass = 103
   const id_telescope = 207
@@ -63,10 +55,9 @@ export default function GameContainer2() {
   const id_safe = 205
   const id_calendar = 204
   const id_map = 203
-
+  const id_safe_handle = 208
 
   // función para manejar el objeto seleccionado
-
   const handleObjectUsed = (objectId) => {
     console.log(`Objeto (ID: ${objectId}) ha sido usado y se eliminará del inventario.`);
     setPickedUpObjects(prevObjects => prevObjects.filter(id => id !== objectId));
@@ -75,34 +66,26 @@ export default function GameContainer2() {
 
   // Función para abrir cualquier enigma
   const handleEnigmaClick = (enigmaIdToOpen) => {
-    console.log("handleEnigmaClick llamado con ID:", enigmaIdToOpen);
-
     setCurrentEnigma(enigmaIdToOpen);
     setShowEnigma(true);
     console.log(`Abriendo enigma ${enigmaIdToOpen}`);
     setSelectedObject(null);
-    setShowEnigma(true);
   };
-// función para abrir la bola del mundo
-const handleMapClick = () => {
-    console.log("Clic en la bola detectado.");
-      handleEnigmaClick(id_map);
-        } 
-  const handleCalendarClick = () => {
-    console.log("Clic en el calendario detectado.");
-      handleEnigmaClick(id_calendar);
-        } 
 
+  // función para abrir la bola del mundo
+  const handleMapClick = () => {
+    handleEnigmaClick(id_map);
+  }
+  const handleCalendarClick = () => {
+    handleEnigmaClick(id_calendar);
+  }
 
   // Función para abrir enigma libro
-
   const handleBookClick = () => {
-    console.log("Clic en el libro detectado.");
     if (selectedObject === id_magnifying_glass) {
       handleEnigmaClick(id_book);
       handleObjectUsed(id_magnifying_glass)
     } else {
-      console.log("No tienes la lupa seleccionada.");
       setGameMessage("¿consigues leer lo que pone?")
       setSelectPictureCorrectBook(true);
       setSelectedObject(null);
@@ -115,7 +98,6 @@ const handleMapClick = () => {
 
   // funcion para enigma de telescopio
   const handleTelescopeClick = () => {
-    console.log("Clic en el telescopio detectado. Objeto seleccionado:", selectedObject);
     if (selectedObject === id_clinex) {
       handleEnigmaClick(id_telescope);
       handleObjectUsed(id_clinex);
@@ -130,11 +112,9 @@ const handleMapClick = () => {
     }
   };
 
- const handleSafeClick = () => {
-    console.log("Clic en la caja fuerte detectado.");
-      handleEnigmaClick(id_safe);
-        } 
-
+  const handleSafeClick = () => {
+    handleEnigmaClick(id_safe);
+  }
 
   //  Función para manejar la resolución de enigma final desde EnigmaModal
   const handleEnigmaSolved = (enigmaId, isCorrect) => {
@@ -148,13 +128,27 @@ const handleMapClick = () => {
         setTimeout(() => setGameMessage(""), 4000);
         saveGameProgress((nivelActual + 1), tiempo);
         navigate(`/game-victory`)
-      } else {
-
       }
     }
   }
-  // Función para aplicar penalización de tiempo
 
+  // funcion para manejar el clic en la manilla de la caja fuerte
+  const handleSafeHandle = () => {
+    if (!isSafeCodeCorrect) {
+      setGameMessage("Necesitas resolver el enigma de la caja fuerte para poder abrirla.");
+      setTimeout(() => setGameMessage(""), 4000);
+    } else {
+     setShowFinalImage (true);
+       setTimeout(() => {
+        setShowFinalImage(false); 
+        saveGameProgress(nivelActual, tiempo); 
+        navigate("/game-victory"); 
+      }, 15000); 
+    
+    }
+  }
+  
+  // Función para aplicar penalización de tiempo
   const handlePenalty = (seconds) => {
     if (timerRef.current) {
       timerRef.current.addSeconds(seconds);
@@ -166,8 +160,9 @@ const handleMapClick = () => {
   return (
     <div className="game-container2-bg">
       {/* <img src={Level1BG} className="bg-img" alt="BG Level2" /> */}
-      <button id="calendar" onClick={handleCalendarClick }>calendario</button>
-      <button id="id_safe" onClick={handleSafeClick }>caja fuerte</button>
+      <button id="calendar" onClick={handleCalendarClick}>calendario</button>
+      <button id="id_safe" onClick={handleSafeClick}>caja fuerte</button>
+      <button id="id_safe_handle" onClick={handleSafeHandle}> manilla caja fuerte</button>
       <button id="map" onClick={handleMapClick}>bola del mundo</button>
       <button id="telescope" className='object-zone' onClick={handleTelescopeClick}>telescopio</button>
       <button id="book" className='object-zone' onClick={handleBookClick}>libro</button>
@@ -197,8 +192,13 @@ const handleMapClick = () => {
 
       {showEnigma && currentEnigmaData && (
         <EnigmaModal show={showEnigma} onEnigmaSolved={handleEnigmaSolved} onHide={() => setShowEnigma(false)} enigmaId={currentEnigma}
-         timerRef={timerRef}
+          timerRef={timerRef}
         />
+      )}
+  {showFinalImage && (
+        <div className="final-image-overlay"> {/* Esta clase la definiremos en CSS */}
+          <img src={pantalla_final} alt="Repositorio Desbloqueado" className="final-image-content" />
+        </div>
       )}
 
 
@@ -210,7 +210,7 @@ const handleMapClick = () => {
         <Timer className="timer" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
         <Objects objectsLevel={ObjectsLevel2} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
       </div>
-     
+
     </div>
 
 

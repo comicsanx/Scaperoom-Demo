@@ -20,8 +20,8 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
     ]
 
     const modalObject = allObjects.filter(obj => pickedUpObjects.includes(obj.id))
-    console.log("Objetos recogidos:", pickedUpObjects);
-    console.log("Objetos filtrados:", modalObject);
+    
+   
 
     const handleSelect = (id) => {
         if (selectedObject === id) {
