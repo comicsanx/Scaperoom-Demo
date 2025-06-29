@@ -110,7 +110,7 @@ export default function GameContainer() {
       setSelectedObject(null);
       setTimeout(() => {
         setMailboxMessage("");
-      }, 4000);
+      }, 3000);
     }
   };
 
@@ -126,7 +126,7 @@ export default function GameContainer() {
     setTimeout(() => {
       setShowRoomImage(false);
       setGameMessage("");
-    }, 5000);
+    }, 4000);
   };
 
   // Función para el clic en el Cuadro de Luces
@@ -134,7 +134,7 @@ export default function GameContainer() {
     console.log("Clic en el cuadro de luces detectado.");
     if (!hasLookedRoom) {
       setGameMessage("Primero, debes mirar por la mirilla para comprobar la situación.");
-      setTimeout(() => setGameMessage(""), 5000);
+      setTimeout(() => setGameMessage(""), 4000);
       return;
     }
     handleEnigmaClick(id_gearbox);
@@ -153,7 +153,7 @@ export default function GameContainer() {
     } else {
 
       setGameMessage("La puerta está cerrada. Debes asegurarte de que la habitación esté vacía.");
-      setTimeout(() => setGameMessage(""), 5000);
+      setTimeout(() => setGameMessage(""), 3000);
     }
   };
 
@@ -166,7 +166,7 @@ export default function GameContainer() {
       if (isCorrect) {
         setIsGearboxCodeCorrect(true);
         setGameMessage("¡Conseguiste manipular el reloj!Compreba si el señor Geeks se ha ido a comer.");
-        setTimeout(() => setGameMessage(""), 5000);
+        setTimeout(() => setGameMessage(""), 4000);
       } else {
 
       }

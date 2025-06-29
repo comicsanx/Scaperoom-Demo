@@ -3,7 +3,6 @@ import { EnigmasData } from "../data/EnigmasData";
 import UsedHints from "./UsedHints";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import '../CSS/General-UI.css';
 
 // NO CAMBIAR FRASE 'CODIGO INCORRECTO', SI SE CAMBIA CAMBIARLA IGUAL EN LA CONDICION DE ERROR ABAJO
 
@@ -74,20 +73,18 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
   
 
   return ( 
-    <Modal  className = 'enigmaGeneral' show={show} onHide={onHide} centered backdrop="static">
+    <Modal show={show} onHide={onHide} centered backdrop="static">
       <Modal.Header>
-        
-           <h1 className="modal-title h1-righteous w-100 text-center">{enigma.title}</h1>
-        
+        <Modal.Title>{enigma.title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-          <div className="image-container">
-    {enigma.img && <img src={enigma.img} alt="enigma" className="img-fluid" />}
-  </div>
-   {enigma.description && (
-    <h3 className="enigma-description">{enigma.description}</h3>
-  )}
-  
+        {enigma.img && (
+          <img
+            src={enigma.img}
+            className="img-fluid mb-3"
+           
+          />
+        )}
         {enigma.solution && ( 
   <Form.Group className="mb-3">
    
@@ -110,23 +107,23 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
         
 
       {message && (
-  <p className={`message-box text-center ${message === "Código incorrecto. Este error te trae 5 segundos de penalización..." ? 'text-danger' : 'text-success'}`}>
+  <p className={`text-center ${message === "Código incorrecto. Este error te trae 5 segundos de penalización..." ? 'text-danger' : 'text-success'}`}>
     {message}
   </p>
 )}
-        {/* {enigma.description && <p>{enigma.description}</p>} */}
+        {enigma.description && <p>{enigma.description}</p>}
 
         <UsedHints enigmaId={enigma.id} isOpen={show} onClose={onHide} />
 
       </Modal.Body>
       <Modal.Footer>
         {enigma.solution && (
-          <Button variant="primary"  className = 'ClassicButton SmallButton' onClick={handleSubmit}>
+          <Button variant="primary" onClick={handleSubmit}>
             Comprobar Código
           </Button>
         )}
-        <Button   className = 'ClassicButton SmallButton ' variant="secondary" onClick={onHide}>
-          X
+        <Button variant="secondary" onClick={onHide}>
+          <p>X</p>
         </Button>
       </Modal.Footer>
     </Modal>
