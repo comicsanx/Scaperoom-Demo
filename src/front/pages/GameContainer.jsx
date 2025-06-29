@@ -59,14 +59,14 @@ export default function GameContainer() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    
-          setNivelActual(1);
+
+    setNivelActual(1);
     const handleEsc = (e) => {
       if (e.key === "Escape") setMenuOpen((prev) => !prev);
     };
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
-  }, [  setNivelActual]);
+  }, [setNivelActual]);
 
   const [selectedObject, setSelectedObject] = useState(null);
   const [showEnigma, setShowEnigma] = useState(false);
@@ -185,55 +185,50 @@ export default function GameContainer() {
     }
   };
 
-    const currentEnigmaData = EnigmasData.enigmasNivel1.find(e => e.id === currentEnigma)
+  const currentEnigmaData = EnigmasData.enigmasNivel1.find(e => e.id === currentEnigma)
 
-    return (
-      <div className="game-container-bg">
-        <img src={Level1BG} className="bg-img" alt="BG Level1" />
-        <button id="plant"></button>
-        <button id="door"onClick={handleDoorClick}></button>
-        <button
-          id="letterbox"
-          className='object-zone'
-          onClick={handleMailboxClick}
-        ></button>
-        <button id="ESC" onClick={() => setMenuOpen(true)}></button>
-        <button id="lock" onClick={handlePeepholeClick}></button>
-        <button id="gearbox" onClick={handleLightsPanelClick}></button>
-        <button id="PlayerInfo"></button>
-        <div className="menu-toggle">
-           <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
-
-          <InfoModalUser className="info-modal-user" showEnigma={showEnigma}  />
-
-            <Timer className="timer" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
-
-
-         
-          {showEnigma && currentEnigmaData &&(
-            <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }} 
-            enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved} 
-             timerRef={timerRef}/>)}
-           {(mailboxMessage || gameMessage) && (
-            <div className="mailbox-message">
-              <p>{mailboxMessage || gameMessage}</p>
-            </div>
-          )}
-           {showRoomImage && (
-                    <div className="image-room">
-                        <img
-                            src={isGearboxCodeCorrect ? despacho_vacio : despacho_lleno} 
-                            alt="Vista a través de la mirilla"
-                            className="view-image"
-                        />
-                    </div>
-                )}
-
-          <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
-        </div>
+  return (
+    <div className="game-container-bg">
+      <img src={Level1BG} className="bg-img" alt="BG Level1" />
+      <button id="plant"></button>
+      <button id="door" onClick={handleDoorClick}></button>
+      <button
+        id="letterbox"
+        className='object-zone'
+        onClick={handleMailboxClick}
+      ></button>
+      <button id="ESC" onClick={() => setMenuOpen(true)}></button>
+      <button id="lock" onClick={handlePeepholeClick}></button>
+      <button id="gearbox" onClick={handleLightsPanelClick}></button>
+      <button id="PlayerInfo"></button>
+      <div className="menu-toggle">
+        <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
+        <InfoModalUser className="info-modal-user" showEnigma={showEnigma} />
+        <Timer className="timer" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
+        {showEnigma && currentEnigmaData && (
+          <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }}
+            enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved}
+            timerRef={timerRef} />)}
+        {(mailboxMessage || gameMessage) && (
+          <div className="mailbox-message">
+            <p>{mailboxMessage || gameMessage}</p>
+          </div>
+        )}
+        {showRoomImage && (
+          <div className="image-room">
+            <img
+              src={isGearboxCodeCorrect ? despacho_vacio : despacho_lleno}
+              alt="Vista a través de la mirilla"
+              className="view-image"
+            />
+          </div>
+        )}
+        <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
+          
       </div>
+    </div>
 
 
 
-    );
-  }
+  );
+}
