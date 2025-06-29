@@ -61,8 +61,40 @@
     border-color: #B2CD9C;
 }
 
-.editbutton, .deletebutton {
+.editbutton {
     font-size: 1.5rem;
+}
+.deletebutton {
+    font-size: 2rem;
+    color: #CA7842;
+    background-color: #B2CD9C;
+    background-image: radial-gradient(circle at 0% 50%, #b02c20 0%, #b02c20 100%); 
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    background-position: left center;
+    border: none;
+    overflow: hidden;
+    position: relative; 
+    transition: background-size 0.6s ease-in, color 0.5s ease-in, background-color 0.5s ease-in;
+}
+
+.deletebutton:hover {
+    background-size: 300% 100%;
+    background-color: #b02c20;
+    color: #F0F2BD;
+}
+
+.paginationbutton{
+    background-color: #B2CD9C;
+    border: none;
+    color: #CA7842;
+     position: relative; 
+    transition: background-size 0.6s ease-in, color 0.5s ease-in, background-color 0.5s ease-in;
+}
+
+.paginationbutton:hover {
+    background-size: 300% 100%;
+    color: #F0F2BD;
 }
 
 /* Dashboard */

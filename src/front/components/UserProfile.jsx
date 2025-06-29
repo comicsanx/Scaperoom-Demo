@@ -144,15 +144,15 @@ export function UserProfile() {
                         )}
                     </div>
                     <div className=" buttons-edit d-flex justify-content-center gap-3 mt-5">
-                    <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => setIsEditing(true)} className="ClassicButton righteous editbutton mb-3 rounded-pill px-4 py-3">Editar</ButtonWithSFX>
-                    <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={handleDeleteAccount} className="ClassicButton righteous deletebutton mb-3 rounded-pill px-4 py-3">Eliminar</ButtonWithSFX>
+                    <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => setIsEditing(true)} className="ClassicButton righteous editbutton mb-3 rounded-pill px-5 py-3"><i class="fa-solid fa-pen"></i></ButtonWithSFX>
+                    <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={handleDeleteAccount} className="righteous deletebutton mb-3 rounded-pill px-5 py-3"><i class="fa-solid fa-xmark"></i></ButtonWithSFX>
                     </div>
                 </div>
             ) : (
                 <form className="profile-edit-mode" onSubmit={handleSave}>
                     <div className="avatar-container-edit">
                         <img src={getAvatarUrl(formData.avatar_filename)} alt="Avatar actual" className="avatar-img-edit" />
-                        <label htmlFor="avatarSelect">Cambiar Avatar:</label>
+                        <label htmlFor="avatarSelect ">Cambiar Avatar:</label>
                         <select
                             id="avatarSelect"
                             name="avatar_filename"
