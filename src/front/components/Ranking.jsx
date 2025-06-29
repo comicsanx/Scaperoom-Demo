@@ -39,9 +39,9 @@ export function Ranking() {
         <div className="ranking-card p-3 mt-5 d-flex flex-column align-items-center w-100 justify-content-between">
             <h1 className="righteous ranking-title mb-5 mt-4">RANKING</h1>
             <div className="ranking-results d-flex flex-column align-items-center w-100">
-                {/* {currentItems.map((item) => ( aqui va la logica para la paginacion del ranking. Ranking results es el contenedor padre, ranking-single-result mapea la info. La info de cada player es avatar, nombre, tiempo y posición */}
-                <div className="ranking-single-result d-flex flex-column align-items-start w-100">
-                    <div className="righteous ranking-position d-flex flex-column align-items-start w-100 ps-2">
+                {/* {currentItems.map((item) => ( aqui va la logica para la paginacion del ranking. Ranking results es el contenedor padre, ranking-result mapea la info. La info de cada player es avatar, nombre, tiempo y posición */}
+                <div className="ranking-result d-flex flex-column align-items-start w-100">
+                    <div className="righteous ranking-number d-flex flex-column align-items-start w-100 ps-2">
                         <p className="m-0">1#</p>
                     </div>
                     <div className="d-flex justify-content-between w-100">
