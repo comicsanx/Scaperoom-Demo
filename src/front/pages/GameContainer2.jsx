@@ -13,12 +13,13 @@ import { EnigmasData } from "../data/EnigmasData";
 import letra_pequeña from "../assets/img/level2_provisional/letra_pequeña.jpg";
 import imagen_borrosa from "../assets/img/level2_provisional/imagen_borrosa.jpg";
 import Pause from "../components/Pause";
+import pantalla_final from '../assets/img/level2_provisional/pantalla_final.png';
 
 // LAS CLASES QUE SE LLAMEN 'object-zone' NO SE LES PUEDE CAMBIAR EL NOMBRE
 
 
 
-// import { useNavigate } from "react-router-dom";
+
 
 export default function GameContainer2() {
   const navigate = useNavigate();
@@ -38,14 +39,14 @@ export default function GameContainer2() {
   } = useGame()
 
   useEffect(() => {
-    
-          setNivelActual(2);
+
+    setNivelActual(2);
     const handleEsc = (e) => {
       if (e.key === "Escape") setMenuOpen((prev) => !prev);
     };
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
-  }, [  setNivelActual]);
+  }, [setNivelActual]);
 
   const [selectedObject, setSelectedObject] = useState(null);
   const [showEnigma, setShowEnigma] = useState(false);
@@ -53,6 +54,7 @@ export default function GameContainer2() {
 
   const [selectPictureCorrectBook, setSelectPictureCorrectBook] = useState(false);
   const [selectPictureCorrectTelescope, setSelectPictureCorrectTelescope] = useState(false);
+  const [showFinalImage, setShowFinalImage] = useState(false);
 
   const [gameMessage, setGameMessage] = useState("");
 
@@ -63,6 +65,7 @@ export default function GameContainer2() {
   const id_safe = 205
   const id_calendar = 204
   const id_map = 203
+  const id_safe_handle = 208
 
 
   // función para manejar el objeto seleccionado
@@ -81,17 +84,17 @@ export default function GameContainer2() {
     setShowEnigma(true);
     console.log(`Abriendo enigma ${enigmaIdToOpen}`);
     setSelectedObject(null);
-    setShowEnigma(true);
+   
   };
-// función para abrir la bola del mundo
-const handleMapClick = () => {
+  // función para abrir la bola del mundo
+  const handleMapClick = () => {
     console.log("Clic en la bola detectado.");
-      handleEnigmaClick(id_map);
-        } 
+    handleEnigmaClick(id_map);
+  }
   const handleCalendarClick = () => {
     console.log("Clic en el calendario detectado.");
-      handleEnigmaClick(id_calendar);
-        } 
+    handleEnigmaClick(id_calendar);
+  }
 
 
   // Función para abrir enigma libro
@@ -130,10 +133,10 @@ const handleMapClick = () => {
     }
   };
 
- const handleSafeClick = () => {
+  const handleSafeClick = () => {
     console.log("Clic en la caja fuerte detectado.");
-      handleEnigmaClick(id_safe);
-        } 
+    handleEnigmaClick(id_safe);
+  }
 
 
   //  Función para manejar la resolución de enigma final desde EnigmaModal
@@ -146,10 +149,26 @@ const handleMapClick = () => {
         setIsSafeCodeCorrect(true);
         setGameMessage("¡Felicidades! Has conseguido abrir la caja fuerte.!");
         setTimeout(() => setGameMessage(""), 4000);
-        navigate(`/game-victory`)
-      } else {
 
+      } else {
       }
+    }
+   
+  }
+  // funcion para manejar el clic en la manilla de la caja fuerte
+  const handleSafeHandle = () => {
+    console.log("Clic en la manilla de la caja fuerte detectado.");
+    if (!isSafeCodeCorrect) {
+      setGameMessage("Necesitas resolver el enigma de la caja fuerte para poder abrirla.");
+      setTimeout(() => setGameMessage(""), 4000);
+    } else {
+     setShowFinalImage (true);
+       setTimeout(() => {
+        setShowFinalImage(false); 
+        saveGameProgress(nivelActual, tiempo); 
+        navigate("/game-victory"); 
+      }, 15000); 
+    
     }
   }
   // Función para aplicar penalización de tiempo
@@ -165,8 +184,9 @@ const handleMapClick = () => {
   return (
     <div className="game-container2-bg">
       {/* <img src={Level1BG} className="bg-img" alt="BG Level2" /> */}
-      <button id="calendar" onClick={handleCalendarClick }>calendario</button>
-      <button id="id_safe" onClick={handleSafeClick }>caja fuerte</button>
+      <button id="calendar" onClick={handleCalendarClick}>calendario</button>
+      <button id="id_safe" onClick={handleSafeClick}>caja fuerte</button>
+      <button id="id_safe_handle" onClick={handleSafeHandle}> manilla caja fuerte</button>
       <button id="map" onClick={handleMapClick}>bola del mundo</button>
       <button id="telescope" className='object-zone' onClick={handleTelescopeClick}>telescopio</button>
       <button id="book" className='object-zone' onClick={handleBookClick}>libro</button>
@@ -196,8 +216,13 @@ const handleMapClick = () => {
 
       {showEnigma && currentEnigmaData && (
         <EnigmaModal show={showEnigma} onEnigmaSolved={handleEnigmaSolved} onHide={() => setShowEnigma(false)} enigmaId={currentEnigma}
-         timerRef={timerRef}
+          timerRef={timerRef}
         />
+      )}
+  {showFinalImage && (
+        <div className="final-image-overlay"> {/* Esta clase la definiremos en CSS */}
+          <img src={pantalla_final} alt="Repositorio Desbloqueado" className="final-image-content" />
+        </div>
       )}
 
 
@@ -209,7 +234,7 @@ const handleMapClick = () => {
         <Timer className="timer" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
         <Objects objectsLevel={ObjectsLevel2} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
       </div>
-     
+
     </div>
 
 
