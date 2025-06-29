@@ -156,46 +156,50 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
 
   // --- 5. Funciones de Lógica de Juego ---
 
-  // 5.1 Gestión del progreso del juego
-  const saveGameProgress = useCallback(async (current_level, accumulated_time) => {
+  // 5.1 Obtener el estado de la partida (solo GET)
+  const getGameSession = useCallback(async () => {
+    if (!user || !user.id || !token) {
+      console.error("No hay usuario autenticado.");
+      return null;
+    }
+    try {
+      return await makeRequest(`/api/gamesession/user/${user.id}`, "GET", null, token);
+    } catch (error) {
+      console.error("Error al obtener sesión de juego:", error);
+      return null;
+    }
+  }, [user, token, makeRequest]);
+
+  // 5.2 Guardar progreso (POST o PUT, según si hay sessionId)
+  const saveGameProgress = useCallback(async (current_level, accumulated_time, sessionId = null) => {
     if (!user || !user.id || !token) {
       console.error("No hay usuario autenticado.");
       return false;
     }
     try {
-
-      const session = await makeRequest(`/api/gamesession/user/${user.id}`, "GET", null, token)
-        .then(data => data)
-        .catch(() => null);
       let method, endpoint;
-
-      if (session && session.id) {
+      if (sessionId) {
         method = "PUT";
-        endpoint = `/api/gamesession/${session.id}`;
+        endpoint = `/api/gamesession/${sessionId}`;
       } else {
         method = "POST";
         endpoint = `/api/gamesession`;
       }
-
-
       await makeRequest(endpoint, method, {
         current_level,
         accumulated_time,
       }, token);
-
-
       setNivelActual(current_level);
       setTiempo(accumulated_time);
       return true;
     } catch (error) {
-
       console.error("Error al guardar progreso:", error);
       alert(error.message || "No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
       return false;
     }
   }, [user, token, makeRequest, setNivelActual, setTiempo]);
 
-  // 5.2 Obtencion de enigmas  
+  // 5.3 Obtencion de enigmas  
   const getCurrentEnigmas = () => {
 
     switch (nivelActual) {
@@ -384,6 +388,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
         setTiempo,
         makeRequest,
         signup,
+        getGameSession,
         saveGameProgress,
         deleteUser,
         updateUserProfile,
@@ -410,7 +415,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
         sfxVolume: displaySfxVolume,
         setSfxVolume,
         playSfx,
-        isSafeCodeCorrect, 
+        isSafeCodeCorrect,
         setIsSafeCodeCorrect
       }}
     >
