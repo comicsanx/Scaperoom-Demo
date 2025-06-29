@@ -101,7 +101,7 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
                 {!isOpen && (
                     <button
                         type="button"
-                        className="btn inventory_btn dropdown-toggle"
+                        className="btn inventory_btn fs-2"
                         onClick={() => setIsOpen(true)}
                     >
                         <i className="fa-solid fa-box-open inventoryIcono"></i>
