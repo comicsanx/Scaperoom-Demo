@@ -1,0 +1,183 @@
+/* Tipografias */
+.righteous {
+    font-family: "Righteous", sans-serif;
+    font-size: 1.5rem;
+}
+
+.open-sans {
+     font-family: "Open Sans", sans-serif;
+    font-size: 1.5rem;
+    
+}
+
+@media (min-width: 992px) {
+    .righteous {
+        font-size: 2rem; 
+    }
+    .open-sans {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+}
+
+@media (min-width: 1400px) {
+    .righteous {
+        font-size: 2.4rem; 
+    }
+    .open-sans {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+}
+
+.ranking-title {
+    font-size: 3rem;
+}
+
+.ranking-container{
+    background-color: #B2CD9C;
+    color: #4B352A;
+}
+
+/* Botones */
+
+.ClassicButton {
+    color: #CA7842;
+    background-color: #B2CD9C;
+    background-image: radial-gradient(circle at 0% 50%, #F0F2BD 0%, #F0F2BD 100%); 
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    background-position: left center;
+    border: none;
+    overflow: hidden;
+    position: relative; 
+    transition: background-size 0.6s ease-in, color 0.5s ease-in, background-color 0.5s ease-in;
+}
+
+.ClassicButton:hover {
+    background-size: 300% 100%;
+    background-color: #F0F2BD;
+    color: #4B352A;
+    border-color: #B2CD9C;
+}
+
+.editbutton {
+    font-size: 1.5rem;
+}
+.deletebutton {
+    font-size: 2rem;
+    color: #CA7842;
+    background-color: #B2CD9C;
+    background-image: radial-gradient(circle at 0% 50%, #b02c20 0%, #b02c20 100%); 
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    background-position: left center;
+    border: none;
+    overflow: hidden;
+    position: relative; 
+    transition: background-size 0.6s ease-in, color 0.5s ease-in, background-color 0.5s ease-in;
+}
+
+.deletebutton:hover {
+    background-size: 300% 100%;
+    background-color: #b02c20;
+    color: #F0F2BD;
+}
+
+.paginationbutton{
+    background-color: #B2CD9C;
+    border: none;
+    color: #CA7842;
+     position: relative; 
+    transition: background-size 0.6s ease-in, color 0.5s ease-in, background-color 0.5s ease-in;
+}
+
+.paginationbutton:hover {
+    background-size: 300% 100%;
+    color: #F0F2BD;
+}
+
+/* Dashboard */
+
+.user-profile-card{
+    background-color: #CA7842;
+    color: #4B352A;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.ranking-card{
+    background-color: #B2CD9C;
+    color: #4B352A;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.ranking-results{
+    background-color: #F0F2BD;
+    color: #4B352A;
+}
+.ranking-avatar {
+    width: 80px;
+    height: 80px;
+}
+.ranking-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.ranking-number {
+    background-color: #CA7842;
+    color: #F0F2BD;
+}
+
+.ranking-time {
+    color: #CA7842;
+}
+
+/* Dashboard mediaQueries */
+
+@media (min-width: 1400px) {
+        .dashboard-container  {
+    padding-top: 5rem;
+}
+.dashboard-lateral{
+    padding-top:1rem;
+}
+.dashboard-lateral > div {
+    align-self: flex-start;
+    height: 740px;
+
+}
+.btn-group-vertical{
+    padding-top: 4rem;
+}
+
+.logo-container {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* usuario */
+.profile-display-mode .avatar-container {
+        display: flex;
+        justify-content: center; 
+        align-items: center;
+        margin-bottom: 2rem; 
+        margin-top: 2rem;
+    }
+
+     .profile-display-mode .avatar-img {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    /* faltan los de editar (profile-edit-mode) */
+
+}
+

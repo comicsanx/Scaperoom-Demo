@@ -121,3 +121,51 @@ def get_global_ranking():
     except Exception as error:
         print(f'Error en el ranking global: {error}')
         return jsonify({"msg": "Error interno del servidor"}), 500
+    
+    # --- ENDPOINTS PARA GAMESESSION ---
+
+@game_api.route('/gamesession/user/<int:user_id>', methods=['GET'])
+@jwt_required()
+def get_gamesession_by_user(user_id):
+    session = GameSession.query.filter_by(user_id=user_id).order_by(GameSession.id.desc()).first()
+    if session:
+        return jsonify(session.serialize()), 200
+    else:
+        return jsonify({"msg": "No hay progreso guardado"}), 404
+
+@game_api.route('/gamesession', methods=['POST'])
+@jwt_required()
+def create_gamesession():
+    current_user_id = get_jwt_identity()
+    data = request.get_json()
+    user_id = current_user_id
+    current_level = data.get('current_level', 1)
+    accumulated_time = data.get('accumulated_time', 0.0)
+
+    if not user_id:
+        return jsonify({"msg": "user_id es requerido"}), 400
+
+    new_session = GameSession(
+        user_id=user_id,
+        current_level=current_level,
+        accumulated_time=accumulated_time,
+        status="playing"
+    )
+    db.session.add(new_session)
+    db.session.commit()
+    return jsonify(new_session.serialize()), 201
+
+@game_api.route('/gamesession/<int:session_id>', methods=['PUT'])
+@jwt_required()
+def update_gamesession(session_id):
+    session = GameSession.query.get(session_id)
+    if not session:
+        return jsonify({"msg": "Sesión no encontrada"}), 404
+
+    data = request.get_json()
+    session.current_level = data.get('current_level', session.current_level)
+    session.accumulated_time = data.get('accumulated_time', session.accumulated_time)
+    session.status = data.get('status', session.status)
+
+    db.session.commit()
+    return jsonify(session.serialize()), 200

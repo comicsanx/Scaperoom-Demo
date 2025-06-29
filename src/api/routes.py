@@ -1,16 +1,18 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-
-from flask import Flask, request, jsonify, url_for, Blueprint
+import os
+import secrets
+from flask import Flask, request, jsonify, url_for, Blueprint, current_app, send_from_directory 
+from flask_mail import Message
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from api.models import db, User, GameSession
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from sqlalchemy import select, func
-from flask import Blueprint, request, jsonify
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 api = Blueprint('api', __name__)
 
@@ -26,14 +28,14 @@ def signup():
         email = request.json.get('email', None)
         username = request.json.get('username', None)
         password = request.json.get('password', None)
-        #avatar_filename = request.json.get('avatar_filename', None)
+        avatar_filename = request.json.get('avatar_filename', None)
 
-        if not email or not username or not password: #or not avatar_filename: 
-            return jsonify({'msg': 'Se necesita email, nombre de usuario, contraseña y avatar'}), 400
+        if not email or not username or not password or not avatar_filename: 
+            return jsonify({'msg': 'Se necesita email, nombre de usuario, avatar y contraseña'}), 400
         
-        # ALLOWED_AVATARS = ["avatar_01.png", "avatar_02.png", "avatar_03.png"]
-        # if avatar_filename not in ALLOWED_AVATARS:
-        #     return jsonify({"msg": "El avatar seleccionado no es válido"}), 400
+        ALLOWED_AVATARS = ["Avatar_01.png", "Avatar_02.png", "Avatar_03.png", "default_avatar.png"]
+        if avatar_filename not in ALLOWED_AVATARS:
+            return jsonify({"msg": "El avatar seleccionado no es válido"}), 400
 
         user_exists_email = db.session.execute(select(User).where(User.email == email)).scalar_one_or_none()
         if user_exists_email:
@@ -45,7 +47,7 @@ def signup():
             email=email,
             username=username,
             password_hash=hashed_password,
-            # avatar_filename=avatar_filename,
+            avatar_filename=avatar_filename,
             is_active=True
         )
 
@@ -86,7 +88,6 @@ def login():
     
 @api.route('/user/profile', methods=['GET', 'PUT', 'DELETE'])
 @jwt_required()
-
 def handle_user_profile():
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
@@ -108,8 +109,9 @@ def handle_user_profile():
                 user.username = new_username
 
             new_avatar_filename = data.get('avatar_filename', None)
+
             if new_avatar_filename is not None:
-                ALLOWED_AVATARS = ["avatar_01.png", "avatar_02.png", "avatar_03.png"]
+                ALLOWED_AVATARS = ["Avatar_01.png", "Avatar_02.png", "Avatar_03.png", "default_avatar.png"]
                 if new_avatar_filename not in ALLOWED_AVATARS:
                     return jsonify({"msg": "Nombre de archivo de avatar no válido."}), 400
                 user.avatar_filename = new_avatar_filename
@@ -138,7 +140,7 @@ def handle_user_profile():
         try:
             db.session.delete(user)
             db.session.commit()
-            return jsonify({"msg": "Usuario eliminado con éxito"}), 204 
+            return '', 204 
         except Exception as error:
             db.session.rollback()
             print(f"Error al eliminar el usuario: {error}")
@@ -173,3 +175,75 @@ def get_ranking():
     except Exception as error:
         print(f'Error en el ranking: {error}')
         return jsonify({"msg": "Error interno del servidor"}), 500
+
+# --- FLUJO DE RECUPERACIÓN DE CONTRASEÑA CON TOKEN CORTO EN MEMORIA ---
+
+password_reset_tokens = {}
+
+def generate_short_token(length=12):
+    return secrets.token_urlsafe(length)[:length]
+
+def generate_reset_token(email):
+    serializer = URLSafeTimedSerializer(os.getenv("FLASK_APP_KEY"))
+    return serializer.dumps(email, salt="password-reset-salt")
+
+
+@api.route('/forgot-password', methods=['POST'])
+def forgot_password():
+    email = request.json.get('email')
+    if not email:
+        return jsonify({"msg": "El email es requerido"}), 400
+
+    user = db.session.execute(select(User).where(User.email == email)).scalar_one_or_none()
+    if not user:
+        return jsonify({"msg": "Si el email está registrado, recibirás instrucciones"}), 200
+
+    short_token = generate_short_token(12)
+    password_reset_tokens[short_token] = {
+        "email": email,
+        "expires_at": datetime.now(timezone.utc) + timedelta(hours=1)
+    }
+    reset_url = f"{os.getenv('FRONTEND_URL', 'http://localhost:3000')}/reset-password/{short_token}"
+
+    msg = Message(
+    "Recuperación de contraseña",
+    recipients=[email],
+    html=f"""<p>Para restablecer tu contraseña, haz clic en el siguiente enlace:<br>
+    <a href="{reset_url}">{reset_url}</a>
+    <br><br>Este enlace expirará en 1 hora.</p>"""
+    )
+    mail = current_app.extensions['mail']
+    mail.send(msg)
+
+    return jsonify({"msg": "Si el email está registrado, recibirás instrucciones"}), 200
+
+def verify_reset_token(token, expiration=3600):
+    serializer = URLSafeTimedSerializer(os.getenv("FLASK_APP_KEY"))
+    try:
+        email = serializer.loads(token, salt="password-reset-salt", max_age=expiration)
+        return email
+    except (SignatureExpired, BadSignature):
+        return None
+    
+@api.route('/reset-password/<token>', methods=['POST'])
+def reset_password(token):
+    data = request.get_json()
+    new_password = data.get("password")
+    if not new_password:
+        return jsonify({"msg": "La nueva contraseña es requerida"}), 400
+
+    token_data = password_reset_tokens.get(token)
+    if not token_data or token_data["expires_at"] < datetime.now(timezone.utc):
+        return jsonify({"msg": "El enlace es inválido o ha expirado"}), 400
+
+    email = token_data["email"]
+    user = db.session.execute(select(User).where(User.email == email)).scalar_one_or_none()
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+
+    user.password_hash = generate_password_hash(new_password)
+    db.session.commit()
+
+    del password_reset_tokens[token]
+
+    return jsonify({"msg": "Contraseña actualizada correctamente"}), 200

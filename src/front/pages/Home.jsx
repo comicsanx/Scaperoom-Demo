@@ -1,52 +1,58 @@
-import React, { useEffect } from "react"
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import { Login } from "../pages/Login";
-import { Signup } from "../pages/Signup";
-import GameContainer from "./GameContainer";
-import Dashboard from "./Dashboard";
-import Timer from "../components/Timer";
+import { useNavigate } from "react-router-dom";
+import '../CSS/General-UI.css';
+import Logo from '../assets/img/UI/General_UI/Logo.png';
+import { ButtonWithSFX } from '../components/SFXButton';
 
-export const Home = () => {
+export function Home() {
+	const navigate = useNavigate();
+	// const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api";
 
-
-	/* const loadMessage = async () => {
-		try {
-			const backendUrl = import.meta.env.VITE_BACKEND_URL
-
-			if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
-
-			const response = await fetch(backendUrl + "/api/hello")
-			const data = await response.json()
-
-			if (response.ok) dispatch({ type: "set_hello", payload: data.message })
-
-			return data
-
-		} catch (error) {
-			if (error.message) throw new Error(
-				`Could not fetch the message from the backend.
-				Please check if the backend is running and the backend port is public.`
-			);
-		}
-
-	} */
-
-	/* useEffect(() => {
-		loadMessage()
-	}, []) */
+	    const handleLogin = () => {
+        navigate(`/login`);
+     }
+	 const handleSignup = () => {
+		navigate(`/signup`);
+	 }
+	 const handleCredits = () => {
+		navigate(`/credits`);
+	 }
 
 	return (
-		<div className="text-center mt-5">
-			<h1 className="display-4">Hello Rigo!!</h1>
-			<p className="lead">
-				<img src={rigoImageUrl} className="img-fluid rounded-circle mb-3" alt="Rigo Baby" />
-			</p>
-			<div className="alert alert-info">
-				<Login />
-				<Dashboard />
-				<Signup />
 
-			</div>
-		</div>
+		<div className="dashboard-container container-fluid d-flex justify-content-center align-items-center vh-100 mt-5">
+					<div className="row w-100 h-100">
+						<div className="col-lg-3 col-md-4 col-sm-2 col-xs-2 d-flex flex-column mt-5">
+						</div>
+		
+						<div className="col-xs-4 col-sm-4 col-md-4 col-lg-6 game-controls d-flex flex-column">
+		
+							<div className="row w-100">
+		
+							<div className="logo-container col-12 text-center mb-auto mt-5 mx-auto px-5">
+								<img src={Logo} alt="Scaperoom Logo" className="Scaperoom-Logo img-fluid" />
+							</div>
+		
+							<div className="btn-group-vertical d-flex justify-content-center align-items-center">
+								<div className="button-group col-lg-6 col-md-12 col-sm-12 col-xs-12 mt-5">
+								<ButtonWithSFX onClick={handleLogin} sfxName="BUTTON_CLICK" 
+								className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
+								  <h2>Iniciar Sesión</h2>
+								</ButtonWithSFX>
+		
+								<ButtonWithSFX onClick={handleSignup} sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100"> 
+									<h2>Registro</h2>
+								</ButtonWithSFX>
+		
+								<ButtonWithSFX onClick={handleCredits} sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100"> 
+									<h2>Créditos</h2>
+								</ButtonWithSFX>
+								</div>
+							</div>
+							</div>
+						</div>
+						<div className="col-lg-3 col-md-4 col-sm-2 col-xs-2 d-flex flex-column mt-5">      
+						</div >
+					</div >
+				</div >
 	);
 }; 

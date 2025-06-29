@@ -19,7 +19,7 @@ export const Login = () => {
             console.log("login realizado", resp);
             console.log(resp);
             if (resp) {
-                navigate("/level");
+                navigate("/dashboard");
             } else {
                 console.error("Error en el login.");
                 setError("Credenciales inválidas.");
@@ -61,6 +61,14 @@ export const Login = () => {
                 </div>
                 <button type="submit" className="btn btn-primary btn-lg w-100">Entrar</button>
             </form>
+            <div className="mt-3">
+                <button
+                    className="btn btn-link"
+                    onClick={() => navigate("/forgot-password")}
+                >
+                    He olvidado mi contraseña
+                </button>
+            </div>
         </div>
     );
 };
