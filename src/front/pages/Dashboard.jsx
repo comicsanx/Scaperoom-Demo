@@ -8,16 +8,12 @@ import '../CSS/General-UI.css';
 import Logo from '../assets/img/UI/General_UI/Logo.png';
 import HowToPlay from '../components/HowToPlay';
 
-
-
 export function Dashboard() {
-
   const { setIsMusicEnabled, setNivelActual, nivelActual, setHasUserInteracted, hasUserInteracted, user, isUserLoading, token, getGameSession, setTiempo } = useGame();
   const navigate = useNavigate();
   const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api";
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const [gameSession, setGameSession] = useState(null);
-  const { logout } = useGame();
 
   // useEffect(() => {
   //     fetch(`${API_BASE}/ranking/global`)
@@ -38,7 +34,6 @@ export function Dashboard() {
   useEffect(() => {
     if (user && token) {
       getGameSession().then(session => setGameSession(session));
-
     }
   }, [user, token, getGameSession]);
 
@@ -50,16 +45,7 @@ export function Dashboard() {
     }
   }, [isUserLoading, user, navigate]);
 
-     // boton de logout
-    const handleLogoutClick = () => {
-    logout(); 
-    navigate('/login'); 
-};
-
-
-
   if (isUserLoading) {
-
     return (
       <div className="dashboard-container">
         <div className="dashboard-section">
@@ -76,8 +62,6 @@ export function Dashboard() {
 
   // para mostrar si ha jugado o no
   const hasPlayed = gameSession && (gameSession.current_level === 1 || gameSession.current_level === 2);
-
-
 
 
   // Necesario para la navegación al juego
@@ -132,11 +116,9 @@ export function Dashboard() {
                 <ButtonWithSFX onClick={() => setShowHowToPlay(true)} sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
                   <h2>Cómo Jugar</h2>
                 </ButtonWithSFX>
-                
-                <ButtonWithSFX onClick={handleLogoutClick} sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100"> 
-                     <h2>Cerrar sesión</h2>
-                 </ButtonWithSFX>
-                        
+                <ButtonWithSFX sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
+                  <h2>Boton prueba SFX</h2>
+                </ButtonWithSFX>
               </div>
             </div>
           </div>
