@@ -76,8 +76,8 @@ z-index: 0;
   position: fixed;
   top: 20%;
   left: 50%;
-  background: rgba(101, 67, 33, 1);
-  border: 2px solid #6B4226;
+  background-color:  #CA7842;
+  border: 2px solid #d7651a;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(50, 30, 10, 0.4);
   padding: 15px 25px;
@@ -85,14 +85,15 @@ z-index: 0;
   z-index: 9999;
   animation: popIn 0.7s ease forwards;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  
 }
 .modal-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.modal-content button {
-  background-color: #6A2E06;
+/* .modal-content button {
+  background-color:  #CA7842;
   border: none;
   color: white;
   font-size: 1rem;
@@ -101,7 +102,7 @@ z-index: 0;
   line-height: 1;
   border-radius: 4px;
   margin-top: 2px;
-}
+} */
 @keyframes popIn {
   0% {
     transform: translateX(-50%) scale(0.8);
@@ -112,10 +113,10 @@ z-index: 0;
     opacity: 1;
   }
 }
-.modal-content button:hover {
+/* .modal-content button:hover {
   background-color: #D48A4E;
   color: #222;
-}
+} */
 .modal-content h2 {
   font-size: 1rem;
   color: #F3E6D8;
@@ -137,10 +138,11 @@ z-index: 0;
 }
 .inventoryContainer {
   position: fixed;
-  bottom: 1%;
+  bottom: 1.5%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1050;
+  margin-bottom: 35px;
 }
 .inventory_btn {
   z-index: 1040;
@@ -150,6 +152,7 @@ z-index: 0;
 }
 .inventoryMenuObjects {
   background-color: #CA7842;
+
   padding: 10px;
   border-radius: 10px;
   height: 70px;
@@ -159,6 +162,7 @@ z-index: 0;
   align-items: center;
   animation: slideUp 0.5s ease-out;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  
 }
 @keyframes slideUp {
   from {
@@ -178,11 +182,11 @@ z-index: 0;
 }
 .inventoryPenaltyMessage {
   position: fixed;
-  top: 20px;
+  top: 60px;
   left: 50%;
   transform: translateX(-50%);
-  background: #ECC13F;
-  color: #fff;
+  background:  #4B352A;
+  color: #eef5e9;
   padding: 0.75em 1.25em;
   border-radius: 4px;
   font-size: 1rem;
@@ -199,3 +203,91 @@ z-index: 0;
   opacity: 0;
   visibility: hidden;
 }
+
+/* enigmas */
+.enigmaGeneral .modal-content {
+  background-color: #CA7842; 
+  border-radius: 1rem;
+  color: #2e2e2e;
+  font-family: 'Open Sans', sans-serif;
+  max-width: 90vw;
+  margin: auto;
+}
+
+.modal-title {
+  font-family: 'Righteous', sans-serif;
+  color: #fff;
+  font-size: 1.2rem;
+  text-align: center;
+}
+@media (max-width: 576px) {
+  .modal-title {
+    font-size: 1.4rem;
+  }
+
+  .enigma-description {
+    font-size: 0.95rem;
+  }
+
+  .image-container {
+    padding: 0.5rem;
+  }
+}
+.SmallButton {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.enigma-description {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.image-container {
+  background-color: #B2CD9C;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 1rem auto;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+.message-box {
+  font-weight: bold;
+  font-family: 'Open Sans', sans-serif;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.text-danger {
+  background-color: rgba(241, 162, 162, 0.2);
+  color: #a00;
+}
+
+.text-success {
+  background-color: #77ed92;
+  color: rgb(4, 96, 4);
+}
+
+.modal-footer button {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* .modal-footer button:last-child {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+} */

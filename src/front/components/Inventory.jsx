@@ -49,7 +49,7 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
 
             setTimeout(() => {
                 setMessage('');
-            }, 2000);
+            }, 3000);
 
             if (newCount >= 3) {
                 console.log("Penalización");
@@ -123,15 +123,15 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
                                 <img
                                     src={obj.img}
                                     className={`inventoryImg ${selectedObject === obj.id ? "selected" : ""}`}
-                                    alt={obj.name}
+                                    // alt={obj.name}
                                 />
-                                <p className="inventoryName">{obj.name}</p>
+                                {/* <p className="inventoryName">{obj.name}</p> */}
                             </div>
                         ))}
 
                         <button
                             type="button"
-                            className="btn btn-sm btn-danger  "
+                            className="ClassicButton SmallButton  "
                             onClick={() => setIsOpen(false)}
                         >
                             X
