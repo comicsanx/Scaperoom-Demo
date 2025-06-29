@@ -7,10 +7,14 @@ import { Ranking } from '../components/Ranking';
 import '../CSS/General-UI.css';
 import Logo from '../assets/img/UI/General_UI/Logo.png';
 
+
+
 export function Dashboard() {
     const { setIsMusicEnabled, setNivelActual, nivelActual, setHasUserInteracted, hasUserInteracted, user, isUserLoading, token } = useGame();
     const navigate = useNavigate();
     const API_BASE = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api";
+    
+    const { logout } = useGame();
 
     // useEffect(() => {
     //     fetch(`${API_BASE}/ranking/global`)
@@ -83,6 +87,12 @@ export function Dashboard() {
         navigate('/how-to-play');
 
      }
+     // boton de logout
+    const handleLogoutClick = () => {
+    logout(); 
+    navigate('/login'); 
+};
+
 
     return (
         <div className="dashboard-container container-fluid d-flex justify-content-center align-items-center vh-100 mt-5">
@@ -118,6 +128,7 @@ export function Dashboard() {
                         <ButtonWithSFX onClick={handleHowToPlay} sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100"> 
                             <h2>Cómo Jugar</h2>
                         </ButtonWithSFX>
+                        <button onClick={handleLogoutClick}>Cerrar Sesión</button>
 
                         <ButtonWithSFX sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
                             <h2>Boton prueba SFX</h2>
