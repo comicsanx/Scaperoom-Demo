@@ -149,60 +149,59 @@ const updateUserProfile = async (newProfile) => {
 };
 
 
-// --- 5. Funciones de Lógica de Juego ---
+ // --- 5. Funciones de Lógica de Juego ---
 
-// 5.1 Gestión del progreso del juego
-const saveGameProgress = useCallback(async (current_level, accumulated_time) => {
-  if (!user || !user.id || !token) {
-    console.error("No hay usuario autenticado.");
-    return false;
-  }
-  try {
-
-    const session = await makeRequest(`/api/gamesession/user/${user.id}`, "GET", null, token)
-      .then(data => data)
-      .catch(() => null);
-    let method, endpoint;
-
-    if (session && session.id) {
-      method = "PUT";
-      endpoint = `/api/gamesession/${session.id}`;
-    } else {
-      method = "POST";
-      endpoint = `/api/gamesession`;
+  // 5.1 Obtener el estado de la partida (solo GET)
+  const getGameSession = useCallback(async () => {
+    if (!user || !user.id || !token) {
+      console.error("No hay usuario autenticado.");
+      return null;
     }
+    try {
+      return await makeRequest(`/api/gamesession/user/${user.id}`, "GET", null, token);
+    } catch (error) {
+      console.error("Error al obtener sesión de juego:", error);
+      return null;
+    }
+  }, [user, token, makeRequest]);
 
+  // 5.2 Guardar progreso (POST o PUT, según si hay sessionId)
+  const saveGameProgress = useCallback(async (current_level, accumulated_time, sessionId = null) => {
+    if (!user || !user.id || !token) {
+      console.error("No hay usuario autenticado.");
+      return false;
+    }
+    try {
+      let method, endpoint;
+      if (sessionId) {
+        method = "PUT";
+        endpoint = `/api/gamesession/${sessionId}`;
+      } else {
+        method = "POST";
+        endpoint = `/api/gamesession`;
+      }
+      await makeRequest(endpoint, method, {
+        current_level,
+        accumulated_time,
+      }, token);
+      setNivelActual(current_level);
+      setTiempo(accumulated_time);
+      return true;
+    } catch (error) {
+      console.error("Error al guardar progreso:", error);
+      alert(error.message || "No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
+      return false;
+    }
+  }, [user, token, makeRequest, setNivelActual, setTiempo]);
 
-    await makeRequest(endpoint, method, {
-      current_level,
-      accumulated_time,
-    }, token);
+  // 5.3 Obtencion de enigmas  
+  const getCurrentEnigmas = () => {
 
-
-    setNivelActual(current_level);
-    setTiempo(accumulated_time);
-    return true;
-  } catch (error) {
-
-    console.error("Error al guardar progreso:", error);
-    alert(error.message || "No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.");
-    return false;
-  }
-}, [user, token, makeRequest, setNivelActual, setTiempo]);
-
-// 5.2 Obtencion de enigmas  
-const getCurrentEnigmas = () => {
-
-  switch (nivelActual) {
-    case 1:
-      return EnigmasData.enigmasNivel1;
-    case 2:
-      return EnigmasData.enigmasNivel2;
-
-    default:
-      return [];
-  }
-};
+    switch (nivelActual) {
+      case 1:
+        return EnigmasData.enigmasNivel1;
+      case 2:
+        return EnigmasData.enigmasNivel2;
 
 // --- 6. Funciones y Efectos de Audio/SFX ---
 
@@ -287,6 +286,9 @@ useEffect(() => {
         console.warn(`[GameContext] Error al conectar con el proveedor ${providerUrl}:`, error);
       }
     }
+
+ 
+
 
     setAudiusAudioUrl(foundStreamUrl);
     if (!foundStreamUrl) {
@@ -396,6 +398,7 @@ useEffect(() => {
       } finally {
         setIsUserLoading(false);
       }
+
     }
   };
   loadUserProfile();
@@ -418,59 +421,78 @@ useEffect(() => {
     }, [logout]);
 
 
-return (
-  <GameContext.Provider
-    value={{
-      user,
-      setUser,
-      isUserLoading,
-      setIsUserLoading,
-      token,
-      login,
-      logout,
-      nivelActual,
-      setNivelActual,
-      tiempo,
-      setTiempo,
-      makeRequest,
-      signup,
-      saveGameProgress,
-      deleteUser,
-      updateUserProfile,
-      menuOpen,
-      setMenuOpen,
-      timerRef,
-      pickedUpObjects,
-      setPickedUpObjects,
-      hasLookedRoom,
-      setHasLookedRoom,
-      isGearboxCodeCorrect,
-      setIsGearboxCodeCorrect,
-      getCurrentEnigmas,
-      audiusAudioUrl,
-      isAudioLoading,
-      audioPlayerRef,
-      isMusicEnabled,
-      setIsMusicEnabled,
-      hasUserInteracted,
-      setHasUserInteracted,
-      currentVolume,
-      setMusicVolume,
-      displayMusicVolume,
-      sfxVolume: displaySfxVolume,
-      setSfxVolume,
-      playSfx,
-      isSafeCodeCorrect,
-      setIsSafeCodeCorrect
-    }}
-  >
-    {SFXManagerComponent && (
-      <SFXManagerComponent
-        sfxManagerPlayRef={sfxManagerPlayRef}
-        sfxGlobalVolumeRef={sfxVolume}
-      />
-    )}
-    {children}
-  </GameContext.Provider>
-);
+      if (!user && token) {
+        setIsUserLoading(true);
+        try {
+          const userData = await makeRequest(`/api/user/profile`, "GET", null, token);
+          setUser(userData);
+        } catch (error) {
+          console.error("Error al cargar el perfil de usuario al iniciar:", error);
+          logout();
+        } finally {
+          setIsUserLoading(false);
+        }
+      }
+    };
+    loadUserProfile();
+  }, [token, makeRequest, user, setUser, setIsUserLoading, logout]);
+
+
+  return (
+    <GameContext.Provider
+      value={{
+        user,
+        setUser,
+        isUserLoading,
+        setIsUserLoading,
+        token,
+        login,
+        logout,
+        nivelActual,
+        setNivelActual,
+        tiempo,
+        setTiempo,
+        makeRequest,
+        signup,
+        getGameSession,
+        saveGameProgress,
+        deleteUser,
+        updateUserProfile,
+        menuOpen,
+        setMenuOpen,
+        timerRef,
+        pickedUpObjects,
+        setPickedUpObjects,
+        hasLookedRoom,
+        setHasLookedRoom,
+        isGearboxCodeCorrect,
+        setIsGearboxCodeCorrect,
+        getCurrentEnigmas,
+        audiusAudioUrl,
+        isAudioLoading,
+        audioPlayerRef,
+        isMusicEnabled,
+        setIsMusicEnabled,
+        hasUserInteracted,
+        setHasUserInteracted,
+        currentVolume,
+        setMusicVolume,
+        displayMusicVolume,
+        sfxVolume: displaySfxVolume,
+        setSfxVolume,
+        playSfx,
+        isSafeCodeCorrect,
+        setIsSafeCodeCorrect
+      }}
+    >
+      {SFXManagerComponent && (
+        <SFXManagerComponent
+          sfxManagerPlayRef={sfxManagerPlayRef}
+          sfxGlobalVolumeRef={sfxVolume}
+        />
+      )}
+      {children}
+    </GameContext.Provider>
+  );
+
 };

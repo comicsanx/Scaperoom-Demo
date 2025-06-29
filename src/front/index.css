@@ -130,7 +130,7 @@ z-index: 0;
   height: 30px;
   object-fit: contain;
   border-radius: 20px;
-  background-color: rgb(235, 210, 178);
+  background-color: #F0F2BD(235, 210, 178);
   margin-top: 20px;
 }
 .inventoryName {
@@ -147,10 +147,12 @@ z-index: 0;
 .inventory_btn {
   z-index: 1040;
   position: relative;
-  
+  margin-bottom:35px;
+  color: #F0F2BD;
 }
 .inventoryMenuObjects {
-  background-color:#CA7842;
+  background-color: #CA7842;
+
   padding: 10px;
   border-radius: 10px;
   height: 70px;

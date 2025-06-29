@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useGame } from '../context/GameContext';
 import { useNavigate } from 'react-router-dom';
 import { ALLOWED_AVATAR_FILENAMES, getAvatarUrl } from '../data/AvatarData'; 
+import { ButtonWithSFX } from '../components/SFXButton';
 import '../CSS/General-UI.css'; 
 
 export function UserProfile() {
@@ -83,7 +84,6 @@ export function UserProfile() {
     
         try {
             await updateUserProfile(payload);
-            setFeedbackMessage('Perfil actualizado exitosamente.');
             setFeedbackType('success');
             setIsEditing(false); 
             setFormData(prev => ({
@@ -115,7 +115,7 @@ export function UserProfile() {
     };
 
     return (
-        <div className="user-profile-card container mt-5 p-5 d-flex flex-column align-items-center">
+        <div className="user-profile-card p-3 mt-5 d-flex flex-column align-items-center w-100">
 
             {feedbackMessage && (
                 <div className={`feedback-message ${feedbackType === 'success' ? 'success' : 'error'}`}>
@@ -124,15 +124,15 @@ export function UserProfile() {
             )}
 
             {!isEditing ? (
-                <div className="profile-display-mode">
-                    <div className="avatar-container">
+                <div className="profile-display-mode ">
+                    <div className="avatar-container d-flex flex-column align-items-center w-100">
                         <img src={getAvatarUrl(user.avatar_filename)} alt="Avatar de usuario" className="avatar-img" />
                     </div>
-                    <h1 className="player-name mb-0 mt-3">{user.username}</h1>
-                    <p className="player-email-display mt-0">{user.email}</p>
+                    <h1 className="righteous player-name ms-3 mb-0 mt-3">{user.username}</h1>
+                    <p className="open-sans player-email-display ms-3 mt-0">{user.email}</p>
 
-                    <div className="game-stats mt-5">
-                        <h3>Estadísticas</h3>
+                    <div className="righteous game-stats ms-3 mt-5">
+                        <h2>DATOS</h2>
                         {user.gameSession ? (
                             <>
                                 <p>Nivel Actual: <span className="stat-value">{user.gameSession.current_level}</span></p>
@@ -140,19 +140,19 @@ export function UserProfile() {
                                 {/* Añade más estadísticas si las tienes en user.gameSession */}
                             </>
                         ) : (
-                            <p className="no-game-data">No hay datos de juego</p>
+                            <p className="open-sans game-data fs-lg-3">No hay datos de juego</p>
                         )}
                     </div>
                     <div className=" buttons-edit d-flex justify-content-center gap-3 mt-5">
-                    <button onClick={() => setIsEditing(true)} className="edit-profile-btn d-flex">Editar Perfil</button>
-                    <button onClick={handleDeleteAccount} className="delete-btn d-flex">Eliminar Cuenta</button>
+                    <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => setIsEditing(true)} className="ClassicButton righteous editbutton mb-3 rounded-pill px-5 py-3"><i class="fa-solid fa-pen"></i></ButtonWithSFX>
+                    <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={handleDeleteAccount} className="righteous deletebutton mb-3 rounded-pill px-5 py-3"><i class="fa-solid fa-xmark"></i></ButtonWithSFX>
                     </div>
                 </div>
             ) : (
                 <form className="profile-edit-mode" onSubmit={handleSave}>
                     <div className="avatar-container-edit">
                         <img src={getAvatarUrl(formData.avatar_filename)} alt="Avatar actual" className="avatar-img-edit" />
-                        <label htmlFor="avatarSelect">Cambiar Avatar:</label>
+                        <label htmlFor="avatarSelect ">Cambiar Avatar:</label>
                         <select
                             id="avatarSelect"
                             name="avatar_filename"

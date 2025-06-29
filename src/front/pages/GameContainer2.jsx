@@ -16,11 +16,6 @@ import Pause from "../components/Pause";
 import pantalla_final from '../assets/img/level2_provisional/pantalla_final.png';
 
 // LAS CLASES QUE SE LLAMEN 'object-zone' NO SE LES PUEDE CAMBIAR EL NOMBRE
-
-
-
-
-
 export default function GameContainer2() {
   const navigate = useNavigate();
   const {
@@ -34,12 +29,10 @@ export default function GameContainer2() {
     setNivelActual,
     tiempo,
     setTiempo,
-    saveGameProgress,
-
+    saveGameProgress
   } = useGame()
 
   useEffect(() => {
-
     setNivelActual(2);
     const handleEsc = (e) => {
       if (e.key === "Escape") setMenuOpen((prev) => !prev);
@@ -51,13 +44,10 @@ export default function GameContainer2() {
   const [selectedObject, setSelectedObject] = useState(null);
   const [showEnigma, setShowEnigma] = useState(false);
   const [currentEnigma, setCurrentEnigma] = useState(null);
-
   const [selectPictureCorrectBook, setSelectPictureCorrectBook] = useState(false);
   const [selectPictureCorrectTelescope, setSelectPictureCorrectTelescope] = useState(false);
   const [showFinalImage, setShowFinalImage] = useState(false);
-
   const [gameMessage, setGameMessage] = useState("");
-
   const id_clinex = 102
   const id_magnifying_glass = 103
   const id_telescope = 207
@@ -67,9 +57,7 @@ export default function GameContainer2() {
   const id_map = 203
   const id_safe_handle = 208
 
-
   // función para manejar el objeto seleccionado
-
   const handleObjectUsed = (objectId) => {
     console.log(`Objeto (ID: ${objectId}) ha sido usado y se eliminará del inventario.`);
     setPickedUpObjects(prevObjects => prevObjects.filter(id => id !== objectId));
@@ -78,34 +66,26 @@ export default function GameContainer2() {
 
   // Función para abrir cualquier enigma
   const handleEnigmaClick = (enigmaIdToOpen) => {
-    console.log("handleEnigmaClick llamado con ID:", enigmaIdToOpen);
-
     setCurrentEnigma(enigmaIdToOpen);
     setShowEnigma(true);
     console.log(`Abriendo enigma ${enigmaIdToOpen}`);
     setSelectedObject(null);
-   
   };
+
   // función para abrir la bola del mundo
   const handleMapClick = () => {
-    console.log("Clic en la bola detectado.");
     handleEnigmaClick(id_map);
   }
   const handleCalendarClick = () => {
-    console.log("Clic en el calendario detectado.");
     handleEnigmaClick(id_calendar);
   }
 
-
   // Función para abrir enigma libro
-
   const handleBookClick = () => {
-    console.log("Clic en el libro detectado.");
     if (selectedObject === id_magnifying_glass) {
       handleEnigmaClick(id_book);
       handleObjectUsed(id_magnifying_glass)
     } else {
-      console.log("No tienes la lupa seleccionada.");
       setGameMessage("¿consigues leer lo que pone?")
       setSelectPictureCorrectBook(true);
       setSelectedObject(null);
@@ -118,7 +98,6 @@ export default function GameContainer2() {
 
   // funcion para enigma de telescopio
   const handleTelescopeClick = () => {
-    console.log("Clic en el telescopio detectado. Objeto seleccionado:", selectedObject);
     if (selectedObject === id_clinex) {
       handleEnigmaClick(id_telescope);
       handleObjectUsed(id_clinex);
@@ -134,10 +113,8 @@ export default function GameContainer2() {
   };
 
   const handleSafeClick = () => {
-    console.log("Clic en la caja fuerte detectado.");
     handleEnigmaClick(id_safe);
   }
-
 
   //  Función para manejar la resolución de enigma final desde EnigmaModal
   const handleEnigmaSolved = (enigmaId, isCorrect) => {
@@ -149,15 +126,14 @@ export default function GameContainer2() {
         setIsSafeCodeCorrect(true);
         setGameMessage("¡Felicidades! Has conseguido abrir la caja fuerte.!");
         setTimeout(() => setGameMessage(""), 4000);
-
-      } else {
+        saveGameProgress((nivelActual + 1), tiempo);
+        navigate(`/game-victory`)
       }
     }
-   
   }
+
   // funcion para manejar el clic en la manilla de la caja fuerte
   const handleSafeHandle = () => {
-    console.log("Clic en la manilla de la caja fuerte detectado.");
     if (!isSafeCodeCorrect) {
       setGameMessage("Necesitas resolver el enigma de la caja fuerte para poder abrirla.");
       setTimeout(() => setGameMessage(""), 4000);
@@ -171,8 +147,8 @@ export default function GameContainer2() {
     
     }
   }
+  
   // Función para aplicar penalización de tiempo
-
   const handlePenalty = (seconds) => {
     if (timerRef.current) {
       timerRef.current.addSeconds(seconds);
