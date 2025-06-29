@@ -146,6 +146,7 @@ const handleMapClick = () => {
         setIsSafeCodeCorrect(true);
         setGameMessage("¡Felicidades! Has conseguido abrir la caja fuerte.!");
         setTimeout(() => setGameMessage(""), 4000);
+        saveGameProgress((nivelActual + 1), tiempo);
         navigate(`/game-victory`)
       } else {
 
