@@ -147,6 +147,7 @@ export default function GameContainer() {
     if (isGearboxCodeCorrect && hasLookedRoom) {
       setGameMessage("¡La puerta se abre! Avanzando al siguiente nivel...");
       saveGameProgress((nivelActual + 1), tiempo);
+      sessionStorage.setItem('level1Timer', tiempo);
       setTimeout(() => {
       }, 3000);
       navigate(`/level-victory`);

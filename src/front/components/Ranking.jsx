@@ -13,7 +13,8 @@ const ALL_ITEMS_TO_PAGINATE = Array.from({ length: 100 }, (_, i) => ({
 export function Ranking() {
     const { user } = useGame();
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 3; 
+    const itemsPerPage = 3;
+    const [ranking, setRanking] = useState([]);
 
     const totalPages = Math.ceil(ALL_ITEMS_TO_PAGINATE.length / itemsPerPage);
 
@@ -29,11 +30,12 @@ export function Ranking() {
         setCurrentPage(prev => Math.min(prev + 1, totalPages));
     };
 
-// hay que adaptar los nombres a los estados del Ranking. 
-// No se ha podido probar la paginación al no existir logica de ranking
-
-// El diseño está realizado como base en una resolucion 1280x720.
-// MEDIA QUERIES: 1920x1080
+    useEffect(() => {
+        fetch('http://localhost:3001/api/ranking/global')
+            .then(res => res.json())
+            .then(data => setRanking(data))
+            .catch(err => console.error("Error fetching ranking:", err));
+    }, []);
 
     return (
         <div className="ranking-card p-3 mt-5 d-flex flex-column align-items-center w-100 justify-content-between">
