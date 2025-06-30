@@ -10,6 +10,12 @@
     
 }
 
+.open-sans-lite {
+     font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
+    
+}
+
 
 @media (min-width: 992px) {
     .righteous {
@@ -18,6 +24,10 @@
     .open-sans {
         font-size: 1rem;
         font-weight: 600;
+    }
+      .open-sans-lite {
+        font-size: 1rem;
+        font-weight: 500;
     }
 }
 
@@ -59,8 +69,8 @@ background: none;
 border: none;
 }
 
-.backgrond-orange{
-background-color:#CA7842 ;
+.background-orange{
+background-color:#CA7842;
 }
 
 .brown {
