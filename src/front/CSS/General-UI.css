@@ -10,6 +10,7 @@
     
 }
 
+
 @media (min-width: 992px) {
     .righteous {
         font-size: 2rem; 
@@ -30,13 +31,44 @@
     }
 }
 
-.ranking-title {
-    font-size: 3rem;
+/* Colores */
+
+.yellow{
+color:#F0F2BD;
 }
 
-.ranking-container{
-    background-color: #B2CD9C;
-    color: #4B352A;
+.background-yellow{
+background-color: #F0F2BD;
+}
+
+.green {
+color:#B2CD9C;
+}
+
+.background-green {
+background-color: #B2CD9C;
+}
+
+.orange {
+color:#CA7842;
+}
+
+.backgrond-orange{
+background-color:#CA7842 ;
+}
+
+.brown {
+color:#4B352A;
+}
+
+.background-brown {
+background-color: #4B352A;
+}
+
+/* tamaño */
+
+.header-title {
+    font-size: 4rem;
 }
 
 /* Botones */
@@ -59,6 +91,30 @@
     background-color: #F0F2BD;
     color: #4B352A;
     border-color: #B2CD9C;
+}
+
+.ClassicButton-Variation {
+    color: #F0F2BD;
+    background-color: #CA7842;
+    background-image: radial-gradient(circle at 0% 50%, #4B352A 0%, #4B352A 100%); 
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    background-position: left center;
+    border: none;
+    overflow: hidden;
+    position: relative; 
+    transition: background-size 0.6s ease-in, color 0.5s ease-in, background-color 0.5s ease-in;
+}
+
+.ClassicButton-Variation:hover {
+    background-size: 300% 100%;
+    background-color: #4B352A;
+    color: #F0F2BD;
+    border: none;
+}
+
+.btn-link.orange:hover {
+  color: #F0F2BD; 
 }
 
 .editbutton {
@@ -105,6 +161,14 @@
     font-weight: 400;
     font-style: normal;
 }
+.ranking-title {
+    font-size: 3rem;
+}
+
+.ranking-container{
+    background-color: #B2CD9C;
+    color: #4B352A;
+}
 
 .ranking-card{
     background-color: #B2CD9C;
@@ -136,6 +200,8 @@
 .ranking-time {
     color: #CA7842;
 }
+
+
 
 /* Dashboard mediaQueries */
 

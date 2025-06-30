@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext";
+import { ButtonWithSFX } from '../components/SFXButton';
+import '../CSS/General-UI.css';
 
 export const Login = () => {
     const { login } = useGame();
@@ -33,11 +35,14 @@ export const Login = () => {
     };   
 
     return (
-        <div className="text-center mt-5 container">
-            <h1 className="mb-4">Iniciar Sesión</h1>
-            <form onSubmit={handleSubmit} className="col-md-6 mx-auto">
+        <div className="text-center mt-5 py-5 container">
+            <div className="background-green d-flex flex-column align-items-center w-100">
+                <div className="righteous ranking-number d-flex flex-column w-100 ps-2">
+            <h1 className="header-title righteous mt-5 yellow mb-5">INICIAR SESIÓN</h1>
+                </div>
+            <form onSubmit={handleSubmit} className="col-md-6 mx-auto m-5">
                 <div className="mb-3 text-start">
-                    <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
+                    <label htmlFor="exampleInputEmail1" className="open-sans orange form-label">Email</label>
                     <input
                         type="email"
                         className="form-control"
@@ -49,7 +54,7 @@ export const Login = () => {
                     />
                 </div>
                 <div className="mb-3 text-start">
-                    <label htmlFor="exampleInputPassword1" className="form-label">Contraseña</label>
+                    <label htmlFor="exampleInputPassword1" className="open-sans orange form-label">Contraseña</label>
                     <input
                         type="password"
                         className="form-control"
@@ -59,15 +64,16 @@ export const Login = () => {
                         required
                     />
                 </div>
-                <button type="submit" className="btn btn-primary btn-lg w-100">Entrar</button>
+                <ButtonWithSFX type="submit" sfxName="BUTTON_CLICK" className="ClassicButton-Variation righteous mb-0 mt-4 rounded-pill px-5 py-3">Entrar</ButtonWithSFX>
             </form>
-            <div className="mt-3">
+            <div className="mb-5">
                 <button
-                    className="btn btn-link"
+                    className="btn btn-link open-sans orange"
                     onClick={() => navigate("/forgot-password")}
                 >
-                    He olvidado mi contraseña
+                    <h5>He olvidado mi contraseña</h5>
                 </button>
+            </div>
             </div>
         </div>
     );
