@@ -35,6 +35,8 @@
 
 .yellow{
 color:#F0F2BD;
+background: none;
+border: none;
 }
 
 .background-yellow{
@@ -43,6 +45,8 @@ background-color: #F0F2BD;
 
 .green {
 color:#B2CD9C;
+background: none;
+border: none;
 }
 
 .background-green {
@@ -51,6 +55,8 @@ background-color: #B2CD9C;
 
 .orange {
 color:#CA7842;
+background: none;
+border: none;
 }
 
 .backgrond-orange{
@@ -59,6 +65,8 @@ background-color:#CA7842 ;
 
 .brown {
 color:#4B352A;
+background: none;
+border: none;
 }
 
 .background-brown {
@@ -153,6 +161,66 @@ background-color: #4B352A;
     color: #F0F2BD;
 }
 
+.forward-button h1 .fa-solid.fa-caret-right {
+  font-size: 3em;
+}
+
+.forward-button h1 .fa-solid.fa-caret-left {
+  font-size: 3em;
+}
+
+.forward-button h1 .fa-solid.fa-caret-right:hover {
+  color: #B2CD9C;
+  transition: color 0.5s ease-in;
+}
+
+.forward-button h1 .fa-solid.fa-caret-left:hover {
+  color: #B2CD9C;
+  transition: color 0.5s ease-in;
+}
+
+/* login y registro */
+
+.header-background {
+    border-radius: 100px 100px 0 0;
+}
+
+.form-background {
+    border-radius: 100px 100px 0 0;
+     height: 600px;
+}
+
+.avatar-preview {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: cover; 
+    border-radius: 50%;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+}
+
+/* media querys login y registro */
+@media (min-width: 1400px) {
+
+    .form-background {
+    border-radius: 100px 100px 0 0;
+     height: 720px;
+}
+.form-content {
+    height: 340px;
+}
+.avatar-preview {
+    max-width: 250px;
+    max-height: 250px;
+    object-fit: cover; 
+    border-radius: 50%;
+    border: none;
+    background-color: transparent;
+    padding: 20px;
+}
+
+}
 /* Dashboard */
 
 .user-profile-card{
