@@ -126,8 +126,8 @@ export default function GameContainer2() {
         setIsSafeCodeCorrect(true);
         setGameMessage("¡Felicidades! Has conseguido abrir la caja fuerte.!");
         setTimeout(() => setGameMessage(""), 4000);
-        saveGameProgress((nivelActual + 1), tiempo);
-        navigate(`/game-victory`)
+        
+       
       }
     }
   }
@@ -141,9 +141,9 @@ export default function GameContainer2() {
      setShowFinalImage (true);
        setTimeout(() => {
         setShowFinalImage(false); 
-        saveGameProgress(nivelActual, tiempo); 
+        saveGameProgress((nivelActual + 1), tiempo); 
         navigate("/game-victory"); 
-      }, 15000); 
+      }, 14000); 
     
     }
   }
