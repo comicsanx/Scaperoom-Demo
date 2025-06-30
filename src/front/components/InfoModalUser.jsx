@@ -1,5 +1,7 @@
 import { useGame } from "../context/GameContext";
 import React, { useEffect, useState } from "react";
+import { ALLOWED_AVATAR_FILENAMES, getAvatarUrl } from '../data/AvatarData'; 
+import { ButtonWithSFX } from '../components/SFXButton';
 // import Timer from "./Timer";
 import GameContainer from "../pages/GameContainer";
 // import "../CSS/Game.css";
@@ -54,11 +56,9 @@ const avatarSrc = user.avatar_filename ? user.avatar_filename : Game_img;
                 as="div" 
                 className="profile-toggle-container" 
             >
-                <img
-                    src={avatarSrc}
-                    alt="Foto de perfil"
-                    className="rounded-circle profile-toggle-avatar"
-                />
+                <img src={getAvatarUrl(user.avatar_filename)} 
+                alt="Avatar de usuario" 
+                className="avatar-img" />
             </Dropdown.Toggle>
 
       <Dropdown.Menu className="p-3">
