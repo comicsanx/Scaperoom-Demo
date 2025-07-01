@@ -1,9 +1,12 @@
-import carta from '../assets/img/carta.jpg';
+import agenda from '../assets/img/Level1_img/Level1-Agenda.png';
 import mapa from '../assets/img/level2_provisional/mapa.png';
 import calendario from '../assets/img/level2_provisional/calendario.png';
 import poesia from '../assets/img/level2_provisional/poesía.png';
 import edificio from '../assets/img/level2_provisional/edificio.png';
 import caja_fuerte from '../assets/img/level2_provisional/caja_fuerte.png';
+import puzzle_vacio from  '../assets/img/Level1_img/Level1-Puzzle_vacio.png';
+import puzzle_resuelto from '../assets/img/Level1_img/Level1-Puzzle_resuelto.png'
+
 
 
 export const EnigmasData = {
@@ -13,7 +16,7 @@ export const EnigmasData = {
         id: 1,
         title: "Has encontrado el planning diario del señor Geeks...",
         description: "El planning diario del Señor Geeks te dará pistas sobre su rutina y horarios.",
-        img: carta,
+        img: agenda,
         hints: [
       
             "El Señor Geeks es muy estricto con los horarios, y no tolera retrasos. Tampoco le gusta saltarse los descansos. Cada minuto cuenta.",
@@ -26,7 +29,8 @@ export const EnigmasData = {
         {
         id: 2,
         title: "¡Ya sabes de dónde viene el código!",
-        img: 'panelabierto',
+        imgBefore: puzzle_vacio,
+        imgAfter:puzzle_resuelto,
         solution: "1545",
         description : 'Probemos sabiamente...por cada error tendremos 5 segundos de penalización....',
         hints: [
