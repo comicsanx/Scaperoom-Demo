@@ -17,6 +17,7 @@ import Avatar_01 from '../assets/img/UI/Avatars/Avatar_01.png';
 import Avatar_02 from '../assets/img/UI/Avatars/Avatar_02.png';
 import Avatar_03 from '../assets/img/UI/Avatars/Avatar_03.png';
 import Default_Avatar from '../assets/img/UI/Avatars/default_avatar.png';
+import {ButtonWithSFX} from "../components/SFXButton";
 
 const avatarMap = {
   "Avatar_01.png": Avatar_01,
@@ -185,15 +186,15 @@ export default function GameContainer() {
       <img src={Level1BG} className="bg-img" alt="BG Level1" />
       <button id="plant"></button>
       <button id="door" onClick={handleDoorClick}></button>
-      <button
+       <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON'
         id="letterbox"
         className='object-zone'
         onClick={handleMailboxClick}
-      ></button>
-      <button id="ESC" onClick={() => setMenuOpen(true)}></button>
-      <button id="lock" onClick={handlePeepholeClick}></button>
-      <button id="gearbox" onClick={handleLightsPanelClick}></button>
-      <button id="PlayerInfo"></button>
+      ></ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="ESC" onClick={() => setMenuOpen(true)}></ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="lock" onClick={handlePeepholeClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="gearbox" onClick={handleLightsPanelClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="PlayerInfo"></ButtonWithSFX>
       <div className="menu-toggle">
         <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
         <InfoModalUser className="info-modal-user" showEnigma={showEnigma} />

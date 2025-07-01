@@ -8,4 +8,5 @@ export const SFX_CONFIG = {
   LEVEL_COMPLETE: "/sfx/Sound_Level_Victory.wav",
   PICK_KEY: "/sfx/Sound_PickObject_Key.wav",
   PICK_OBJECT: "/sfx/Sound_PickObject.wav",
+  PICK_OBJECT_COMMON:"/sfx/Audio_Objeto_Cortado.wav"
 };

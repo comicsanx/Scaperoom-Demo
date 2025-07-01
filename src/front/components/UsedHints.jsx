@@ -3,6 +3,7 @@ import { useGame } from "../context/GameContext";
 import { useState, useEffect } from "react";
 import {useHints} from "../context/HintsContext";
 import { EnigmasData } from "../data/EnigmasData";
+import {ButtonWithSFX} from "./SFXButton";
 
 export default function UsedHints({ enigmaId, isOpen, onClose }) {
   const {  hintsUsed, totalHintsUsed, currentHintMessage, requestHint} = useHints();
@@ -49,9 +50,9 @@ const handleHint = () => {
     
   return (
     <div>
-      <button className="btn btn-warning" onClick={handleHint} disabled={!canAskForMoreHints}>
+     <ButtonWithSFX sfxName="USE_HINT" className="ClassicButton SmallButton" onClick={handleHint} disabled={!canAskForMoreHints}>
         Pedir pista
-      </button>
+      </ButtonWithSFX>
        {currentHintMessage && <p className="mt-2 text-warning">{currentHintMessage}</p>} 
             {!currentHintMessage && localMessage && <p className="mt-2 text-warning">{localMessage}</p>}
             
