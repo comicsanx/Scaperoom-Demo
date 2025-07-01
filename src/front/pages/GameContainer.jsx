@@ -41,9 +41,11 @@ export default function GameContainer() {
     user,
     tiempo,
     setTiempo,
-    saveGameProgress
+    saveGameProgress,
+   
 
   } = useGame()
+   
 
   const navigate = useNavigate();
   const [selectedObject, setSelectedObject] = useState(null);
@@ -56,6 +58,7 @@ export default function GameContainer() {
   const id_key = 101
   const id_box_letter = 1
   const id_gearbox = 2
+
 
   useEffect(() => {
     setPickedUpObjects([]);
@@ -136,6 +139,7 @@ export default function GameContainer() {
     if (!hasLookedRoom) {
       setGameMessage("Primero, debes mirar por la mirilla para comprobar la situación.");
       setTimeout(() => setGameMessage(""), 4000);
+    
       return;
     }
     handleEnigmaClick(id_gearbox);
@@ -195,6 +199,7 @@ export default function GameContainer() {
       <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="lock" onClick={handlePeepholeClick}></ButtonWithSFX>
       <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="gearbox" onClick={handleLightsPanelClick}></ButtonWithSFX>
       {/* <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="PlayerInfo"></ButtonWithSFX> */}
+      
 
       <p><Timer className="timer-display" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} /></p>
 

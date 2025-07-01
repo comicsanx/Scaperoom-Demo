@@ -143,7 +143,7 @@ export default function GameContainer2() {
         setShowFinalImage(false); 
         saveGameProgress((nivelActual + 1), tiempo); 
         navigate("/game-victory"); 
-      }, 14000); 
+      }, 2000); 
     
     }
   }
