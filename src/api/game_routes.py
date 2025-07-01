@@ -141,6 +141,7 @@ def create_gamesession():
     user_id = current_user_id
     current_level = data.get('current_level', 1)
     accumulated_time = data.get('accumulated_time', 0.0)
+    status = data.get('status', 'playing') 
 
     if not user_id:
         return jsonify({"msg": "user_id es requerido"}), 400
@@ -149,7 +150,7 @@ def create_gamesession():
         user_id=user_id,
         current_level=current_level,
         accumulated_time=accumulated_time,
-        status="playing"
+        status=status
     )
     db.session.add(new_session)
     db.session.commit()
