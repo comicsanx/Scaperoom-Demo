@@ -117,7 +117,7 @@ export function Dashboard() {
                   <h2>Cómo Jugar</h2>
                 </ButtonWithSFX>
                 <ButtonWithSFX sfxName="BUTTON_CLICK" className="ClassicButton mb-3 rounded-pill px-4 py-3 w-100">
-                  <h2>Boton prueba SFX</h2>
+                  <h2>Cerrar Sesión</h2>
                 </ButtonWithSFX>
               </div>
             </div>

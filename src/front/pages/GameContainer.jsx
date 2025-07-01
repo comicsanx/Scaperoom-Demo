@@ -181,7 +181,7 @@ export default function GameContainer() {
   };
 
   return (
-    <div className="game-container-bg">
+    <div className="game-container-bg justidf">
       <img src={Level1BG} className="bg-img" alt="BG Level1" />
       <button id="plant"></button>
       <button id="door" onClick={handleDoorClick}></button>
@@ -193,11 +193,16 @@ export default function GameContainer() {
       <button id="ESC" onClick={() => setMenuOpen(true)}></button>
       <button id="lock" onClick={handlePeepholeClick}></button>
       <button id="gearbox" onClick={handleLightsPanelClick}></button>
-      <button id="PlayerInfo"></button>
+      {/* <button id="PlayerInfo"></button> */}
+
+      <p><Timer className="timer-display" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} /></p>
+
       <div className="menu-toggle">
+
         <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
+
         <InfoModalUser className="info-modal-user" showEnigma={showEnigma} />
-        <Timer className="timer" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
+        
         {showEnigma && currentEnigmaData && (
           <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }}
             enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved}
