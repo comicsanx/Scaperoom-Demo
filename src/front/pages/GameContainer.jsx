@@ -191,12 +191,8 @@ export default function GameContainer() {
     <div className="game-container-bg justidf">
       <img src={Level1BG} className="bg-img" alt="BG Level1" />
       <button id="plant"></button>
-      <button id="door" onClick={handleDoorClick}></button>
-       <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON'
-        id="letterbox"
-        className='object-zone'
-        onClick={handleMailboxClick}
-      ></ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="door" onClick={handleDoorClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON'  id="letterbox"className='object-zone'onClick={handleMailboxClick} ></ButtonWithSFX>
       <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="ESC" onClick={() => setMenuOpen(true)}></ButtonWithSFX>
       <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="lock" onClick={handlePeepholeClick}></ButtonWithSFX>
       <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="gearbox" onClick={handleLightsPanelClick}></ButtonWithSFX>

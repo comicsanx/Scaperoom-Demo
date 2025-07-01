@@ -4,7 +4,7 @@ import UsedHints from "./UsedHints";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useGame } from "../context/GameContext";
-import { SFX_CONFIG } from '../data/SFXData'; 
+
 
 // NO CAMBIAR FRASE 'CODIGO INCORRECTO', SI SE CAMBIA CAMBIARLA IGUAL EN LA CONDICION DE ERROR ABAJO
 
@@ -14,7 +14,7 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
   const [isModalEnigmaSolved, setIsModalEnigmaSolved] = useState(false);
-  const { playSfx } = useGame();
+ 
 
   let enigma = EnigmasData.enigmasNivel1.find((e) => e.id === enigmaId);
   if (!enigma) {
@@ -46,7 +46,7 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
     if (enigma.solution && inputValue === enigma.solution) {
       setMessage("¡Código correcto!");
       setIsModalEnigmaSolved(true)
-      playSfx(SFX_CONFIG.PUZZLE_SOLVED)
+   
 
 
       if (enigma.id === 2) {
@@ -66,7 +66,7 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
     } else if (enigma.solution) {
       setMessage(
         "Código incorrecto. Este error te trae 5 segundos de penalización..." );
-        playSfx(SFX_CONFIG.PENALIZATION);
+        
      
 
 
