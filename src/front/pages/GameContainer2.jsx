@@ -139,12 +139,13 @@ export default function GameContainer2() {
       setGameMessage("Necesitas resolver el enigma de la caja fuerte para poder abrirla.");
       setTimeout(() => setGameMessage(""), 4000);
     } else {
-     setShowFinalImage (true);
-       setTimeout(() => {
-        setShowFinalImage(false); 
-        saveGameProgress((nivelActual + 1), tiempo); 
-        navigate("/game-victory"); 
-      }, 10000); 
+     saveGameProgress((nivelActual + 1), (accumulatedTime + tiempo), status);
+      setTiempo((accumulatedTime + tiempo));
+      setShowFinalImage(true);
+      setTimeout(() => {
+        setShowFinalImage(false);
+        navigate("/game-victory");
+      }, 10000);
     
     }
   }
