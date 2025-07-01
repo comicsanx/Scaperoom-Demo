@@ -7,7 +7,84 @@ background-color: #513325;
 z-index: 0;
 }
 
+.righteous {
+    font-family: "Righteous", sans-serif;
+    font-size: 1.5rem;
+}
 
+.open-sans {
+     font-family: "Open Sans", sans-serif;
+    font-size: 1.5rem;
+    
+}
+
+.open-sans-lite {
+     font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
+    
+}
+
+
+@media (min-width: 992px) {
+    .righteous {
+        font-size: 2rem; 
+    }
+    .open-sans {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+      .open-sans-lite {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+}
+
+@media (min-width: 1400px) {
+    .righteous {
+        font-size: 2.4rem; 
+    }
+    .open-sans {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+}
+
+.game-container-bg {
+  position: relative; 
+  width: 100%;
+  height: 100vh; 
+  overflow: hidden;
+}
+
+.bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1; 
+}
+
+.avatar-img {
+  width: 120px;
+  height: 120px;
+  
+}
+
+.profile-toggle-container {
+transform: translateY(-120px) translateX(-30px);
+}
+
+.timer {
+transform: translateY(10px) translateX(565px);
+}
+
+@media (min-width: 992px) {
+  .timer {
+transform: translateY(25px) translateX(880px);
+}
+}
 
 .modalUser-name {
   font-family: "Courier New", Courier, monospace;
