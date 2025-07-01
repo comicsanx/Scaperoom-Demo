@@ -148,10 +148,12 @@ export default function GameContainer() {
 
   // Función para click de la puerta final
   const handleDoorClick = () => {
+    let status = "playing";
     console.log("Clic en la puerta detectado.");
     if (isGearboxCodeCorrect && hasLookedRoom) {
       setGameMessage("¡La puerta se abre! Avanzando al siguiente nivel...");
-      saveGameProgress((nivelActual + 1), tiempo);
+      saveGameProgress((nivelActual + 1), tiempo, status);
+      sessionStorage.setItem('level1Timer', tiempo);
       setTimeout(() => {
       }, 3000);
       navigate(`/level-victory`);

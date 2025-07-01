@@ -171,7 +171,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
   }, [user, token, makeRequest]);
 
   // 5.2 Guardar progreso (POST o PUT, según si hay sessionId)
-  const saveGameProgress = useCallback(async (current_level, accumulated_time, sessionId = null) => {
+  const saveGameProgress = useCallback(async (current_level, accumulated_time, status, sessionId = null) => {
     if (!user || !user.id || !token) {
       console.error("No hay usuario autenticado.");
       return false;
@@ -188,6 +188,7 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
       await makeRequest(endpoint, method, {
         current_level,
         accumulated_time,
+        status
       }, token);
       setNivelActual(current_level);
       setTiempo(accumulated_time);
@@ -371,6 +372,20 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
     loadUserProfile();
   }, [token, makeRequest, user, setUser, setIsUserLoading, logout]);
 
+  // 7 Cargar ranking de usuario
+  const getRanking = useCallback(async () => {
+    if (!user || !user.id || !token) {
+      console.error("No hay usuario autenticado.");
+      return null;
+    }
+    try {
+      return await makeRequest(`/api/ranking/global`, "GET", null, token);
+    } catch (error) {
+      console.error("Error al obtener ranking:", error);
+      return null;
+    }
+  }, [user, token, makeRequest]);
+
 
   return (
     <GameContext.Provider
@@ -416,7 +431,8 @@ export const GameProvider = ({ children, SFXManagerComponent }) => {
         setSfxVolume,
         playSfx,
         isSafeCodeCorrect,
-        setIsSafeCodeCorrect
+        setIsSafeCodeCorrect,
+        getRanking
       }}
     >
       {SFXManagerComponent && (

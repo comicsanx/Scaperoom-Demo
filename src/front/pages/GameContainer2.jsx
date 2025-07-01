@@ -48,6 +48,7 @@ export default function GameContainer2() {
   const [selectPictureCorrectTelescope, setSelectPictureCorrectTelescope] = useState(false);
   const [showFinalImage, setShowFinalImage] = useState(false);
   const [gameMessage, setGameMessage] = useState("");
+  const [accumulatedTime, setAccumulatedTime] = useState(parseInt(sessionStorage.getItem('level1Timer') || 0));
   const id_clinex = 102
   const id_magnifying_glass = 103
   const id_telescope = 207
@@ -126,28 +127,27 @@ export default function GameContainer2() {
         setIsSafeCodeCorrect(true);
         setGameMessage("¡Felicidades! Has conseguido abrir la caja fuerte.!");
         setTimeout(() => setGameMessage(""), 4000);
-        
-       
       }
     }
   }
 
   // funcion para manejar el clic en la manilla de la caja fuerte
   const handleSafeHandle = () => {
+    let status = "completed";
     if (!isSafeCodeCorrect) {
       setGameMessage("Necesitas resolver el enigma de la caja fuerte para poder abrirla.");
       setTimeout(() => setGameMessage(""), 4000);
     } else {
-     setShowFinalImage (true);
-       setTimeout(() => {
-        setShowFinalImage(false); 
-        saveGameProgress((nivelActual + 1), tiempo); 
-        navigate("/game-victory"); 
-      }, 2000); 
-    
+      saveGameProgress((nivelActual + 1), (accumulatedTime + tiempo), status);
+      setTiempo((accumulatedTime + tiempo));
+      setShowFinalImage(true);
+      setTimeout(() => {
+        setShowFinalImage(false);
+        navigate("/game-victory");
+      }, 14000);
     }
   }
-  
+
   // Función para aplicar penalización de tiempo
   const handlePenalty = (seconds) => {
     if (timerRef.current) {
@@ -195,7 +195,7 @@ export default function GameContainer2() {
           timerRef={timerRef}
         />
       )}
-  {showFinalImage && (
+      {showFinalImage && (
         <div className="final-image-overlay"> {/* Esta clase la definiremos en CSS */}
           <img src={pantalla_final} alt="Repositorio Desbloqueado" className="final-image-content" />
         </div>
