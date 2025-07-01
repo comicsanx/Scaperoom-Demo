@@ -111,7 +111,7 @@ export default function GameContainer() {
       setSelectedObject(null);
       setTimeout(() => {
         setMailboxMessage("");
-      }, 3000);
+      }, 4000);
     }
   };
 
@@ -127,7 +127,7 @@ export default function GameContainer() {
     setTimeout(() => {
       setShowRoomImage(false);
       setGameMessage("");
-    }, 4000);
+    }, 5000);
   };
 
   // Función para el clic en el Cuadro de Luces
@@ -135,7 +135,7 @@ export default function GameContainer() {
     console.log("Clic en el cuadro de luces detectado.");
     if (!hasLookedRoom) {
       setGameMessage("Primero, debes mirar por la mirilla para comprobar la situación.");
-      setTimeout(() => setGameMessage(""), 4000);
+      setTimeout(() => setGameMessage(""), 5000);
       return;
     }
     handleEnigmaClick(id_gearbox);
@@ -151,12 +151,11 @@ export default function GameContainer() {
       saveGameProgress((nivelActual + 1), tiempo, status);
       sessionStorage.setItem('level1Timer', tiempo);
       setTimeout(() => {
-      }, 3000);
+      }, 5000);
       navigate(`/level-victory`);
     } else {
-
       setGameMessage("La puerta está cerrada. Debes asegurarte de que la habitación esté vacía.");
-      setTimeout(() => setGameMessage(""), 3000);
+      setTimeout(() => setGameMessage(""), 5000);
     }
   };
 
@@ -164,18 +163,14 @@ export default function GameContainer() {
   const handleEnigmaSolved = (enigmaId, isCorrect) => {
     setShowEnigma(false);
     setCurrentEnigma(null);
-
     if (enigmaId === id_gearbox) {
       if (isCorrect) {
         setIsGearboxCodeCorrect(true);
         setGameMessage("¡Conseguiste manipular el reloj!Compreba si el señor Geeks se ha ido a comer.");
-        setTimeout(() => setGameMessage(""), 4000);
-      } else {
-
+        setTimeout(() => setGameMessage(""), 5000);
       }
     }
   }
-
   // Función para aplicar penalización de tiempo
   const handlePenalty = (seconds) => {
     if (timerRef.current) {
@@ -196,16 +191,12 @@ export default function GameContainer() {
       <button id="ESC" onClick={() => setMenuOpen(true)}></button>
       <button id="lock" onClick={handlePeepholeClick}></button>
       <button id="gearbox" onClick={handleLightsPanelClick}></button>
-      {/* <button id="PlayerInfo"></button> */}
-
-      <p><Timer className="timer-display" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} /></p>
-
+      <p>
+        <Timer className="timer-display" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
+      </p>
       <div className="menu-toggle">
-
         <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
-
         <InfoModalUser className="info-modal-user" showEnigma={showEnigma} />
-        
         {showEnigma && currentEnigmaData && (
           <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }}
             enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved}
