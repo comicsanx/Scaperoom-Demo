@@ -4,6 +4,7 @@ import UsedHints from "./UsedHints";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useGame } from "../context/GameContext";
+import '../CSS/General-UI.css';
 
 
 // NO CAMBIAR FRASE 'CODIGO INCORRECTO', SI SE CAMBIA CAMBIARLA IGUAL EN LA CONDICION DE ERROR ABAJO
@@ -65,11 +66,8 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
       }, 4000);
     } else if (enigma.solution) {
       setMessage(
-        "Código incorrecto. Este error te trae 5 segundos de penalización..." );
-        
-     
-
-
+        "Código incorrecto. Este error te trae 5 segundos de penalización..."
+      );
       if (timerRef.current && timerRef.current.addSeconds) {
         timerRef.current.addSeconds(5);
         console.log("Penalización de 5 segundos aplicada por respuesta incorrecta.");
@@ -88,22 +86,19 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
 
 
   return (
-    <Modal show={show} onHide={onHide} centered backdrop="static">
+    <Modal className='enigmaGeneral' show={show} onHide={onHide} centered backdrop="static">
       <Modal.Header>
-        <Modal.Title>{enigma.title}</Modal.Title>
+        <Modal.Title className="modal-title h1-righteous w-100 text-center">{enigma.title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {currentEnigmaImage && (
-          <img
-            src={currentEnigmaImage}
-            className="img-fluid mb-3"
-            alt={enigma.title}
-          />
+        <div className="image-container">
+          {enigma.img && <img src={enigma.img} alt="enigma" className="img-fluid" />}
+        </div>
+        {enigma.description && (
+          <h3 className="enigma-description">{enigma.description}</h3>
         )}
-
-        {enigma.solution && !isModalEnigmaSolved && (
+        {enigma.solution && (
           <Form.Group className="mb-3">
-
             <Form.Label>
               {enigma.id === 2
                 ? "Introduce el código de la caja de luces:"
@@ -120,26 +115,22 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
             />
           </Form.Group>
         )}
-
-
         {message && (
-          <p className={`text-center ${message === "Código incorrecto. Este error te trae 5 segundos de penalización..." ? 'text-danger' : 'text-success'}`}>
+          <p className={`message-box text-center ${message === "Código incorrecto. Este error te trae 5 segundos de penalización..." ? 'text-danger' : 'text-success'}`}>
             {message}
           </p>
         )}
         {enigma.description && <p>{enigma.description}</p>}
-
         <UsedHints enigmaId={enigma.id} isOpen={show} onClose={onHide} />
-
       </Modal.Body>
       <Modal.Footer>
-        {enigma.solution && !isModalEnigmaSolved &&(
-          <Button variant="primary" onClick={handleSubmit}>
+        {enigma.solution && (
+          <Button variant="primary" className='ClassicButton SmallButton' onClick={handleSubmit}>
             Comprobar Código
           </Button>
         )}
-        <Button variant="secondary" onClick={onHide}>
-          <p>X</p>
+        <Button className='ClassicButton SmallButton ' variant="secondary" onClick={onHide}>
+          X
         </Button>
       </Modal.Footer>
     </Modal>
