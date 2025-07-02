@@ -48,7 +48,7 @@ const handleHint = () => {
     
   return (
     <div>
-      <ButtonWithSFX sfxName="USE_HINT" className="ClassicButton SmallButton" onClick={handleHint} disabled={!canAskForMoreHints}>
+      <ButtonWithSFX sfxName="USE_HINT" className="ClassicButton rounded-pill px-3 py-2" onClick={handleHint} disabled={!canAskForMoreHints}>
         Pedir pista
       </ButtonWithSFX>
        {currentHintMessage && <p className="mt-2 text-warning">{currentHintMessage}</p>} 

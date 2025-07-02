@@ -332,9 +332,9 @@ z-index: 1;
 /* enigmas */
 .enigmaGeneral .modal-content {
   background-color: #CA7842; 
+  border: none;
   border-radius: 1rem;
-  color: #2e2e2e;
-  font-family: 'Open Sans', sans-serif;
+  color: #513325;
   max-width: 90vw;
   margin: auto;
 }

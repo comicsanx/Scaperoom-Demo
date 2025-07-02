@@ -205,7 +205,7 @@ export default function GameContainer() {
             enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved}
             timerRef={timerRef} />)}
         {(mailboxMessage || gameMessage) && (
-          <div className="mailbox-message">
+          <div className="mailbox-message open-sans">
             <p>{mailboxMessage || gameMessage}</p>
           </div>
         )}

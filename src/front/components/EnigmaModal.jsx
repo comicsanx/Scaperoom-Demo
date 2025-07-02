@@ -95,7 +95,7 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
           {enigma.img && <img src={enigma.img} alt="enigma" className="img-fluid" />}
         </div>
         {enigma.description && (
-          <h3 className="enigma-description">{enigma.description}</h3>
+          <h3 className="enigma-description righteous-lite brown">{enigma.description}</h3>
         )}
         {enigma.solution && (
           <Form.Group className="mb-3">
@@ -125,12 +125,12 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
       </Modal.Body>
       <Modal.Footer>
         {enigma.solution && (
-          <Button variant="primary" className='ClassicButton SmallButton' onClick={handleSubmit}>
+          <Button variant="primary" className='ClassicButton SmallButton rounded-pill px-4 py-3' onClick={handleSubmit}>
             Comprobar Código
           </Button>
         )}
-        <Button className='ClassicButton SmallButton ' variant="secondary" onClick={onHide}>
-          X
+        <Button className='ClassicButton rounded-pill px-3 py-2' variant="secondary" onClick={onHide}>
+          <i class="fa-solid fa-xmark"></i>
         </Button>
       </Modal.Footer>
     </Modal>
