@@ -101,7 +101,7 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
                 {isOpen && (
                     <div className="inventoryMenuObjects  w-100 w-sm-75 w-md-50 w-lg-25 mx-auto gap-3 ">
                         {modalObject.length === 0 && (
-                            <p className="dropdown-item open-sans">Ningun objeto en el inventario</p>
+                            <p className="dropdown-item open-sans-lite brown">Ningun objeto en el inventario</p>
                         )}
 
                         {modalObject.map(obj => (
@@ -121,10 +121,10 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
 
                         <button
                             type="button"
-                            className="ClassicButton SmallButton"
+                            className="ClassicButton SmallButton rounded-pill py-2 px-3"
                             onClick={() => setIsOpen(false)}
                         >
-                            X
+                            <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
                 )}
