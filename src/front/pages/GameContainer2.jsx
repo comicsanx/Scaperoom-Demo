@@ -172,7 +172,7 @@ export default function GameContainer2() {
       {/* <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="PlayerInfo"></ButtonWithSFX> */}
 
       {gameMessage && (
-        <div className="game-message-overlay">
+        <div className="mailbox-message">
           <p>{gameMessage}</p>
         </div>
       )}
@@ -180,14 +180,14 @@ export default function GameContainer2() {
       {/* Imagen del imagen borrosa*/}
       {selectPictureCorrectTelescope && (
         <div className="enigma-image-overlay">
-          <img src={imagen_borrosa} alt="imagen borrosa" className="enigma-zoom-image" />
+          <img src={imagen_borrosa} alt="imagen borrosa" className="enigma-zoom-image view-image" />
         </div>
       )}
 
       {/* Imagen del libro ilegible*/}
       {selectPictureCorrectBook && (
         <div className="enigma-image-overlay">
-          <img src={letra_pequeña} alt="Texto ilegible del libro" className="enigma-zoom-image" />
+          <img src={letra_pequeña} alt="Texto ilegible del libro" className="enigma-zoom-image view-image" />
         </div>
       )}
 
