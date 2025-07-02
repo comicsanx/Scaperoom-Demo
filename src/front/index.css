@@ -328,3 +328,85 @@ z-index: 1;
   opacity: 0;
   visibility: hidden;
 }
+
+/* enigmas */
+.enigmaGeneral .modal-content {
+  background-color: #CA7842; 
+  border-radius: 1rem;
+  color: #2e2e2e;
+  font-family: 'Open Sans', sans-serif;
+  max-width: 90vw;
+  margin: auto;
+}
+
+.modal-title {
+  font-family: 'Righteous', sans-serif;
+  color: #fff;
+  font-size: 1.2rem;
+  text-align: center;
+}
+@media (max-width: 576px) {
+  .modal-title {
+    font-size: 1.4rem;
+  }
+
+  .enigma-description {
+    font-size: 0.95rem;
+  }
+
+  .image-container {
+    padding: 0.5rem;
+  }
+}
+
+.SmallButton {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.enigma-description {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.image-container {
+  background-color: #B2CD9C;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 1rem auto;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+.message-box {
+  font-weight: bold;
+  font-family: 'Open Sans', sans-serif;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.text-danger {
+  background-color: rgba(241, 162, 162, 0.2);
+  color: #a00;
+}
+
+.text-success {
+  background-color: #77ed92;
+  color: rgb(4, 96, 4);
+}
+
+.modal-footer button {
+  font-family: 'Open Sans', sans-serif;
+}
