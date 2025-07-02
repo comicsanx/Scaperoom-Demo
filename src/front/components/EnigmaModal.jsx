@@ -3,7 +3,9 @@ import { EnigmasData } from "../data/EnigmasData";
 import UsedHints from "./UsedHints";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import { useGame } from "../context/GameContext";
 import '../CSS/General-UI.css';
+
 
 // NO CAMBIAR FRASE 'CODIGO INCORRECTO', SI SE CAMBIA CAMBIARLA IGUAL EN LA CONDICION DE ERROR ABAJO
 
@@ -12,6 +14,8 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
 
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
+  const [isModalEnigmaSolved, setIsModalEnigmaSolved] = useState(false);
+ 
 
   let enigma = EnigmasData.enigmasNivel1.find((e) => e.id === enigmaId);
   if (!enigma) {
@@ -22,7 +26,11 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
     if (show) {
       setInputValue('');
       setMessage('');
+      setIsModalEnigmaSolved(false);
     }
+
+
+
   }, [show, enigmaId]);
 
   if (!enigma) {
@@ -37,13 +45,16 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
 
   const handleSubmit = () => {
     if (enigma.solution && inputValue === enigma.solution) {
-      setMessage(
-        "¡Código correcto!"
-      );
+      setMessage("¡Código correcto!");
+      setIsModalEnigmaSolved(true)
+   
+
+
       if (enigma.id === 2) {
         setMessage(
           "¡Código correcto! Ya has manipulado el reloj...deberías echar un vistazo por la mirilla para comprobar si el señor Geeks está en su despacho."
         );
+        setIsModalEnigmaSolved(true)
       } else if (enigma.id === 205) {
         setMessage(
           "¡Código correcto! Has descubierto el código de la caja fuerte del Sr Geeks. ¡Enhorabuena!"
@@ -66,8 +77,13 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
       setTimeout(() => {
         onHide();
       }, 4000);
+
     }
   };
+  const currentEnigmaImage = (enigma.id === 2 && enigma.imgBefore && enigma.imgAfter)
+    ? (isModalEnigmaSolved ? enigma.imgAfter : enigma.imgBefore)
+    : enigma.img;
+
 
   return (
     <Modal className='enigmaGeneral' show={show} onHide={onHide} centered backdrop="static">
