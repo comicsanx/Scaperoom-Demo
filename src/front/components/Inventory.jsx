@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../CSS/level2.css"
 
 
 export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelectedObject, selectedObject }) => {
