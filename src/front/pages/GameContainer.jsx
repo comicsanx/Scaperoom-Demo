@@ -17,6 +17,7 @@ import Avatar_01 from '../assets/img/UI/Avatars/Avatar_01.png';
 import Avatar_02 from '../assets/img/UI/Avatars/Avatar_02.png';
 import Avatar_03 from '../assets/img/UI/Avatars/Avatar_03.png';
 import Default_Avatar from '../assets/img/UI/Avatars/default_avatar.png';
+import {ButtonWithSFX} from "../components/SFXButton";
 
 const avatarMap = {
   "Avatar_01.png": Avatar_01,
@@ -40,9 +41,11 @@ export default function GameContainer() {
     user,
     tiempo,
     setTiempo,
-    saveGameProgress
+    saveGameProgress,
+   
 
   } = useGame()
+   
 
   const navigate = useNavigate();
   const [selectedObject, setSelectedObject] = useState(null);
@@ -55,6 +58,7 @@ export default function GameContainer() {
   const id_key = 101
   const id_box_letter = 1
   const id_gearbox = 2
+
 
   useEffect(() => {
     setPickedUpObjects([]);
@@ -135,6 +139,7 @@ export default function GameContainer() {
     if (!hasLookedRoom) {
       setGameMessage("Primero, debes mirar por la mirilla para comprobar la situación.");
       setTimeout(() => setGameMessage(""), 4000);
+    
       return;
     }
     handleEnigmaClick(id_gearbox);
@@ -143,10 +148,12 @@ export default function GameContainer() {
 
   // Función para click de la puerta final
   const handleDoorClick = () => {
+    let status = "playing";
     console.log("Clic en la puerta detectado.");
     if (isGearboxCodeCorrect && hasLookedRoom) {
       setGameMessage("¡La puerta se abre! Avanzando al siguiente nivel...");
-      saveGameProgress((nivelActual + 1), tiempo);
+      saveGameProgress((nivelActual + 1), tiempo, status);
+      sessionStorage.setItem('level1Timer', tiempo);
       setTimeout(() => {
       }, 3000);
       navigate(`/level-victory`);
@@ -184,16 +191,13 @@ export default function GameContainer() {
     <div className="game-container-bg justidf">
       <img src={Level1BG} className="bg-img" alt="BG Level1" />
       <button id="plant"></button>
-      <button id="door" onClick={handleDoorClick}></button>
-      <button
-        id="letterbox"
-        className='object-zone'
-        onClick={handleMailboxClick}
-      ></button>
-      <button id="ESC" onClick={() => setMenuOpen(true)}></button>
-      <button id="lock" onClick={handlePeepholeClick}></button>
-      <button id="gearbox" onClick={handleLightsPanelClick}></button>
-      {/* <button id="PlayerInfo"></button> */}
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="door" onClick={handleDoorClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON'  id="letterbox"className='object-zone'onClick={handleMailboxClick} ></ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="ESC" onClick={() => setMenuOpen(true)}></ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="lock" onClick={handlePeepholeClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="gearbox" onClick={handleLightsPanelClick}></ButtonWithSFX>
+      {/* <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="PlayerInfo"></ButtonWithSFX> */}
+      
 
       <p><Timer className="timer-display" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} /></p>
 

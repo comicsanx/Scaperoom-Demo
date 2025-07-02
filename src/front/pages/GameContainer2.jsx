@@ -14,6 +14,7 @@ import letra_pequeña from "../assets/img/level2_provisional/letra_pequeña.jpg"
 import imagen_borrosa from "../assets/img/level2_provisional/imagen_borrosa.jpg";
 import Pause from "../components/Pause";
 import pantalla_final from '../assets/img/level2_provisional/pantalla_final.png';
+import {ButtonWithSFX} from "../components/SFXButton";
 
 // LAS CLASES QUE SE LLAMEN 'object-zone' NO SE LES PUEDE CAMBIAR EL NOMBRE
 export default function GameContainer2() {
@@ -48,6 +49,7 @@ export default function GameContainer2() {
   const [selectPictureCorrectTelescope, setSelectPictureCorrectTelescope] = useState(false);
   const [showFinalImage, setShowFinalImage] = useState(false);
   const [gameMessage, setGameMessage] = useState("");
+  const [accumulatedTime, setAccumulatedTime] = useState(parseInt(sessionStorage.getItem('level1Timer') || 0));
   const id_clinex = 102
   const id_magnifying_glass = 103
   const id_telescope = 207
@@ -126,28 +128,28 @@ export default function GameContainer2() {
         setIsSafeCodeCorrect(true);
         setGameMessage("¡Felicidades! Has conseguido abrir la caja fuerte.!");
         setTimeout(() => setGameMessage(""), 4000);
-        saveGameProgress((nivelActual + 1), tiempo);
-        navigate(`/game-victory`)
       }
     }
   }
 
   // funcion para manejar el clic en la manilla de la caja fuerte
   const handleSafeHandle = () => {
+    let status = "completed";
     if (!isSafeCodeCorrect) {
       setGameMessage("Necesitas resolver el enigma de la caja fuerte para poder abrirla.");
       setTimeout(() => setGameMessage(""), 4000);
     } else {
-     setShowFinalImage (true);
-       setTimeout(() => {
-        setShowFinalImage(false); 
-        saveGameProgress(nivelActual, tiempo); 
-        navigate("/game-victory"); 
-      }, 15000); 
+     saveGameProgress((nivelActual + 1), (accumulatedTime + tiempo), status);
+      setTiempo((accumulatedTime + tiempo));
+      setShowFinalImage(true);
+      setTimeout(() => {
+        setShowFinalImage(false);
+        navigate("/game-victory");
+      }, 10000);
     
     }
   }
-  
+
   // Función para aplicar penalización de tiempo
   const handlePenalty = (seconds) => {
     if (timerRef.current) {
@@ -160,14 +162,14 @@ export default function GameContainer2() {
   return (
     <div className="game-container2-bg">
       {/* <img src={Level1BG} className="bg-img" alt="BG Level2" /> */}
-      <button id="calendar" onClick={handleCalendarClick}>calendario</button>
-      <button id="id_safe" onClick={handleSafeClick}>caja fuerte</button>
-      <button id="id_safe_handle" onClick={handleSafeHandle}> manilla caja fuerte</button>
-      <button id="map" onClick={handleMapClick}>bola del mundo</button>
-      <button id="telescope" className='object-zone' onClick={handleTelescopeClick}>telescopio</button>
-      <button id="book" className='object-zone' onClick={handleBookClick}>libro</button>
-      <button id="ESC" onClick={() => setMenuOpen(true)}>salir</button>
-      <button id="PlayerInfo"></button>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="calendar" onClick={handleCalendarClick}>calendario</ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="id_safe" onClick={handleSafeClick}>caja fuerte</ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="id_safe_handle" onClick={handleSafeHandle}> manilla caja fuerte</ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="map" onClick={handleMapClick}>bola del mundo</ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="telescope" className='object-zone' onClick={handleTelescopeClick}>telescopio</ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="book" className='object-zone' onClick={handleBookClick}>libro</ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="ESC" onClick={() => setMenuOpen(true)}>salir</ButtonWithSFX>
+      {/* <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="PlayerInfo"></ButtonWithSFX> */}
 
       {gameMessage && (
         <div className="game-message-overlay">
@@ -195,7 +197,7 @@ export default function GameContainer2() {
           timerRef={timerRef}
         />
       )}
-  {showFinalImage && (
+      {showFinalImage && (
         <div className="final-image-overlay"> {/* Esta clase la definiremos en CSS */}
           <img src={pantalla_final} alt="Repositorio Desbloqueado" className="final-image-content" />
         </div>
