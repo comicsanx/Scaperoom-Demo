@@ -96,8 +96,8 @@ border:none;
 
 .menu-toggle {
  position: absolute; 
-    top: 120px; 
-    left: 40px;  
+    top: 200px; 
+    left: 60px;  
     z-index: 100;
     padding: 10px;
     border-radius: 5px;

@@ -78,13 +78,13 @@ background-color:#CA7842;
 }
 
 .brown {
-color:#4B352A;
+color:#513325;
 background: none;
 border: none;
 }
 
 .background-brown {
-background-color: #4B352A;
+background-color: #513325;
 }
 
 /* tamaño */
@@ -111,14 +111,14 @@ background-color: #4B352A;
 .ClassicButton:hover {
     background-size: 300% 100%;
     background-color: #F0F2BD;
-    color: #4B352A;
+    color: #513325;
     border-color: #B2CD9C;
 }
 
 .ClassicButton-Variation {
     color: #F0F2BD;
     background-color: #CA7842;
-    background-image: radial-gradient(circle at 0% 50%, #4B352A 0%, #4B352A 100%); 
+    background-image: radial-gradient(circle at 0% 50%, #513325 0%, #513325 100%); 
     background-size: 0% 100%;
     background-repeat: no-repeat;
     background-position: left center;
@@ -130,7 +130,7 @@ background-color: #4B352A;
 
 .ClassicButton-Variation:hover {
     background-size: 300% 100%;
-    background-color: #4B352A;
+    background-color: #513325;
     color: #F0F2BD;
     border: none;
 }
@@ -239,7 +239,7 @@ background-color: #4B352A;
 
 .user-profile-card{
     background-color: #CA7842;
-    color: #4B352A;
+    color: #513325;
     font-weight: 400;
     font-style: normal;
 }
@@ -249,19 +249,19 @@ background-color: #4B352A;
 
 .ranking-container{
     background-color: #B2CD9C;
-    color: #4B352A;
+    color: #513325;
 }
 
 .ranking-card{
     background-color: #B2CD9C;
-    color: #4B352A;
+    color: #513325;
     font-weight: 400;
     font-style: normal;
 }
 
 .ranking-results{
     background-color: #F0F2BD;
-    color: #4B352A;
+    color: #513325;
 }
 .ranking-avatar {
     width: 80px;
