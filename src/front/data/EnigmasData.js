@@ -1,16 +1,16 @@
 import agenda from '../assets/img/Level1_img/Level1-Agenda.png';
 import mapa from '../assets/img/level2_provisional/mapa.png';
-import calendario from '../assets/img/level2_provisional/calendario.png';
-import poesia from '../assets/img/level2_provisional/poesía.png';
-import edificio from '../assets/img/level2_provisional/edificio.png';
+import calendario from '../assets/img/Level2_img/calendario.png';
+import poesia from '../assets/img/Level2_img/poesía.png';
+import edificio from '../assets/img/Level2_img/edificios.png';
 import caja_fuerte from '../assets/img/level2_provisional/caja_fuerte.png';
-import puzzle_vacio from  '../assets/img/Level1_img/Level1-Puzzle_vacio.png';
-import puzzle_resuelto from '../assets/img/Level1_img/Level1-Puzzle_resuelto.png'
+import puzzle_vacio from  '../assets/img/Level1_img/caja_fuerte_vacia.png';
+import puzzle_resuelto from '../assets/img/Level1_img/caja_fuerte_resuelta.png'
 
 
 
 export const EnigmasData = {
-     // falta cambiar esa imagen por la carta final
+    
     "enigmasNivel1": [
         {
         id: 1,
@@ -25,7 +25,7 @@ export const EnigmasData = {
            
        
         },
-        // falta por introducir la imagen de panel abierto
+       
         {
         id: 2,
         title: "¡Ya sabes de dónde viene el código!",
