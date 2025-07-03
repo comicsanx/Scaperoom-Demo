@@ -47,7 +47,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  z-index: 50;
+  z-index: 2;
 }
 
 #telescope {
@@ -90,11 +90,11 @@
 }
 
 .balleta {
-  left: 0%;
-  top: 45%;
-  width: 15%;
-  height: 15%;
-  background: none;
+  left: 3.4%;
+  top: 48%;
+  width: 6%;
+  height: 10%;
+  background: transparent;
   border: none;
   background-size: contain;
   background-repeat: no-repeat;
@@ -103,14 +103,16 @@
 }
 
 .lupa {
-  left: 40.7%;
-  top: 34%;
-  width: 15%;
-  height: 15%;
-  background: none;
+  left: 45%;
+  top: 36%;
+  width: 5%;
+  height: 10%;
+  background: transparent;
   border: none;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  z-index: 50;
+  z-index: 150;
 }
+
+

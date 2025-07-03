@@ -1,6 +1,6 @@
 import llave from "../assets/img/llave.png"
-import balleta  from "../assets/img/level2_provisional/balleta.png"
-import lupa from "../assets/img/level2_provisional/lupa.png"
+import balleta  from "../assets/img/Level2_img/Mopa.png"
+import lupa from "../assets/img/Level2_img/lupa.png"
     // id : 'llave',
     // name : 'llave maestra:',
     // img : 'foto png con fondo trnasparente ( será la forma del boton)',

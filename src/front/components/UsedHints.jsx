@@ -55,7 +55,7 @@ const handleHint = () => {
             {!currentHintMessage && localMessage && <p className="mt-2 text-warning">{localMessage}</p>}
             
             {currentHintsForThisEnigma > 0 && (
-                <p className="mt-2">Pista: {hints[currentHintsForThisEnigma - 1]}</p>
+                <p className="mt-2">{hints[currentHintsForThisEnigma - 1]}</p>
             )}
         </div>
     );

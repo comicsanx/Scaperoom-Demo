@@ -190,6 +190,7 @@ z-index: 1;
   width: 90px;
   height: 90px;
   object-fit: contain;
+ 
 }
 .objectButtonDisable {
   opacity: 0;
@@ -238,7 +239,7 @@ z-index: 1;
 }
 .modal-content button:hover {
   background-color: #D48A4E;
-  color: #222;
+
 }
 .modal-content h2 {
   font-size: 1rem;
@@ -248,16 +249,23 @@ z-index: 1;
   flex-grow: 1;
 }
 /* css componente INVENTORY */
-.inventoryImg {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
-  border-radius: 20px;
-  background-color: #F0F2BD(235, 210, 178);
-  margin-top: 20px;
+
+ .inventoryImg {
+  width: 80px;
+  height: 80px; 
+  object-fit: contain; 
+  border-radius: 10px;
+  background-color: #f0f2bd; 
+  padding: 5px; 
 }
+
+
 .inventoryName {
-  font-size: 8px;
+  width: 100%;
+  text-align: center;
+  color: #F0F2BD; 
+  margin: 0; 
+  padding: 0; 
 }
 .inventoryContainer {
   position: fixed;
@@ -279,16 +287,23 @@ z-index: 1;
 
 .inventoryMenuObjects {
   background-color: #CA7842;
-  padding: 10px;
-  border-radius: 10px;
-  height: 70px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  padding: 15px 20px;
+  border-radius: 15px; 
+  height: auto; 
+  min-height: 120px; 
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); 
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-wrap: wrap; 
+  justify-content: center; 
+  align-items: center; 
+  gap: 20px; 
   animation: slideUp 0.5s ease-out;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 90vw;
+  width: fit-content; 
+  margin: 0 auto; 
 }
+
 @keyframes slideUp {
   from {
     transform: translateY(100%);
@@ -300,7 +315,7 @@ z-index: 1;
   }
 }
 .selected {
-  outline: 3px solid rgb(24, 222, 27);
+  outline: 4px solid rgb(24, 222, 27);
   background-color: #FFF4D2;
   border-radius: 50px;
   padding: 2px;
@@ -409,4 +424,9 @@ z-index: 1;
 
 .modal-footer button {
   font-family: 'Open Sans', sans-serif;
+}
+
+.final-image-content {
+  z-index: 2000;
+  left: 50%;
 }

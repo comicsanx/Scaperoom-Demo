@@ -90,7 +90,7 @@ background-color: #513325;
 /* tamaño */
 
 .header-title {
-    font-size: 4rem;
+    font-size: 3rem;
 }
 
 /* Botones */
@@ -195,13 +195,20 @@ background-color: #513325;
 
 /* login y registro */
 
-.header-background {
+.header-background, .credits-top {
     border-radius: 100px 100px 0 0;
 }
 
 .form-background {
     border-radius: 100px 100px 0 0;
      height: 600px;
+}
+
+.credits-top {
+    height: 870px;
+}
+.credit-link {
+    color:#CA7842;
 }
 
 .avatar-preview {

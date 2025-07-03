@@ -12,8 +12,8 @@ import { Objects } from "../components/Objects";
 import { InfoModalUser } from "../components/InfoModalUser";
 import { EnigmaModal } from "../components/EnigmaModal";
 import { EnigmasData } from "../data/EnigmasData";
-import letra_pequeña from "../assets/img/level2_provisional/letra_pequeña.jpg";
-import imagen_borrosa from "../assets/img/level2_provisional/imagen_borrosa.jpg";
+import letra_pequeña from "../assets/img/Level2_img/letra_pequeña.png";
+import imagen_borrosa from "../assets/img/Level2_img/imagen_borrosa.png";
 import Pause from "../components/Pause";
 import pantalla_final from '../assets/img/level2_provisional/pantalla_final.png';
 import {ButtonWithSFX} from "../components/SFXButton";
@@ -175,7 +175,7 @@ export default function GameContainer2() {
       {/* <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="PlayerInfo"></ButtonWithSFX> */}
 
       {gameMessage && (
-        <div className="game-message-overlay">
+        <div className="mailbox-message">
           <p>{gameMessage}</p>
         </div>
       )}
@@ -183,14 +183,14 @@ export default function GameContainer2() {
       {/* Imagen del imagen borrosa*/}
       {selectPictureCorrectTelescope && (
         <div className="enigma-image-overlay">
-          <img src={imagen_borrosa} alt="imagen borrosa" className="enigma-zoom-image" />
+          <img src={imagen_borrosa} alt="imagen borrosa" className="enigma-zoom-image view-image" />
         </div>
       )}
 
       {/* Imagen del libro ilegible*/}
       {selectPictureCorrectBook && (
         <div className="enigma-image-overlay">
-          <img src={letra_pequeña} alt="Texto ilegible del libro" className="enigma-zoom-image" />
+          <img src={letra_pequeña} alt="Texto ilegible del libro" className="enigma-zoom-image view-image" />
         </div>
       )}
 

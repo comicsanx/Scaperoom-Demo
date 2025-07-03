@@ -54,7 +54,7 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
         setMessage(
           "¡Código correcto! Ya has manipulado el reloj...deberías echar un vistazo por la mirilla para comprobar si el señor Geeks está en su despacho."
         );
-        setIsModalEnigmaSolved(true)
+       
       } else if (enigma.id === 205) {
         setMessage(
           "¡Código correcto! Has descubierto el código de la caja fuerte del Sr Geeks. ¡Enhorabuena!"
@@ -92,12 +92,12 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
       </Modal.Header>
       <Modal.Body>
         <div className="image-container">
-          {enigma.img && <img src={enigma.img} alt="enigma" className="img-fluid" />}
+          {currentEnigmaImage && <img src={currentEnigmaImage} alt="enigma" className="img-fluid" />}
         </div>
         {enigma.description && (
           <h3 className="enigma-description righteous-lite brown">{enigma.description}</h3>
         )}
-        {enigma.solution && (
+        {enigma.solution && !isModalEnigmaSolved && (
           <Form.Group className="mb-3">
             <Form.Label>
               {enigma.id === 2
@@ -120,11 +120,11 @@ export const EnigmaModal = ({ show, onHide, enigmaId, onEnigmaSolved, timerRef }
             {message}
           </p>
         )}
-        {enigma.description && <p>{enigma.description}</p>}
+       
         <UsedHints enigmaId={enigma.id} isOpen={show} onClose={onHide} />
       </Modal.Body>
       <Modal.Footer>
-        {enigma.solution && (
+        {enigma.solution &&  !isModalEnigmaSolved &&(
           <Button variant="primary" className='ClassicButton SmallButton rounded-pill px-4 py-3' onClick={handleSubmit}>
             Comprobar Código
           </Button>
