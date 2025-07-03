@@ -98,9 +98,9 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
                 )}
 
                 {isOpen && (
-                    <div className="inventoryMenuObjects  w-100 w-sm-75 w-md-50 w-lg-25 mx-auto gap-3 ">
+                    <div className="inventoryMenuObjects ">
                         {modalObject.length === 0 && (
-                            <p className="dropdown-item">Ningun objeto en el inventario</p>
+                            <p className="dropdown-item  inventoryName">Ningun objeto en el inventario</p>
                         )}
 
                         {modalObject.map(obj => (
