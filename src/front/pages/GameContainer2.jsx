@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
-import "../CSS/level1.css";
-import "../CSS/Game.css";
-import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
+// import "../CSS/level1.css";
+// import "../CSS/Game.css";
+// import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
 import { useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext";
 import { ObjectsLevel2 } from "../data/ObjectsArray";
