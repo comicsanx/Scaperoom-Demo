@@ -16,7 +16,7 @@ import letra_pequeña from "../assets/img/Level2_img/letra_pequeña.png";
 import imagen_borrosa from "../assets/img/Level2_img/imagen_borrosa.png";
 import Pause from "../components/Pause";
 import pantalla_final from '../assets/img/level2_provisional/pantalla_final.png';
-import {ButtonWithSFX} from "../components/SFXButton";
+import { ButtonWithSFX } from "../components/SFXButton";
 
 // LAS CLASES QUE SE LLAMEN 'object-zone' NO SE LES PUEDE CAMBIAR EL NOMBRE
 export default function GameContainer2() {
@@ -60,6 +60,17 @@ export default function GameContainer2() {
   const id_calendar = 204
   const id_map = 203
   const id_safe_handle = 208
+
+  useEffect(() => {
+    setSelectedObject(null);
+    setShowEnigma(false);
+    setCurrentEnigma(null);
+    setSelectPictureCorrectBook(false);
+    setSelectPictureCorrectTelescope(false);
+    setShowFinalImage(false);
+    setGameMessage("");
+    setIsSafeCodeCorrect(false);
+  }, [setTiempo, setPickedUpObjects]);
 
   // función para manejar el objeto seleccionado
   const handleObjectUsed = (objectId) => {
@@ -141,14 +152,14 @@ export default function GameContainer2() {
       setGameMessage("Necesitas resolver el enigma de la caja fuerte para poder abrirla.");
       setTimeout(() => setGameMessage(""), 4000);
     } else {
-     saveGameProgress((nivelActual + 1), (accumulatedTime + tiempo), status);
+      saveGameProgress((nivelActual + 1), (accumulatedTime + tiempo), status);
       setTiempo((accumulatedTime + tiempo));
       setShowFinalImage(true);
       setTimeout(() => {
         setShowFinalImage(false);
         navigate("/game-victory");
       }, 10000);
-    
+
     }
   }
 
@@ -164,36 +175,38 @@ export default function GameContainer2() {
   return (
     <div className="game-container-bg">
       <img src={Level2BG} className="bg-img" alt="BG Level2" />
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="calendar" onClick={handleCalendarClick}></ButtonWithSFX>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="id_safe" onClick={handleSafeClick}></ButtonWithSFX>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="id_safe_handle" onClick={handleSafeHandle}></ButtonWithSFX>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="map" onClick={handleMapClick}></ButtonWithSFX>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="telescope" className='object-zone' onClick={handleTelescopeClick}></ButtonWithSFX>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="book" className='object-zone' onClick={handleBookClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="calendar" onClick={handleCalendarClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="id_safe" onClick={handleSafeClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="id_safe_handle" onClick={handleSafeHandle}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="map" onClick={handleMapClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="telescope" className='object-zone' onClick={handleTelescopeClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="book" className='object-zone' onClick={handleBookClick}></ButtonWithSFX>
       <span id="pencilcase" ></span>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="ESC" onClick={() => setMenuOpen(true)}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="ESC" onClick={() => setMenuOpen(true)}></ButtonWithSFX>
       {/* <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="PlayerInfo"></ButtonWithSFX> */}
 
-      {gameMessage && (
-        <div className="mailbox-message">
-          <p>{gameMessage}</p>
-        </div>
-      )}
+      <div className="game-message-container justfy-content-center align-items-center w-100 d-flex flex-column">
 
-      {/* Imagen del imagen borrosa*/}
-      {selectPictureCorrectTelescope && (
-        <div className="enigma-image-overlay">
-          <img src={imagen_borrosa} alt="imagen borrosa" className="enigma-zoom-image view-image" />
-        </div>
-      )}
+        {gameMessage && (
+          <div className="mailbox-message background-brown rounded">
+            <p>{gameMessage}</p>
+          </div>
+        )}
 
-      {/* Imagen del libro ilegible*/}
-      {selectPictureCorrectBook && (
-        <div className="enigma-image-overlay">
-          <img src={letra_pequeña} alt="Texto ilegible del libro" className="enigma-zoom-image view-image" />
-        </div>
-      )}
+        {/* Imagen del imagen borrosa*/}
+        {selectPictureCorrectTelescope && (
+          <div className="enigma-image-overlay">
+            <img src={imagen_borrosa} alt="imagen borrosa" className="enigma-zoom-image view-image" />
+          </div>
+        )}
 
+        {/* Imagen del libro ilegible*/}
+        {selectPictureCorrectBook && (
+          <div className="enigma-image-overlay">
+            <img src={letra_pequeña} alt="Texto ilegible del libro" className="enigma-zoom-image view-image" />
+          </div>
+        )}
+      </div>
 
       {showEnigma && currentEnigmaData && (
         <EnigmaModal show={showEnigma} onEnigmaSolved={handleEnigmaSolved} onHide={() => setShowEnigma(false)} enigmaId={currentEnigma}
@@ -201,18 +214,18 @@ export default function GameContainer2() {
         />
       )}
       {showFinalImage && (
-        <div className="final-image-overlay"> {/* Esta clase la definiremos en CSS */}
+        <div className="final-image-overlay w-100"> {/* Esta clase la definiremos en CSS */}
           <img src={pantalla_final} alt="Repositorio Desbloqueado" className="final-image-content" />
         </div>
       )}
 
 
-<Timer className="timer" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
+      <Timer className="timer" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
 
       <div className="menu-toggle">
-        
+
         <InfoModalUser className="info-modal-user" showEnigma={showEnigma} />
-        
+
       </div>
       <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
       <Objects objectsLevel={ObjectsLevel2} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />

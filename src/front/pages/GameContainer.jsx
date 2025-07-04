@@ -17,7 +17,7 @@ import Avatar_01 from '../assets/img/UI/Avatars/Avatar_01.png';
 import Avatar_02 from '../assets/img/UI/Avatars/Avatar_02.png';
 import Avatar_03 from '../assets/img/UI/Avatars/Avatar_03.png';
 import Default_Avatar from '../assets/img/UI/Avatars/default_avatar.png';
-import {ButtonWithSFX} from "../components/SFXButton";
+import { ButtonWithSFX } from "../components/SFXButton";
 
 const avatarMap = {
   "Avatar_01.png": Avatar_01,
@@ -42,10 +42,10 @@ export default function GameContainer() {
     tiempo,
     setTiempo,
     saveGameProgress,
-   
+
 
   } = useGame()
-   
+
 
   const navigate = useNavigate();
   const [selectedObject, setSelectedObject] = useState(null);
@@ -139,7 +139,7 @@ export default function GameContainer() {
     if (!hasLookedRoom) {
       setGameMessage("Primero, debes mirar por la mirilla para comprobar la situación.");
       setTimeout(() => setGameMessage(""), 4000);
-    
+
       return;
     }
     handleEnigmaClick(id_gearbox);
@@ -186,26 +186,21 @@ export default function GameContainer() {
     <div className="game-container-bg">
       <img src={Level1BG} className="bg-img" alt="BG Level1" />
       <button id="plant"></button>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="door" onClick={handleDoorClick}></ButtonWithSFX>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON'  id="letterbox"className='object-zone'onClick={handleMailboxClick} ></ButtonWithSFX>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="ESC" onClick={() => setMenuOpen(true)}></ButtonWithSFX>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="lock" onClick={handlePeepholeClick}></ButtonWithSFX>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="gearbox" onClick={handleLightsPanelClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="door" onClick={handleDoorClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="letterbox" className='object-zone' onClick={handleMailboxClick} ></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="ESC" onClick={() => setMenuOpen(true)}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="lock" onClick={handlePeepholeClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="gearbox" onClick={handleLightsPanelClick}></ButtonWithSFX>
       {/* <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="PlayerInfo"></ButtonWithSFX> */}
-      
 
 
-      
-
-      <Timer className="timer-display" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
-<div className="menu-toggle">
-        <InfoModalUser className="info-modal-user" showEnigma={showEnigma} />
+      <div className="game-message-container justfy-content-center align-items-center w-100 d-flex flex-column">
         {showEnigma && currentEnigmaData && (
           <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }}
             enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved}
             timerRef={timerRef} />)}
         {(mailboxMessage || gameMessage) && (
-          <div className="mailbox-message open-sans">
+          <div className="mailbox-message open-sans ">
             <p>{mailboxMessage || gameMessage}</p>
           </div>
         )}
@@ -218,11 +213,18 @@ export default function GameContainer() {
             />
           </div>
         )}
-        </div>
-
-        <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
-        <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
       </div>
-    
+
+
+      <Timer className="timer-display" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
+      <div className="menu-toggle">
+        <InfoModalUser className="info-modal-user" showEnigma={showEnigma} />
+
+      </div>
+
+      <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
+    </div>
+
   );
 }
