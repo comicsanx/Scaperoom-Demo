@@ -91,7 +91,7 @@ export const EnigmasData = {
         description : 'Parece que el Sr. Geeks ha dejado un mensaje oculto en sus pensamientos más profundos. ¿Podrás descifrarlo?',
         hints: [
            ' El Sr. Geeks no era un hombre directo… sus secretos viajan en las primeras palabras de sus pensamientos.',
-          '  Las primeras letras de cada verso forman más que palabras forman el camino.',
+          '  Las primeras letras de cada verso forman más que palabras, forman el camino.',
             
         ],
         
@@ -104,7 +104,7 @@ export const EnigmasData = {
         description :  'No todos los vecinos se atreven a mirar el atardecer.',
         hints: [
           ' Solo las que se atreven a mirar hacia afuera te darán la respuesta',
-          '  Solo las persianas completamente subidas revelan el interior... pero no todas se atreven.'
+          ' Solo las persianas completamente subidas revelan el interior... pero no todas se atreven.'
             
         ],
         

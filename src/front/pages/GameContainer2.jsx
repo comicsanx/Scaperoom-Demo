@@ -101,7 +101,7 @@ export default function GameContainer2() {
       handleEnigmaClick(id_book);
       handleObjectUsed(id_magnifying_glass)
     } else {
-      setGameMessage("¿consigues leer lo que pone?")
+      setGameMessage("¿Consigues leer lo que pone?")
       setSelectPictureCorrectBook(true);
       setSelectedObject(null);
       setTimeout(() => {
@@ -139,7 +139,7 @@ export default function GameContainer2() {
     if (enigmaId === id_safe) {
       if (isCorrect) {
         setIsSafeCodeCorrect(true);
-        setGameMessage("¡Felicidades! Has conseguido abrir la caja fuerte.!");
+        setGameMessage("¡Felicidades! Has conseguido descifrar el codigo¡ Solo tienes que abrirla...");
         setTimeout(() => setGameMessage(""), 4000);
       }
     }
@@ -158,7 +158,7 @@ export default function GameContainer2() {
       setTimeout(() => {
         setShowFinalImage(false);
         navigate("/game-victory");
-      }, 10000);
+      }, 14000);
 
     }
   }
