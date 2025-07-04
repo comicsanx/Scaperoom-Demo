@@ -131,18 +131,7 @@ export function UserProfile() {
                     <h1 className="righteous player-name ms-3 mb-0 mt-3">{user.username}</h1>
                     <p className="open-sans player-email-display ms-3 mt-0">{user.email}</p>
 
-                    <div className="righteous game-stats ms-3 mt-5">
-                        <h2>DATOS</h2>
-                        {user.gameSession ? (
-                            <>
-                                <p>Nivel Actual: <span className="stat-value">{user.gameSession.current_level}</span></p>
-                                <p>Tiempo Acumulado: <span className="stat-value">{user.gameSession.accumulated_time} segundos</span></p>
-                                {/* Añade más estadísticas si las tienes en user.gameSession */}
-                            </>
-                        ) : (
-                            <p className="open-sans game-data fs-lg-3">No hay datos de juego</p>
-                        )}
-                    </div>
+                    
                     <div className=" buttons-edit d-flex justify-content-center gap-3 mt-5">
                     <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => setIsEditing(true)} className="ClassicButton righteous editbutton mb-3 rounded-pill px-5 py-3"><i class="fa-solid fa-pen"></i></ButtonWithSFX>
                     <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={handleDeleteAccount} className="righteous deletebutton mb-3 rounded-pill px-5 py-3"><i class="fa-solid fa-xmark"></i></ButtonWithSFX>
