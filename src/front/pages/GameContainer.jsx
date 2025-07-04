@@ -124,7 +124,7 @@ export default function GameContainer() {
     console.log("Mirando por la mirilla...");
     const messageToShow = isGearboxCodeCorrect
       ? "¡La habitación está vacía!Es momento de pasar al despacho!."
-      : "el Sr Geeks sigue en el despacho...hay que encontrar la forma de hacerle creer que es la hora de la comida";
+      : "El Sr Geeks sigue en el despacho...hay que encontrar la forma de hacerle creer que es la hora de la comida";
     setGameMessage(messageToShow);
     setShowRoomImage(true);
     setTimeout(() => {
@@ -170,7 +170,7 @@ export default function GameContainer() {
     if (enigmaId === id_gearbox) {
       if (isCorrect) {
         setIsGearboxCodeCorrect(true);
-        setGameMessage("¡Conseguiste manipular el reloj!Compreba si el señor Geeks se ha ido a comer.");
+        setGameMessage("¡Conseguiste manipular el reloj! Compreba si el señor Geeks se ha ido a comer.");
         setTimeout(() => setGameMessage(""), 5000);
       }
     }
