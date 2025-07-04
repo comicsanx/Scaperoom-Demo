@@ -24,7 +24,7 @@ const Timer = forwardRef(function Timer({ menuOpen, tiempo, setTiempo }, ref) {
     }, [menuOpen, pause, start]);
 
     return (
-        <div class="timer">
+        <div className="timer">
             <div className="righteous orange timer-position background-brown rounded-pill px-4 py-1">
                 {String(Math.floor(seconds / 3600)).padStart(2, '0')}:
                 {String(Math.floor((seconds % 3600) / 60)).padStart(2, '0')}:

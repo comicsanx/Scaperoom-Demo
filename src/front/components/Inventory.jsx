@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../CSS/level2.css"
 
 
 export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelectedObject, selectedObject }) => {
@@ -100,7 +101,7 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
                 {isOpen && (
                     <div className="inventoryMenuObjects ">
                         {modalObject.length === 0 && (
-                            <p className="dropdown-item  inventoryName">Ningun objeto en el inventario</p>
+                            <p className="dropdown-item inventoryName open-sans-lite brown">Ningun objeto en el inventario</p>
                         )}
 
                         {modalObject.map(obj => (
@@ -120,10 +121,10 @@ export const Inventory = ({ pickedUpObjects, allObjects, onPenalty , setSelected
 
                         <button
                             type="button"
-                            className="ClassicButton SmallButton"
+                            className="ClassicButton SmallButton rounded-pill py-2 px-3"
                             onClick={() => setIsOpen(false)}
                         >
-                            X
+                            <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
                 )}

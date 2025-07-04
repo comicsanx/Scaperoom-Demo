@@ -19,10 +19,10 @@ align-items: center;
 }
 
 #ESC {
-left: 84%;
-top: -1.5%;
-width: 20%;
-height: 20%;
+left: 88%;
+top: 1%;
+width: 13%;
+height: 13%;
 background-image: url('../assets/img/Game_img/Game-ESC-Button.png');
 background-color: transparent;
 background-size: contain;
@@ -30,33 +30,4 @@ background-repeat: no-repeat;
 background-position: center;
 border: none;
 z-index: 2;
-}
-
-/* Avatar */
-/* .user-avatar-button-global {
-    position: absolute;
-    top: 5%;  
-    left: 2%; 
-    width: 3.5vw;
-    height: 3.5vw;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    border: none;
-    padding: 0; 
-    background-color: transparent; 
-    z-index: 1001;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
-.user-avatar-image {
-  display: block;
-    width: 68%; 
-    height: 68%;
-    object-position: center center;
-    object-fit: cover; 
-    background-color: transparent; 
-    z-index: 102;
-    transform: translateY(-5.4%) translateX(-4%);
 }

@@ -33,7 +33,7 @@ def signup():
         if not email or not username or not password or not avatar_filename: 
             return jsonify({'msg': 'Se necesita email, nombre de usuario, avatar y contraseña'}), 400
         
-        ALLOWED_AVATARS = ["Avatar_01.png", "Avatar_02.png", "Avatar_03.png", "default_avatar.png"]
+        ALLOWED_AVATARS = ["Avatar_01.png", "Avatar_02.png", "Avatar_03.png","Avatar_04.png", "Avatar_05.png", "default_avatar.png"]
         if avatar_filename not in ALLOWED_AVATARS:
             return jsonify({"msg": "El avatar seleccionado no es válido"}), 400
 
@@ -111,7 +111,7 @@ def handle_user_profile():
             new_avatar_filename = data.get('avatar_filename', None)
 
             if new_avatar_filename is not None:
-                ALLOWED_AVATARS = ["Avatar_01.png", "Avatar_02.png", "Avatar_03.png", "default_avatar.png"]
+                ALLOWED_AVATARS = ["Avatar_01.png", "Avatar_02.png", "Avatar_03.png", "Avatar_04.png", "Avatar_05.png", "default_avatar.png"]
                 if new_avatar_filename not in ALLOWED_AVATARS:
                     return jsonify({"msg": "Nombre de archivo de avatar no válido."}), 400
                 user.avatar_filename = new_avatar_filename

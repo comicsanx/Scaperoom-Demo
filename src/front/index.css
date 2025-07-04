@@ -24,6 +24,11 @@ z-index: 0;
     
 }
 
+.infomodal-type-top {
+  color:#CA7842;
+  border: none;
+}
+
 
 @media (min-width: 992px) {
     .righteous {
@@ -49,6 +54,50 @@ z-index: 0;
     }
 }
 
+/* colores */
+
+.yellow{
+color:#F0F2BD;
+background: none;
+border: none;
+}
+
+.background-yellow{
+background-color: #F0F2BD;
+}
+
+.green {
+color:#B2CD9C;
+background: none;
+border: none;
+}
+
+.background-green {
+background-color: #B2CD9C;
+}
+
+.orange {
+color:#CA7842;
+background: none;
+border: none;
+}
+
+.background-orange{
+background-color:#CA7842;
+}
+
+.brown {
+color:#513325;
+background: none;
+border: none;
+}
+
+.background-brown {
+background-color: #513325;
+}
+
+/* contenedores */
+
 .game-container-bg {
   position: relative; 
   width: 100%;
@@ -73,26 +122,24 @@ z-index: 0;
 }
 
 .profile-toggle-container {
-transform: translateY(-120px) translateX(-30px);
+transform: translateY(-190px) translateX(-30px);
+border: none;
 }
 
 .timer {
-transform: translateY(10px) translateX(565px);
-}
-
-@media (min-width: 992px) {
-  .timer {
-transform: translateY(25px) translateX(880px);
-}
+  position: absolute;
+  top: 2%;
+  left: 45%;
+background-color: transparent;
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+border: none;
+z-index: 1;
 }
 
 .modalUser-name {
-  font-family: "Courier New", Courier, monospace;
-  /* font-size: 1.5rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;  el pendejo */
-  color: #D4D4D4;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+  color: #513325;
 }
 .modalUser-hints {
   width: 38px;
@@ -128,20 +175,20 @@ transform: translateY(25px) translateX(880px);
 }
 
 .modalUse-hints-unused {
-     border: 2px solid #28A745;
-    box-shadow: 0 0 8px #28A745, 0 0 15px #38C172;
+     border: 2px solid gold;
+    box-shadow: 0 0 8px gold, 0 0 15px #B2CD9C;
   }
 /* css componente OBJECTS */
 .objectPosition {
   position: absolute;
-  top: 100px;
-  left: 200px;
+  top: 45%;
+  left: 50%;
   border: none;
   background: transparent;
 }
 .objectImg {
-  width: 50px;
-  height: 50px;
+  width: 90px;
+  height: 90px;
   object-fit: contain;
  
 }
@@ -154,8 +201,8 @@ transform: translateY(25px) translateX(880px);
   position: fixed;
   top: 20%;
   left: 50%;
-  background: rgba(101, 67, 33, 1);
-  border: 2px solid #6B4226;
+  background: #513325;
+  border: none;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(50, 30, 10, 0.4);
   padding: 15px 25px;
@@ -170,7 +217,7 @@ transform: translateY(25px) translateX(880px);
   align-items: center;
 }
 .modal-content button {
-  background-color: #6A2E06;
+  background-color: #513325;
   border: none;
   color: white;
   font-size: 1rem;
@@ -232,6 +279,10 @@ transform: translateY(25px) translateX(880px);
   position: relative;
   margin-bottom:35px;
   color: #F0F2BD;
+}
+
+.inventory_btn:hover{
+  color: #513325;
 }
 
 .inventoryMenuObjects {
@@ -296,9 +347,9 @@ transform: translateY(25px) translateX(880px);
 /* enigmas */
 .enigmaGeneral .modal-content {
   background-color: #CA7842; 
+  border: none;
   border-radius: 1rem;
-  color: #2e2e2e;
-  font-family: 'Open Sans', sans-serif;
+  color: #513325;
   max-width: 90vw;
   margin: auto;
 }
@@ -373,4 +424,9 @@ transform: translateY(25px) translateX(880px);
 
 .modal-footer button {
   font-family: 'Open Sans', sans-serif;
+}
+
+.final-image-content {
+  z-index: 2000;
+  left: 50%;
 }

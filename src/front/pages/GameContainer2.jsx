@@ -1,7 +1,9 @@
 import { useRef, useState, useEffect } from "react";
-// import "../CSS/level1.css";
-// import "../CSS/Game.css";
-// import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
+import Level2BG from "../assets/img/level2_provisional/Level2-Background.png";
+import "../CSS/level1.css";
+import "../CSS/level2.css";
+import "../CSS/Game.css";
+
 import { useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext";
 import { ObjectsLevel2 } from "../data/ObjectsArray";
@@ -160,15 +162,16 @@ export default function GameContainer2() {
   const currentEnigmaData = EnigmasData.enigmasNivel2.find(e => e.id === currentEnigma)
 
   return (
-    <div className="game-container2-bg">
-      {/* <img src={Level1BG} className="bg-img" alt="BG Level2" /> */}
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="calendar" onClick={handleCalendarClick}>calendario</ButtonWithSFX>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="id_safe" onClick={handleSafeClick}>caja fuerte</ButtonWithSFX>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="id_safe_handle" onClick={handleSafeHandle}> manilla caja fuerte</ButtonWithSFX>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="map" onClick={handleMapClick}>bola del mundo</ButtonWithSFX>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="telescope" className='object-zone' onClick={handleTelescopeClick}>telescopio</ButtonWithSFX>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="book" className='object-zone' onClick={handleBookClick}>libro</ButtonWithSFX>
-      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="ESC" onClick={() => setMenuOpen(true)}>salir</ButtonWithSFX>
+    <div className="game-container-bg">
+      <img src={Level2BG} className="bg-img" alt="BG Level2" />
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="calendar" onClick={handleCalendarClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="id_safe" onClick={handleSafeClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="id_safe_handle" onClick={handleSafeHandle}></ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="map" onClick={handleMapClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="telescope" className='object-zone' onClick={handleTelescopeClick}></ButtonWithSFX>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="book" className='object-zone' onClick={handleBookClick}></ButtonWithSFX>
+      <span id="pencilcase" ></span>
+      <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="ESC" onClick={() => setMenuOpen(true)}></ButtonWithSFX>
       {/* <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="PlayerInfo"></ButtonWithSFX> */}
 
       {gameMessage && (
@@ -204,14 +207,15 @@ export default function GameContainer2() {
       )}
 
 
-
+<Timer className="timer" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
 
       <div className="menu-toggle">
-        <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
+        
         <InfoModalUser className="info-modal-user" showEnigma={showEnigma} />
-        <Timer className="timer" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
-        <Objects objectsLevel={ObjectsLevel2} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
+        
       </div>
+      <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <Objects objectsLevel={ObjectsLevel2} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
 
     </div>
 

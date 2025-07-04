@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
+import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
 import "../CSS/level1.css";
 import "../CSS/Game.css";
-import Level1BG from "../assets/img/Level1_img/Level1-Background.png";
 import { useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext";
 import { ObjectsLevel1 } from "../data/ObjectsArray";
@@ -183,7 +183,7 @@ export default function GameContainer() {
   };
 
   return (
-    <div className="game-container-bg justidf">
+    <div className="game-container-bg">
       <img src={Level1BG} className="bg-img" alt="BG Level1" />
       <button id="plant"></button>
       <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="door" onClick={handleDoorClick}></ButtonWithSFX>
@@ -194,17 +194,18 @@ export default function GameContainer() {
       {/* <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="PlayerInfo"></ButtonWithSFX> */}
       
 
-      <p><Timer className="timer-display" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} /></p>
 
-      <div className="menu-toggle">
-        <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
+      
+
+      <Timer className="timer-display" menuOpen={menuOpen} ref={timerRef} tiempo={tiempo} setTiempo={setTiempo} />
+<div className="menu-toggle">
         <InfoModalUser className="info-modal-user" showEnigma={showEnigma} />
         {showEnigma && currentEnigmaData && (
           <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }}
             enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved}
             timerRef={timerRef} />)}
         {(mailboxMessage || gameMessage) && (
-          <div className="mailbox-message">
+          <div className="mailbox-message open-sans">
             <p>{mailboxMessage || gameMessage}</p>
           </div>
         )}
@@ -217,8 +218,11 @@ export default function GameContainer() {
             />
           </div>
         )}
+        </div>
+
+        <Pause open={menuOpen} onClose={() => setMenuOpen(false)} />
         <Objects objectsLevel={ObjectsLevel1} onPenalty={handlePenalty} setSelectedObject={setSelectedObject} selectedObject={selectedObject} />
       </div>
-    </div>
+    
   );
 }
