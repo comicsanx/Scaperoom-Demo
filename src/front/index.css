@@ -427,6 +427,26 @@ z-index: 1;
 }
 
 .final-image-content {
+  position: inherit;
   z-index: 2000;
-  left: 50%;
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 16px;
+}
+
+.game-message-container{
+  position:absolute;
+  z-index: 2000;
+  top: 30%
+}
+
+.final-image-overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 3000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
