@@ -22,8 +22,8 @@ import Avatar_03 from '../assets/img/UI/Avatars/Avatar_03.png';
                                 <img src={Avatar_01} alt="Avatar de Carol" className="credit-avatar me-3" />
                                 <div className="d-flex flex-column align-items-start">
                                 <p className="righteous orange credit-text mb-0">CAROL</p>
-                                <p className="open-sans-lite brown credit-text mb-0">Carol descripcion</p>
-                                <a href="" target="_blank" rel="noopener noreferrer" className="credit-link"><strong>Puedes ver mi trabajo aquí</strong></a> 
+                                <p className="open-sans-lite brown credit-text text-start mb-0 me-5 pe-5">Iniciando mi camino como Full Stack Developer con gran entusiasmo por la tecnología y el desarrollo web. Lista para seguir creciendo y creando proyectos.</p>
+                                <a href="https://github.com/CarolCastilloDev" target="_blank" rel="noopener noreferrer" className="credit-link"><strong>Puedes ver mi trabajo aquí</strong></a> 
                                 </div>
                             </div>
 
@@ -31,8 +31,8 @@ import Avatar_03 from '../assets/img/UI/Avatars/Avatar_03.png';
                             <div className="credit-item naiomi d-flex align-items-center justify-content-end w-100 my-0 me-5">
                                 <div className="d-flex flex-column align-items-end me-3">
                                 <p className="righteous orange credit-text mb-0">NAIOMI</p>
-                                <p className="open-sans-lite brown credit-text mb-0">Naiomi descripcion</p>
-                                <a href="" target="_blank" rel="noopener noreferrer" className="credit-link"><strong>Puedes ver mi trabajo aquí</strong></a> 
+                                <p className="open-sans-lite brown credit-text text-start mb-0 ms-5 ms-4 ps-5">Después de hacer un checkout a una nueva rama profesional, éste ha sido mi primer proyecto en equipo y el deploy oficial de mi nueva carrera como desarrolladora. Recién graduada y con el entusiasmo, sigo sumando líneas de código.</p>
+                                <a href="https://github.com/naiomi25" target="_blank" rel="noopener noreferrer" className="credit-link"><strong>Puedes ver mi trabajo aquí</strong></a> 
                                 </div>
                                 <img src={Avatar_02} alt="Avatar de Naiomi" className="credit-avatar" />
                             </div>

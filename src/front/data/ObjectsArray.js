@@ -1,11 +1,6 @@
 import llave from "../assets/img/llave.png"
 import balleta  from "../assets/img/Level2_img/Mopa.png"
 import lupa from "../assets/img/Level2_img/lupa.png"
-    // id : 'llave',
-    // name : 'llave maestra:',
-    // img : 'foto png con fondo trnasparente ( será la forma del boton)',
-    // className :'identificador para aplicar clases css, como la posicion',
-    // useIn : 'palabra clave del lugar (boton) donde debe clickar para usar la llave'
 
 export const ObjectsLevel1 = [{
 
@@ -25,7 +20,7 @@ export const ObjectsLevel2 = [
     img : balleta,
     className :'balleta',
     useIn : 'telescopio',
-    message : 'Buscale una utilidad a la gamuza, ¡quizás te sorprenda!'
+    message : 'Búscale una utilidad a la gamuza, ¡quizás te sorprenda!'
 
 },
  {
@@ -35,7 +30,7 @@ export const ObjectsLevel2 = [
     img : lupa,
     className :'lupa',
     useIn : 'libro',
-    message : 'quizás puedas ver algo mejor con la lupa, ¡inténtalo!'
+    message : 'Quizás puedas ver algo mejor con la lupa, ¡inténtalo!'
 }, 
 
 ]
