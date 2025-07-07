@@ -8,7 +8,7 @@
     transform-origin: center center;
     width: min(100vw, (100vh * 16 / 9));
     height: min(100vh, (100vw * 9 / 16));
-    overflow: hidden;
+    /* overflow: hidden; */
     z-index: 1; 
 
 }
