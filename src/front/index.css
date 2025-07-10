@@ -29,6 +29,19 @@ z-index: 0;
   border: none;
 }
 
+@media (max-width: 992px) {
+    .righteous {
+        font-size: 2rem; 
+    }
+    .open-sans {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+      .open-sans-lite {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+}
 
 @media (min-width: 992px) {
     .righteous {
