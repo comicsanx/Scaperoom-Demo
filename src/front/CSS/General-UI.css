@@ -290,7 +290,7 @@ background-color: #513325;
 }
 
 .header-background, .credits-top {
-    
+    border-radius: 100px 100px 0 0;
     padding: 2rem 5% 1rem 5%;
 }
 .header-title {
@@ -332,9 +332,6 @@ background-color: #513325;
     padding: 1rem;
 }
 
-.credits-top {
-    height: 870px;
-}
 .credit-link {
     color:#CA7842;
 }

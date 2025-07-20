@@ -11,9 +11,9 @@ import Avatar_03 from '../assets/img/UI/Avatars/Avatar_03.png';
 
     return (
         <div>
-                   <div className="text-center mt-0 py-3 container col-9">
+                   <div className="text-center form-main-container container col-9">
                        <div className="background-green credits-top d-flex flex-column align-items-center w-100">
-                           <div className="righteous ranking-number header-background d-flex justify-content-between w-100 ps-2">
+                           <div className="righteous ranking-number header-background d-flex justify-content-between w-100">
                                <p className="header-title righteous mt-2 yellow mb-3 ms-5 ps-5 pt-3 d-flex flex-column">CRÉDITOS</p>
                            </div>
                            <div className="menu-content-victory mt-4">
