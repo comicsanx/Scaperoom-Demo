@@ -64,13 +64,13 @@ export const Signup = () => {
     }
   };
   return (
-    <div className="text-center form-main-container container"  >
+    <div className="text-center form-main-container container col-9">
       <div className="background-green form-background d-flex flex-column align-items-center w-100" >
         <div className="righteous ranking-number header-background d-flex justify-content-between w-100">
           <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => navigate("/login")} className= "forward-button d-flex flex-column yellow" ><h1><i class="fa-solid fa-caret-left"></i></h1></ButtonWithSFX>
-          <p className="header-title righteous yellow">REGISTRO</p>
+          <p className="header-title righteous yellow text-end">REGISTRO</p>
         </div>
-        <form className="form-content row g-3" onSubmit={handleSubmit}>
+        <form className="form-content row g-0" onSubmit={handleSubmit}>
           <div className="col-md-6 d-flex flex-column align-items-start"> {/* Columna izquierda para Username, Email, Password */}
                 <div className="col-12"> {/* Ajustar el ancho de los inputs dentro de esta columna */}
                     <label htmlFor="Username" className="form-label open-sans orange">Nombre de Usuario</label>
@@ -118,7 +118,7 @@ export const Signup = () => {
                         />
                     )}
                 </div>
-                <div className="col-12 text-end pe-5">
+                <div className="col-12 justify-content-center">
             <ButtonWithSFX type="submit" sfxName="BUTTON_CLICK" className="ClassicButton-Variation righteous mb-0 mt-4 rounded-pill px-5 py-3" disabled={!validate} >Submit form</ButtonWithSFX>
         </div>
             </div>
