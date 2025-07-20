@@ -32,99 +32,75 @@
         font-size: 1rem;
         font-weight: 500;
     }
-
      .dashboard-container {
-        margin-top: 0 !important; /* Neutraliza mt-5 del JSX */
-        padding: 0 !important; /* Neutraliza cualquier padding del container-fluid */
+        margin-top: 0 !important;
+        padding: 0 !important;
     }
-
     .dashboard-container > .row {
-        height: 100% !important; /* Asegurar que la fila ocupe el 100% del alto */
-        padding: 0 5% !important; /* Añade padding horizontal para que no se pegue a los bordes */
-        flex-direction: column !important; /* Asegurar que las columnas se apilen verticalmente */
-        justify-content: center !important; /* Centrar verticalmente las columnas apiladas */
-        align-items: center !important; /* Centrar horizontalmente las columnas apiladas */
+        height: 100% !important; 
+        padding: 0 5% !important; 
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important; 
     }
-
-    /* Columnas laterales vacías: OCULTARLAS y asegurar que no ocupen espacio */
-    /* Tu JSX: <div className="col-lg-3 col-md-4 col-sm-2 col-xs-2 d-flex flex-column mt-5"> */
     .dashboard-container .col-lg-3, 
     .dashboard-container .col-md-4, 
     .dashboard-container .col-sm-2, 
     .dashboard-container .col-xs-2 {
-        display: none !important; /* Forzar ocultar */
-        width: 0 !important; /* Asegurar que no ocupen ancho */
+        display: none !important; 
+        width: 0 !important;
         padding: 0 !important; 
         margin: 0 !important; 
     }
-
-    /* Columna central de game-controls: HACER QUE OCUPE EL 100% del ancho disponible */
-    /* Tu JSX: <div className="col-xs-4 col-sm-4 col-md-4 col-lg-6 game-controls d-flex flex-column"> */
     .dashboard-container .game-controls {
-        width: 100% !important; /* Sobreescribir col-xs-4/sm-4/md-4 para que ocupe todo el ancho */
-        height: auto !important; /* Altura auto para ajustarse al contenido */
-        padding: 0 !important; /* Neutralizar cualquier padding de Bootstrap en esta columna */
+        width: 100% !important; 
+        height: auto !important; 
+        padding: 0 !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: center !important;
         align-items: center !important;
     }
-
     .dashboard-container .game-controls > .row {
-        width: 100% !important; /* Asegurar que ocupe todo el ancho de game-controls */
+        width: 100% !important;
         height: auto !important;
-        flex-direction: column !important; /* <--- ¡ESTA ES LA CLAVE! Para que logo y botones se apilen. */
-        justify-content: center !important; /* Centra el logo y los botones */
-        align-items: center !important; /* Centra el logo y los botones */
+        flex-direction: column !important;
+        justify-content: center !important; 
+        align-items: center !important; 
     }
-
-    /* Contenedor del logo: AJUSTAR SU ANCHO Y MÁRGENES */
-    /* Tu JSX: <div className="logo-container col-12 text-center mb-auto mt-5 mx-auto px-5"> */
     .logo-container {
-        width: 65% !important; /* Ancho para el logo dentro de game-controls. Ajusta este % */
-        max-width: 350px !important; /* Límite de tamaño para el logo */
-        margin-top: 0 !important; /* Neutraliza mt-5 del JSX */
-        margin-bottom: 5% !important; /* Espacio debajo del logo, relativo al alto del contenedor */
-        padding: 0 !important; /* Neutraliza px-5 del JSX */
+        width: 65% !important;
+        max-width: 350px !important; 
+        margin-top: 0 !important;
+        margin-bottom: 5% !important; 
+        padding: 0 !important; 
     }
-
     .Scaperoom-Logo {
-        width: 100% !important; /* Asegura que la imagen ocupe el 100% de su contenedor */
+        width: 100% !important; 
         height: auto !important;
     }
-
-    /* Grupo de botones: AJUSTAR SU ANCHO Y MÁRGENES */
-    /* Tu JSX: <div className="btn-group-vertical d-flex justify-content-center align-items-center"> */
     .btn-group-vertical {
-        width: 65% !important; /* Ancho para el grupo de botones. Ajusta este % */
-        max-width: 300px !important; /* Límite de tamaño para los botones */
-        margin-top: 0 !important; /* Neutraliza mt-5 del button-group */
+        width: 65% !important;
+        max-width: 300px !important;
+        margin-top: 0 !important;
         padding-top: 0 !important;
-        flex-direction: column !important; /* <--- ¡IMPORTANTE! Asegurar apilamiento de los botones individuales */
+        flex-direction: column !important;
         justify-content: center !important;
         align-items: center !important;
     }
-
-    /* Contenedor de cada botón */
-    /* Tu JSX: <div className="button-group col-lg-6 col-md-12 col-sm-12 col-xs-12 mt-5"> */
     .btn-group-vertical .button-group {
-        width: 100% !important; /* Fuerza a ocupar todo el ancho dentro del btn-group-vertical */
-        margin-top: 0 !important; /* Asegurar mt-5 no interfiere */
+        width: 100% !important;
+        margin-top: 0 !important;
     }
-
-    /* Estilo para los botones individuales: AJUSTAR PADDING Y TAMAÑO DE FUENTE */
-    /* Tu JSX: <ButtonWithSFX ... className="ClassicButton righteous mb-3 rounded-pill px-4 py-3 w-100"> */
     .ClassicButton {
-        padding: 2% 0 !important; /* Padding vertical y horizontal relativo, ajusta estos % */
-        margin-bottom: 2% !important; /* Espacio entre botones */
-        font-size: 3vmin !important; /* Usa vmin para que la fuente se adapte bien */
-        width: 100% !important; /* Asegura que el botón ocupe todo el ancho de su contenedor */
-        /* Neutralizar px-4 y py-3 si lo necesitas, pero el padding ya lo hemos definido */
+        padding: 2% 0 !important;
+        margin-bottom: 2% !important;
+        font-size: 3vmin !important; 
+        width: 100% !important; 
     }
-
     .ClassicButton h2 {
-        font-size: inherit !important; /* Hereda el tamaño del botón */
-        margin-bottom: 0 !important; /* Eliminar margen de h2 */
+        font-size: inherit !important;
+        margin-bottom: 0 !important; 
     }
 }
 
@@ -247,7 +223,7 @@ background-color: #513325;
 }
 
  .btn-link.open-sans.orange h5 {
-        font-size: 0.9rem !important; /* Tamaño más pequeño para el enlace */
+        font-size: 0.9rem !important;
     }
 
 .editbutton {
@@ -307,9 +283,9 @@ background-color: #513325;
 /* login y registro */
 
 .header-background {
-    display: flex; /* <--- IMPORTANTE: Asegurar que es flexbox */
-    justify-content: space-between; /* <--- IMPORTANTE: Empujar elementos a los extremos */
-    align-items: center; /* <--- IMPORTANTE: Centrar verticalmente los elementos */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
 }
 
 .header-background, .credits-top {
@@ -317,11 +293,11 @@ background-color: #513325;
     padding: 2rem 5% 1rem 5%;
 }
 .header-title {
-    font-size: 3rem; /* Mantener tu tamaño base */
+    font-size: 3rem;
      margin: 0 !important;
-    padding: 0 !important;/* Neutralizar ms-5 ps-5 */
-    flex-grow: 1; /* Permitir que ocupe el espacio para empujar la flecha a la derecha */
-    text-align: center; /* Centrar el texto dentro de su espacio */
+    padding: 0 !important;
+    flex-grow: 1;
+    text-align: center; 
 }
 
 .forward-button {
@@ -329,31 +305,31 @@ background-color: #513325;
     border: none !important;
     padding: 0 !important;
    margin: 0 !important; 
-    display: flex !important; /* Confirmar que es flex */
-    align-items: center !important; /* Centrar la flecha verticalmente */
+    display: flex !important;
+    align-items: center !important;
 }
 
 .forward-button h1 .fa-solid.fa-caret-right {
-    font-size: 3em; /* Mantener tu tamaño base */
+    font-size: 3em; 
 }
 
 .form-main-container {
-    width: 65% !important; /* Ancho en escritorio, ajusta según necesidad */
-    max-width: 900px !important; /* O un valor fijo para pantallas muy grandes */
-    margin-left: auto !important; /* Centrar el contenedor */
+    width: 65% !important;
+    max-width: 900px !important;
+    margin-left: auto !important;
     margin-right: auto !important;
-    padding-top: 5rem !important; /* Neutralizar py-5 si lo necesitas */
+    padding-top: 5rem !important;
     padding-bottom: 5rem !important;
 }
 
 .form-background {
     border-radius: 100px 100px 0 0;
-      height: auto; /* Que se ajuste al contenido */
-    padding-bottom: 2rem; /* Espacio extra abajo del formulario */
+      height: auto;
+    padding-bottom: 2rem;
 }
 .form-content {
-    width: 50%; /* Ocupa el 50% del ancho del .form-background en escritorio. Ajusta este % */
-    padding: 1rem; /* Padding interno */
+    width: 50%;
+    padding: 1rem;
 }
 
 .credits-top {
@@ -373,105 +349,157 @@ background-color: #513325;
     padding: 0;
 }
 
-
-
 /* media querys login y registro */
 
 @media (max-width: 992px) {
-
      .righteous {
-        font-size: 1.8rem !important; /* Un poco más pequeño para asegurar que "INICIAR SESIÓN" quepa en una línea */
+        font-size: 1.8rem !important; 
     } 
-
     .header-background {
-        flex-direction: row !important; /* Apilar el título y la flecha */
-        justify-content: space-between !important; /* Centrar el contenido apilado */
-        align-items: center !important; /* Centrar horizontalmente el contenido apilado */
-        padding: 1rem 5% !important;/* Padding vertical para centrar el contenido */
+        flex-direction: row !important; 
+        justify-content: space-between !important; 
+        align-items: center !important;
+        padding: 1rem 5% !important;
          width: 100% !important;
-         margin-top: 0 !important; /* Por si ranking-number o alguna otra clase añade margen */
+         margin-top: 0 !important;
         margin-bottom: 0 !important;
     }
-
     .header-title {
         font-size: 1.8rem !important;
-        text-align: left !important; /* Asegura que el texto esté centrado */
+        text-align: left !important; 
         margin-bottom: 0 !important;
-        margin-top: 0 !important; /* Espacio entre el título y la flecha */
+        margin-top: 0 !important; 
         flex-grow: 1 !important;
-        width: 100% !important;
-         line-height: 1.2 !important; /* Asegurar un line-height adecuado para una sola línea */
-        white-space: nowrap; /* Intentar mantener el texto en una sola línea si es posible */
-        overflow: hidden; /* Ocultar si el texto es demasiado largo para una línea */
-        text-overflow: ellipsis; /* Añadir puntos suspensivos si se oculta */
+        width: auto !important;
+         line-height: 1.2 !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; 
     }
-
     .forward-button {
-        /* No necesitas flex-direction column aquí si ya lo hemos apilado en el padre */
         margin-top: 0 !important;
         margin-bottom: 0 !important;
+        margin-left: 0 !important; 
+        margin-right: 0 !important;
     }
-    .forward-button h1 .fa-solid.fa-caret-right {
-        font-size: 1.4em !important; /* Ajusta el tamaño de la flecha para móvil */
+    .forward-button h1 .fa-solid.fa-caret-right,
+    .forward-button h1 .fa-solid.fa-caret-left {
+        font-size: 1.4em !important;
     }
-
      .form-main-container {
-        width: 95% !important; /* Mantenemos este ancho para el contenedor principal */
-        padding-top: 0 !important; /* Reducir un poco el padding superior para subir el formulario */
-        padding-bottom: 0 !important; /* Reducir un poco el padding inferior */
-         margin-top: 5vh !important; /* Neutralizar cualquier margen superior si lo hay en el JSX */
-        margin-bottom: 10vh !important; /* Neutralizar cualquier margen inferior */
-        display: flex !important; /* Convertir a flex para centrado de su contenido */
-        flex-direction: column !important; /* Apilar su contenido */
-        justify-content: center !important; /* Centrar verticalmente el contenido */
-        align-items: center !important; /* Centrar horizontalmente el contenido */
-        height: 100vh;
-    }
-
-    .form-background {
-        border-radius: 100px 100px 0 0;
-        height: auto !important; /* Asegurar que se ajuste a su contenido en móvil */
-        padding-bottom: 1rem;
-        /* Asegurarse de que no haya un padding-top excesivo aquí tampoco */
-        padding-top: 0 !important; /* Neutralizar cualquier padding-top que lo empuje */
+        width: 95% !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+         margin-top: 5vh !important;
+        margin-bottom: 5vh !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: flex-start !important; /* Empezar el contenido desde arriba */
+        justify-content: center !important;
         align-items: center !important;
-        flex-grow: 1; /* Permitir que ocupe el espacio restante dentro de form-main-container si este es flex */
+        height: auto;
     }
-    /* Formulario de contenido */
+    .form-background {
+        border-radius: 100px 100px 0 0;
+        min-height: 70vh !important;
+        max-height: 85vh !important;
+        height: auto !important;
+        padding-bottom: 1rem;
+        padding-top: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        flex-grow: 1;
+        overflow-y: auto;
+    }
     .form-content {
-        width: 90% !important; /* Ocupa más ancho en móviles */
-        padding: 0 1rem !important; /* Ajusta el padding horizontal si es necesario */
-         margin-top: 1rem !important; /* <--- CAMBIO: Reducir este margen para subir los inputs */
+        width: 90% !important;
+        padding: 0 1rem !important;
+         margin-top: 0.7rem !important;
+        margin-bottom: 0 !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+      .form-content .col-md-6 {
+        width: 100% !important; /* Forzar que cada columna ocupe el 100% del ancho */
+        padding: 0 0.5rem !important; /* Pequeño padding horizontal interno para los inputs */
+        margin-bottom: 0.5rem !important; /* Espacio entre las dos columnas cuando están apiladas */
+        display: flex; /* Aseguramos flex para alinear el contenido interno */
+        flex-direction: column; /* Apila el label y el input dentro de cada col-md-6 */
+        align-items: flex-start; /* Alinea los elementos a la izquierda dentro de cada col-md-6 */
+    }
+    .form-label {
+        font-size: 0.9rem !important;
+        font-weight: 600 !important;
         margin-bottom: 0 !important;
     }
-
-    /* Campos de entrada */
-    .form-label {
-        font-size: 0.9rem !important; /* Tamaño más pequeño para las etiquetas */
-        font-weight: 600 !important;
-    }
     .form-control {
-        font-size: 1rem !important; /* Tamaño de fuente para los inputs */
-        padding: 0.5rem 0.75rem !important; /* Ajusta el padding de los inputs */
+        font-size: 1rem !important;
+        padding: 0.5rem 0.75rem !important;
+        margin-bottom: 0 !important;
     }
-
-    /* Botón "Entrar" */
+     .form-content .col-12 {
+        /* Neutralizar paddings de Bootstrap si los hay en el JSX para estos divs */
+        padding-left: 0 !important; 
+        padding-right: 0 !important;
+        margin-bottom: 0 !important; /* Espacio entre grupos de input/label */
+    }
+     .form-content .mb-3 {
+        margin-bottom: 0 !important;
+    }
+    .form-text.open-sans.orange.small h6 {
+        font-size: 0.75rem !important; /* Hacer el texto más pequeño para que quepa */
+        margin-bottom: 0.5rem !important; /* Reducir el margen debajo del texto */
+        line-height: 1.2 !important; /* Ajustar el interlineado */
+    }
     .ClassicButton-Variation {
-        width: 100% !important; /* Que el botón ocupe todo el ancho del formulario */
-        padding: 0.8rem 0 !important; /* Padding ajustado para móvil */
-        font-size: 1.2rem !important; /* Tamaño de fuente más pequeño para móvil */
+        width: 100% !important;
+        padding: 0.8rem 0 !important;
+        font-size: 1.2rem !important;
+        margin-top: 1rem !important;
+        margin-bottom: 0.2rem !important;
     }
-
-    /* Botón "He olvidado mi contraseña" */
     .btn-link.open-sans.orange h5 {
-        font-size: 0.9rem !important; /* Tamaño más pequeño para el enlace */
+        font-size: 0.9rem !important;
+    }
+        .password-button {
+        margin-top: 0 !important;
+        margin-bottom: 0.5rem !important;
+    }
+      .form-content .col-12.text-end.pe-5 {
+       width: 100% !important; /* Asegurar que el div del botón ocupe todo el ancho */
+        padding-right: 0.5rem !important; /* Ajustar padding derecho para el botón */
+        margin-top: 1rem !important; /* Margen superior para separarlo del avatar */
+        text-align: center !important; /* Centrar el botón si está en una línea propia */
+    }
+     .form-content .col-md-6 .ClassicButton-Variation {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        display: block !important; /* Aseguramos que sea un elemento de bloque para que los márgenes auto funcionen */
+        width: 80% !important; /* Ajustamos un ancho más pequeño para que no ocupe todo el espacio de la columna */
+        max-width: 250px !important; /* Límite para el tamaño del botón */
+    }
+    .avatar-preview {
+        max-width: 100px !important;
+        max-height: 100px !important;
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+                margin-left: auto !important;
+        margin-right: auto !important;
+    }
+    .form-content .col-md-6.d-flex.flex-column.align-items-start {
+        width: 100% !important; /* Hacer que las columnas ocupen todo el ancho en móvil */
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+    .form-content .col-12.ps-4.pe-4 {
+        padding-left: 0 !important; /* Eliminar padding extra para que los inputs queden alineados */
+        padding-right: 0 !important;
     }
 }
-@media (min-width: 1400px) {
 
+@media (min-width: 1400px) {
     .form-background {
     border-radius: 100px 100px 0 0;
      height: 720px;
@@ -488,8 +516,8 @@ background-color: #513325;
     background-color: transparent;
     padding: 20px;
 }
-
 }
+
 /* Dashboard */
 
 .user-profile-card{
@@ -498,6 +526,7 @@ background-color: #513325;
     font-weight: 400;
     font-style: normal;
 }
+
 .ranking-title {
     font-size: 3rem;
 }
@@ -557,28 +586,25 @@ background-color: #513325;
 .btn-group-vertical{
     padding-top: 4rem;
 }
-
 .logo-container {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
-
-/* usuario */
 .profile-display-mode .avatar-container {
         display: flex;
         justify-content: center; 
         align-items: center;
         margin-bottom: 2rem; 
         margin-top: 2rem;
-    }
+}
 
-     .profile-display-mode .avatar-img {
+.profile-display-mode .avatar-img {
         width: 300px;
         height: 300px;
         object-fit: cover;
         border-radius: 50%;
-    }
+}
 
     /* faltan los de editar (profile-edit-mode) */
 

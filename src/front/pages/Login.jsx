@@ -35,13 +35,13 @@ export const Login = () => {
     };   
 
     return (
-        <div className="text-center mt-5 py-5 container form-main-container">
+        <div className="text-center container form-main-container">
             <div className="background-green form-background d-flex flex-column align-items-center w-100">
                 <div className="righteous ranking-number header-background d-flex justify-content-between align-items-center w-100">
-            <p className="header-title righteous mt-5 yellow">INICIAR SESIÓN</p>
+            <p className="header-title righteous yellow">INICIAR SESIÓN</p>
             <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => navigate("/signup")} className= "forward-button yellow" ><h1><i class="fa-solid fa-caret-right"></i></h1></ButtonWithSFX>
                 </div>
-            <form onSubmit={handleSubmit} className="form-content mx-auto mt-5 mb-3">
+            <form onSubmit={handleSubmit} className="form-content mx-auto">
                 <div className="mb-3 text-start">
                     <label htmlFor="exampleInputEmail1" className="open-sans orange form-label">Email</label>
                     <input
@@ -65,9 +65,9 @@ export const Login = () => {
                         required
                     />
                 </div>
-                <ButtonWithSFX type="submit" sfxName="BUTTON_CLICK" className="ClassicButton-Variation righteous mb-0 mt-4 rounded-pill px-5 py-3">Entrar</ButtonWithSFX>
+                <ButtonWithSFX type="submit" sfxName="BUTTON_CLICK" className="ClassicButton-Variation righteous rounded-pill px-5 py-3">Entrar</ButtonWithSFX>
             </form>
-            <div className="password-button mt-0">
+            <div className="password-button">
                 <ButtonWithSFX sfxName="BUTTON_CLICK"
                     className="btn btn-link open-sans orange"
                     onClick={() => navigate("/forgot-password")}
