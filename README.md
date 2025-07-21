@@ -1,28 +1,34 @@
 # Scaperoom 102 — Vertical Slice
 
-A vertical slice of a 2-level escape room game, showcasing a full-stack implementation with advanced features and polished flat design.
+<p>A vertical slice of a <strong>2-level escape room game</strong>, showcasing a full-stack implementation with advanced features and polished flat design.</p>
 
 ## 🔍 Features
-Multi-level gameplay with interactive puzzles
-Full CRUD functionality for user and game data
-Password recovery system using Flask Email integration
-Integration with Audius API for dynamic music streaming
-Sound effects (SFX) to enhance gameplay immersion
-Responsive UI designed with Bootstrap, custom CSS, and flat design principles
-Use of custom images to enrich the visual experience
-Frontend built with React for a smooth user experience
-Backend powered by Flask, Python, and SQLAlchemy for data modeling and persistence
-Environment and dependency management using pipenv
+<ul>
+  <li>Multi-level gameplay with interactive puzzles</li>
+  <li>Full CRUD functionality for user and game data</li>
+  <li>Password recovery system using <strong>Flask Email</strong> integration</li>
+  <li>Integration with <strong>Audius API</strong> for dynamic music streaming</li>
+  <li>Sound effects (SFX) to enhance gameplay immersion</li>
+  <li>Responsive UI designed with <strong>Bootstrap</strong>, <strong>custom CSS</strong>, and <strong>flat design principles</strong></li>
+  <li>Use of <strong>custom images</strong> to enrich the visual experience</li>
+  <li>Frontend built with <strong>React</strong> for a smooth user experience</li>
+  <li>Backend powered by <strong>Flask</strong>, <strong>Python</strong>, and <strong>SQLAlchemy</strong> for data modeling and persistence</li>
+  <li>Environment and dependency management using <strong>pipenv</strong></li>
+</ul>
 
 ## 🛠️ Technologies Used
-Frontend: React, Bootstrap 5, CSS3
-Backend: Flask, Python, SQLAlchemy, Flask-Mail
-APIs: Audius (music streaming)
-Dev Tools: pipenv for virtual environment and dependency management
+<ul>
+  <li>Frontend: React, Bootstrap 5, CSS3</li>
+  <li>Backend: Flask, Python, SQLAlchemy, Flask-Mail</li>
+  <li>APIs: Audius (music streaming)</li>
+  <li>Dev Tools: pipenv for virtual environment and dependency management</li>
+</ul>
 
 ## 📌 Notes
-Focused on a polished, user-friendly gameplay experience
-Secure authentication and password recovery
-Rich multimedia integration with music and SFX
-Scalable architecture ready for further levels and features
-Consistent flat design with personalized visual assets
+<ul>
+  <li>Focused on a polished, user-friendly gameplay experience</li>
+  <li>Secure authentication and password recovery</li>
+  <li>Rich multimedia integration with music and SFX</li>
+  <li>Scalable architecture ready for further levels and features</li>
+  <li>Consistent flat design with personalized visual assets</li>
+</ul>
