@@ -123,12 +123,19 @@ border:none;
 }
 
 .view-image {
-  max-width: 400px;  /* Tamaño máximo ancho */
-  width: 90%;        /* Responsivo */
+  max-width: 400px;  
+  width: 90%;       
   height: auto;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 animation: fadeScaleIn 0.5s ease forwards;
+}
+
+@media (max-width: 992px) {
+  .view-image {
+    max-width: 250px;
+    width: 100%;
+  }
 }
 
 @keyframes fadeMoveUp {
@@ -152,4 +159,11 @@ animation: fadeScaleIn 0.5s ease forwards;
   padding: 0 1rem;
   user-select: none;
   animation: fadeMoveUp 0.6s ease forwards;
+}
+
+@media (max-width: 992px) {
+  .mailbox-message {
+    font-size: 1rem;
+    padding: 0 0.5rem;
+  }
 }

@@ -31,7 +31,7 @@ z-index: 0;
 
 @media (max-width: 992px) {
     .righteous {
-        font-size: 2rem; 
+        font-size: 1rem; 
     }
     .open-sans {
         font-size: 1rem;
@@ -169,7 +169,6 @@ z-index: 1;
   justify-content: center;
   padding: 0;
   transition: all 0.3s ease;
-  /* font-size: 16px; el pendejo 2 */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   border: 1px solid transparent;
 }
@@ -411,7 +410,7 @@ z-index: 1;
   font-size: 1.2rem;
   text-align: center;
 }
-@media (max-width: 576px) {
+@media (max-width: 992px) {
   .modal-title {
     font-size: 1.4rem;
   }
@@ -489,6 +488,12 @@ z-index: 1;
   position:absolute;
   z-index: 2000;
   top: 30%
+}
+
+@media (max-width: 992px) {
+  .game-message-container {
+    top: 10%;
+  }
 }
 
 .final-image-overlay {
