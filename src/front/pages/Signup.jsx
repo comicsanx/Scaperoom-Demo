@@ -66,7 +66,7 @@ export const Signup = () => {
   return (
     <div className="text-center form-main-container container col-9">
       <div className="background-green form-background d-flex flex-column align-items-center w-100" >
-        <div className="righteous ranking-number header-background d-flex justify-content-between w-100">
+        <div className="righteous orange-header header-background d-flex justify-content-between w-100">
           <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => navigate("/login")} className= "forward-button d-flex flex-column yellow" ><h1><i class="fa-solid fa-caret-left"></i></h1></ButtonWithSFX>
           <p className="header-title righteous yellow text-end">REGISTRO</p>
         </div>

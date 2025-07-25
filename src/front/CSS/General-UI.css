@@ -747,7 +747,7 @@ background-color: #513325;
     display: block;
 }
 
-.ranking-number {
+.ranking-number, .orange-header {
     background-color: #CA7842;
     color: #F0F2BD;
 }
@@ -838,6 +838,17 @@ background-color: #513325;
         margin-bottom: 0.2rem !important;
     }
 }
+/* Victory */
+@media (max-width: 992px) {
 
-
+    .menu-content-victory p {
+        font-size: 1.2rem !important;
+        margin-top: 1rem !important;
+        margin-bottom: 0.5rem !important;
+        line-height: 1.2;
+        text-align: center !important;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+}
 

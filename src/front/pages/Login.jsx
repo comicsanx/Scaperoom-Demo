@@ -37,7 +37,7 @@ export const Login = () => {
     return (
         <div className="text-center container form-main-container">
             <div className="background-green form-background d-flex flex-column align-items-center w-100">
-                <div className="righteous ranking-number header-background d-flex justify-content-between align-items-center w-100">
+                <div className="righteous orange-header header-background d-flex justify-content-between align-items-center w-100">
             <p className="header-title righteous yellow text-start">INICIAR SESIÓN</p>
             <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => navigate("/signup")} className= "forward-button yellow" ><h1><i class="fa-solid fa-caret-right"></i></h1></ButtonWithSFX>
                 </div>
