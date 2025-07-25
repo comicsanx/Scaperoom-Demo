@@ -20,6 +20,7 @@
     
 }
 
+/* dashboard */
 @media (max-width: 992px) {
     .righteous {
         font-size: 2rem; 
@@ -34,32 +35,32 @@
     }
      .dashboard-container {
         margin-top: 0 !important;
-        padding: 0 !important;
+        padding: 0 10px !important;
+        overflow-x: hidden;
+        min-height: 100vh; 
     }
     .dashboard-container > .row {
         height: 100% !important; 
-        padding: 0 5% !important; 
-        flex-direction: column !important;
-        justify-content: center !important;
-        align-items: center !important; 
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: flex-start !important; 
+        flex-wrap: nowrap;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
     }
-    .dashboard-container .col-lg-3, 
-    .dashboard-container .col-md-4, 
-    .dashboard-container .col-sm-2, 
-    .dashboard-container .col-xs-2 {
-        display: none !important; 
-        width: 0 !important;
-        padding: 0 !important; 
-        margin: 0 !important; 
+
+    .dashboard-lateral {
+        width: 33% !important; 
+        min-width: unset;
+        padding: 5px !important; 
+        box-sizing: border-box;
     }
+
     .dashboard-container .game-controls {
-        width: 100% !important; 
-        height: auto !important; 
-        padding: 0 !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: center !important;
-        align-items: center !important;
+        width: 36% !important;
+        padding: 5px 5px !important;
+        justify-content: flex-start !important;
+        margin-top: 20px !important;
     }
     .dashboard-container .game-controls > .row {
         width: 100% !important;
@@ -69,38 +70,169 @@
         align-items: center !important; 
     }
     .logo-container {
-        width: 65% !important;
-        max-width: 350px !important; 
-        margin-top: 0 !important;
-        margin-bottom: 5% !important; 
-        padding: 0 !important; 
+        width: 100% !important;
+        margin-bottom: 15px !important;
     }
     .Scaperoom-Logo {
-        width: 100% !important; 
+        width: 90% !important; 
+        max-width: 250px !important;
         height: auto !important;
     }
     .btn-group-vertical {
-        width: 65% !important;
-        max-width: 300px !important;
+        width: 100% !important;
         margin-top: 0 !important;
-        padding-top: 0 !important;
-        flex-direction: column !important;
-        justify-content: center !important;
         align-items: center !important;
     }
     .btn-group-vertical .button-group {
-        width: 100% !important;
+        width: 90% !important;
+        max-width: 200px !important;
         margin-top: 0 !important;
     }
     .ClassicButton {
-        padding: 2% 0 !important;
-        margin-bottom: 2% !important;
-        font-size: 3vmin !important; 
+        padding: 8px 0 !important; 
+        margin-bottom: 8px !important;
+        font-size: 1.2rem !important; 
         width: 100% !important; 
+        max-width: none !important;
     }
     .ClassicButton h2 {
         font-size: inherit !important;
         margin-bottom: 0 !important; 
+    }
+
+    .user-profile-card, .ranking-container {
+        width: 100%;
+    }
+   .user-profile-card {
+        padding: 10px !important;
+        margin-top: 20px !important;
+    }
+    .profile-display-mode {
+        width: 100%; 
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+    }
+    .avatar-container {
+        margin-bottom: 5px !important;
+        margin-top: 5px !important;
+    }
+    .avatar-img {
+        width: 90px !important;
+        height: 90px !important;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    .player-name {
+        font-size: 1.2rem !important;
+        margin-top: 5px !important;
+        margin-bottom: 0 !important;
+        text-align: center;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+    .player-email-display {
+        font-size: 0.75rem !important;
+        margin-top: 0 !important;
+        text-align: center;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+    .buttons-edit {
+        margin-top: 15px !important;
+        gap: 8px !important;
+    }
+    .editbutton, .deletebutton {
+        width: 40px !important;
+        height: 40px !important;
+        padding: 0 !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50% !important;
+        font-size: 1rem !important;
+    }
+    .editbutton .fa-solid, .deletebutton .fa-solid {
+        font-size: 1rem !important;
+    }
+    .user-profile-card h3, .user-profile-card p {
+        font-size: 0.9rem !important; 
+        white-space: normal !important; 
+        word-wrap: break-word !important;
+        overflow: visible !important;
+        text-align: center;
+    }
+}
+
+/* ranking */
+@media (max-width: 992px) {
+  .ranking-card {
+        padding: 10px !important; 
+        margin-top: 20px !important;
+        display: flex; 
+        flex-direction: column;
+        justify-content: space-between;
+        height: calc(100% - 20px); 
+        background-color: #B2CD9C;
+        color: #513325;
+    }
+    .ranking-title {
+        font-size: 1.5rem !important; 
+        margin-bottom: 10px !important;
+        margin-top: 0 !important;
+        align-self: center;
+    }
+    .ranking-results {
+        width: 95% !important;
+        padding: 5px !important;
+    }
+    .ranking-result {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        margin-bottom: 5px; 
+    }
+    .ranking-number {
+        font-size: 0.9rem !important; 
+        width: 25px !important;
+        height: 25px !important;
+        line-height: 25px !important; 
+        align-self: center !important; 
+        padding-left: 0 !important; 
+        text-align: center; 
+    }
+    .ranking-result > div:nth-child(2) { 
+        width: 100% !important;
+        justify-content: center !important; 
+        margin-top: 5px;
+    }
+    .ranking-avatar { 
+        width: 35px !important;
+        height: 35px !important;
+        margin-right: 5px !important; 
+        margin: 0 5px !important; 
+    }
+    .ranking-name p, .ranking-time p {
+        font-size: 0.75rem !important;
+        margin-bottom: 0 !important;
+        text-align: center; 
+    }
+    .ranking-time {
+        margin-top: -2px !important; 
+    }
+
+    .pagination {
+        margin-top: 15px !important;
+        justify-content: center !important; 
+    }
+    .paginationbutton {
+        padding: 5px 8px !important; 
+        font-size: 1rem !important; 
+        border-radius: 50% !important;
+    }
+    .paginationbutton h2 .fa-solid {
+        font-size: 1rem !important;
+        margin-bottom: 0;
     }
 }
 
@@ -507,6 +639,7 @@ background-color: #513325;
         padding-left: 0 !important; 
         padding-right: 0 !important;
     }
+
 }
 
 @media (min-width: 1400px) {
