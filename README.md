@@ -1,6 +1,13 @@
-# Scaperoom 102 — Vertical Slice
+<img width="4172" height="1603" alt="Logo" src="https://github.com/user-attachments/assets/d64b7b05-a413-4920-99b8-3802bc275a55" />
+
+# Scaperoom 102 — Demo
 
 <p>A vertical slice of a <strong>2-level escape room game</strong>, showcasing a full-stack implementation with advanced features and polished flat design.</p>
+<img width="190" height="190" alt="Avatar_03" src="https://github.com/user-attachments/assets/71dc4e38-5e0c-48b2-9061-dd3c16847d9d" />
+<img width="190" height="190" alt="Recurso 61" src="https://github.com/user-attachments/assets/e2c2356d-f181-4f7a-8833-39466eca7120" />
+<img width="190" height="190" alt="Avatar_02" src="https://github.com/user-attachments/assets/06051f72-74f2-4e3f-b0b5-bb3440505ed2" />
+<img width="190" height="190" alt="Avatar_01" src="https://github.com/user-attachments/assets/39dae0a7-8b34-4238-b21a-f2d0df558f6b" />
+<img width="190" height="190" alt="avatar_alejandro" src="https://github.com/user-attachments/assets/8ac73dd2-b26d-45a9-9c33-9908fc7cbfb2" />
 
 ## 🔍 Features
 <ul>
@@ -18,10 +25,11 @@
 
 ## 🛠️ Technologies Used
 <ul>
-  <li>Frontend: React, Bootstrap 5, CSS3</li>
-  <li>Backend: Flask, Python, SQLAlchemy, Flask-Mail</li>
-  <li>APIs: Audius (music streaming)</li>
-  <li>Dev Tools: pipenv for virtual environment and dependency management</li>
+  <li><strong>Frontend:</strong> React, Bootstrap 5, CSS3</li>
+  <li><strong>Backend:</strong> Flask, Python, SQLAlchemy, Flask-Mail</li>
+  <li><strong>APIs:</strong> Audius (music streaming)</li>
+  <li><strong>Dev Tools:</strong> pipenv for virtual environment and dependency management</li>
+  <li><strong>Design tools:</strong> Adobe illustrator for asset creation, Adobe Xd for prototypes and Audacity for SFX edition</li>
 </ul>
 
 ## 📌 Notes
@@ -32,3 +40,15 @@
   <li>Scalable architecture ready for further levels and features</li>
   <li>Consistent flat design with personalized visual assets</li>
 </ul>
+
+## 📸 Screenshots
+<img width="1920" height="1080" alt="level2-mrgeeks" src="https://github.com/user-attachments/assets/8a769047-c899-4d1c-aac8-04d23e0b1dd3" />
+<img width="1920" height="1080" alt="level2-mrgeeks" src="https://github.com/user-attachments/assets/7f1188d2-c7f6-4513-b899-76b855dd91e9" />
+<img width="1920" height="1080" alt="level2-mrgeeks" src="https://github.com/user-attachments/assets/c1602f4a-bb15-4792-8b41-5aecacbb5ab4" />
+<img width="1920" height="1080" alt="level2-mrgeeks" src="https://github.com/user-attachments/assets/c8435791-ce40-468b-a63b-17e001d87464" />
+
+
+
+
+
+
