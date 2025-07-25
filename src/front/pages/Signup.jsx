@@ -64,27 +64,27 @@ export const Signup = () => {
     }
   };
   return (
-    <div className="text-center mt-5 py-5 container col-9"  >
+    <div className="text-center form-main-container container col-9">
       <div className="background-green form-background d-flex flex-column align-items-center w-100" >
-        <div className="righteous ranking-number header-background d-flex justify-content-between w-100 ps-2">
-          <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => navigate("/login")} className= "forward-button d-flex flex-column yellow mt-5 ms-5 mb-4" ><h1><i class="fa-solid fa-caret-left"></i></h1></ButtonWithSFX>
-          <p className="header-title righteous mt-5 yellow mb-5 me-5 ps-5 pt-3 d-flex flex-column">REGISTRO</p>
+        <div className="righteous orange-header header-background d-flex justify-content-between w-100">
+          <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => navigate("/login")} className= "forward-button d-flex flex-column yellow" ><h1><i class="fa-solid fa-caret-left"></i></h1></ButtonWithSFX>
+          <p className="header-title righteous yellow text-end">REGISTRO</p>
         </div>
-        <form className="form-content row g-3 pt-4" onSubmit={handleSubmit}>
-          <div className="col-md-6 d-flex flex-column align-items-start px-4"> {/* Columna izquierda para Username, Email, Password */}
-                <div className="col-12 ps-4 pe-4"> {/* Ajustar el ancho de los inputs dentro de esta columna */}
-                    <label htmlFor="Username" className="form-label open-sans orange">Username</label>
+        <form className="form-content row g-0" onSubmit={handleSubmit}>
+          <div className="col-md-6 d-flex flex-column align-items-start"> {/* Columna izquierda para Username, Email, Password */}
+                <div className="col-12"> {/* Ajustar el ancho de los inputs dentro de esta columna */}
+                    <label htmlFor="Username" className="form-label open-sans orange">Nombre de Usuario</label>
                     <input type="text" className="form-control" id="validationCustom01" name='username' value={data.username} onChange={handleEvent} required />
                 </div>
-                <div className="col-12 ps-4 pe-4 mt-3"> {/* Añadir margen superior para separar */}
+                <div className="col-12"> {/* Añadir margen superior para separar */}
                     <label htmlFor="email" className="form-label open-sans orange">Email</label>
                     <input type="email" className="form-control" id="validationCustom04" name='email' value={data.email} onChange={handleEvent} required />
                 </div>
-                <div className="col-12 ps-4 pe-4 mt-3"> {/* Añadir margen superior para separar */}
+                <div className="col-12"> {/* Añadir margen superior para separar */}
                     <label htmlFor="Password" className="form-label open-sans orange">Password</label>
                     <input type="password" className="form-control mb-3" id="validationCustom05" value={password} onChange={handlePassword} required />
                     <span id="passwordHelpInline" className="form-text open-sans orange small">
-                        <h6>La contraseña debe tener al menos 6 digitos y contener: mayuscula, minuscula,caracter especial y número.</h6>
+                        <h6>La contraseña debe tener al menos 6 digitos y contener: mayúscula, minúscula, carácter especial y número.</h6>
                     </span>
                     {!validate && (
                         <div className="text-danger">La contraseña no cumple los requisitos</div>
@@ -93,7 +93,7 @@ export const Signup = () => {
             </div>
 
             <div className="col-md-6 d-flex flex-column align-items-start px-4"> {/* Columna derecha para Avatar */}
-                <div className="col-12 ps-4 pe-4"> {/* Ajustar el ancho del select de avatar */}
+                <div className="col-12"> {/* Ajustar el ancho del select de avatar */}
                     <label htmlFor="avatarSelect" className="form-label open-sans orange">Avatar</label>
                     <select
                         className="form-select"
@@ -118,7 +118,7 @@ export const Signup = () => {
                         />
                     )}
                 </div>
-                <div className="col-12 text-end pe-5">
+                <div className="col-12 justify-content-center">
             <ButtonWithSFX type="submit" sfxName="BUTTON_CLICK" className="ClassicButton-Variation righteous mb-0 mt-4 rounded-pill px-5 py-3" disabled={!validate} >Submit form</ButtonWithSFX>
         </div>
             </div>

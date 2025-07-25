@@ -85,10 +85,10 @@ export function Dashboard() {
   return (
     <div className="dashboard-container container-fluid d-flex justify-content-center align-items-center vh-100 mt-3">
       <div className="row w-100 h-100">
-        <div className="dashboard-lateral col-3 d-flex flex-column">
+        <div className="dashboard-lateral col-sm-3 col-md-3 col-lg-3 d-flex flex-column">
           <UserProfile />
         </div>
-        <div className="col-6 game-controls d-flex flex-column">
+        <div className="col-sm-6 col-md-6 col-lg-6 game-controls d-flex flex-column">
           <div className="row w-100">
             <div className="logo-container col-12 text-center">
               <img src={Logo} alt="Scaperoom Logo" className="Scaperoom-Logo img-fluid" />
@@ -115,7 +115,7 @@ export function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="dashboard-lateral col-3 d-flex flex-column">
+        <div className="dashboard-lateral col-sm-3 col-md-3 col-lg-3 d-flex flex-column">
           <Ranking />
         </div >
         <HowToPlay open={showHowToPlay} onClose={() => setShowHowToPlay(false)} />

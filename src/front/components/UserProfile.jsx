@@ -126,7 +126,7 @@ export function UserProfile() {
             {!isEditing ? (
                 <div className="profile-display-mode ">
                     <div className="avatar-container d-flex flex-column align-items-center w-100">
-                        <img src={getAvatarUrl(user.avatar_filename)} alt="Avatar de usuario" className="avatar-img" />
+                        <img src={getAvatarUrl(user.avatar_filename)} alt="Avatar de usuario" className="avatar-img-profile" />
                     </div>
                     <h1 className="righteous player-name ms-3 mb-0 mt-3">{user.username}</h1>
                     <p className="open-sans player-email-display ms-3 mt-0">{user.email}</p>

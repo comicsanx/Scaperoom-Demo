@@ -44,7 +44,7 @@ const Pause = ({ open, onClose }) => {
                             <span>{Math.round(displayMusicVolume * 100)}%</span>
                         </div>
                         
-                        <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => { onClose && onClose(); navigate('/dashboard'); }} className="righteous deletebutton mt-4 mb-3 rounded-pill px-2 py-1">Abandonar</ButtonWithSFX>
+                        <ButtonWithSFX sfxName="BUTTON_CLICK" onClick={() => { onClose && onClose(); navigate('/dashboard'); }} className="righteous ClassicButton mt-4 mb-3 rounded-pill px-2 py-1">Abandonar</ButtonWithSFX>
                     </div>
                     <ButtonWithSFX sfxName="BUTTON_CLICK" className="ClassicButton righteous mb-0 mt-4 rounded-pill px-4 py-2" onClick={onClose}><h3>Cerrar</h3></ButtonWithSFX>
                 </div>
