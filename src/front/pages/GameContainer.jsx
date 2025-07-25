@@ -191,10 +191,9 @@ export default function GameContainer() {
       <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="ESC" onClick={() => setMenuOpen(true)}></ButtonWithSFX>
       <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="lock" onClick={handlePeepholeClick}></ButtonWithSFX>
       <ButtonWithSFX sfxName='PICK_OBJECT_COMMON' id="gearbox" onClick={handleLightsPanelClick}></ButtonWithSFX>
-      {/* <ButtonWithSFX sfxName= 'PICK_OBJECT_COMMON' id="PlayerInfo"></ButtonWithSFX> */}
 
 
-      <div className="game-message-container justfy-content-center align-items-center w-100 d-flex flex-column">
+      <div className="game-message-container  align-items-center w-100 d-flex flex-column">
         {showEnigma && currentEnigmaData && (
           <EnigmaModal show={showEnigma} onHide={() => { setShowEnigma(false) }}
             enigmaId={currentEnigma} onEnigmaSolved={handleEnigmaSolved}

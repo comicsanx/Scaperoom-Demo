@@ -36,13 +36,15 @@
      .dashboard-container {
         margin-top: 0 !important;
         padding: 0 10px !important;
+        
         overflow-x: hidden;
         min-height: 100vh; 
     }
     .dashboard-container > .row {
         height: 100% !important; 
         flex-direction: row !important;
-        justify-content: space-between !important;
+        justify-content: center !important;
+        gap: 10px;
         align-items: flex-start !important; 
         flex-wrap: nowrap;
         margin-top: 0 !important;
@@ -51,16 +53,22 @@
 
     .dashboard-lateral {
         width: 33% !important; 
+        margin-top: 5% !important;
         min-width: unset;
         padding: 5px !important; 
         box-sizing: border-box;
     }
 
+    .game-controls {
+        align-items: center !important;
+        
+    }
+
     .dashboard-container .game-controls {
         width: 36% !important;
         padding: 5px 5px !important;
-        justify-content: flex-start !important;
-        margin-top: 20px !important;
+        justify-content: center !important;
+        margin-top: 40px !important;
     }
     .dashboard-container .game-controls > .row {
         width: 100% !important;
@@ -86,7 +94,7 @@
     .btn-group-vertical .button-group {
         width: 90% !important;
         max-width: 200px !important;
-        margin-top: 0 !important;
+        margin-top: 30px !important;
     }
     .ClassicButton {
         padding: 8px 0 !important; 
@@ -104,7 +112,6 @@
         width: 100%;
     }
    .user-profile-card {
-        padding: 10px !important;
         margin-top: 20px !important;
     }
     .profile-display-mode {
@@ -117,9 +124,15 @@
         margin-bottom: 5px !important;
         margin-top: 5px !important;
     }
+    .avatar-img-profile, .avatar-img-edit {
+        width: 140px !important;
+        height: 140px !important;
+        object-fit: cover;
+        border-radius: 50%;
+    }
     .avatar-img {
-        width: 90px !important;
-        height: 90px !important;
+         width: 70px !important;
+        height: 70px !important;
         object-fit: cover;
         border-radius: 50%;
     }
@@ -185,12 +198,37 @@
     .ranking-results {
         width: 95% !important;
         padding: 5px !important;
+        margin-top: 0 !important;
+        align-self: center;
     }
     .ranking-result {
         display: flex !important;
-        flex-direction: column !important;
+        flex-direction: row !important;
         align-items: center !important;
-        margin-bottom: 5px; 
+        justify-content: space-between;
+        width: 100%; 
+        box-sizing: border-box;
+    }
+    .raking-info {
+        margin-bottom: 6%;
+    }
+    .ranking-result .ranking-number {
+        display: flex !important;
+        flex-direction: row !important; 
+        align-items: center !important;
+        justify-content: center !important; 
+        font-size: 1.5rem !important;
+        width: 50px !important;
+        height: 50px !important;
+        line-height: 30px !important; 
+        padding: 0 !important;
+        text-align: center;
+        border-radius: 50%; 
+        flex-shrink: 0;
+        margin-right: 5px;
+    }
+    .ranking-result .ranking-number p {
+        margin: 0 !important;
     }
     .ranking-number {
         font-size: 0.9rem !important; 
@@ -206,16 +244,24 @@
         justify-content: center !important; 
         margin-top: 5px;
     }
+     .ranking-result > .d-flex.justify-content-between.w-100 {
+        display: flex !important;
+        flex-grow: 1 !important; 
+        justify-content: flex-start !important; /* CAMBIO CLAVE: Justificar a la izquierda */
+        align-items: center !important; 
+    }
+    .ranking-result > div.d-flex.justify-content-between.w-100 {
+        flex-grow: 0 !important; 
+        margin-top: 0 !important; 
+    }
     .ranking-avatar { 
-        width: 35px !important;
-        height: 35px !important;
-        margin-right: 5px !important; 
-        margin: 0 5px !important; 
+        display: none !important; 
     }
     .ranking-name p, .ranking-time p {
-        font-size: 0.75rem !important;
+        font-size: 1.5rem !important;
         margin-bottom: 0 !important;
-        text-align: center; 
+        text-align: left !important;
+        margin-left: 5% !important;  
     }
     .ranking-time {
         margin-top: -2px !important; 

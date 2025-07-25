@@ -40,7 +40,7 @@ export function Ranking() {
                             <div className="righteous ranking-number d-flex flex-column align-items-start w-100 ps-2">
                                 <p className="m-0">{indexOfFirstItem + idx + 1}#</p>
                             </div>
-                            <div className="d-flex justify-content-between w-100">
+                            <div className="d-flex raking-info justify-content-between w-100">
                                 <div className="ranking-avatar me-2 m-2">
                                     <img src={getAvatarUrl(item.avatar_filename)} alt="Avatar de usuario" className="avatar-img" />
                                 </div>
