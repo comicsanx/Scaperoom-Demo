@@ -2,7 +2,8 @@
 
 # Scaperoom 102 — Demo
 
-<p>A vertical slice of a <strong>2-level escape room game</strong>, showcasing a full-stack implementation with advanced features and polished flat design.</p>
+<p>A vertical slice of a <strong>2-level escape room game</strong>, showcasing a full-stack implementation with advanced features and polished flat design. Available only in <strong>Spanish</strong></p>
+<p>Test it here! ➡️ https://sample-service-name-e1di.onrender.com/</p><br/>
 <img width="190" height="190" alt="Avatar_03" src="https://github.com/user-attachments/assets/71dc4e38-5e0c-48b2-9061-dd3c16847d9d" />
 <img width="190" height="190" alt="Recurso 61" src="https://github.com/user-attachments/assets/e2c2356d-f181-4f7a-8833-39466eca7120" />
 <img width="190" height="190" alt="Avatar_02" src="https://github.com/user-attachments/assets/06051f72-74f2-4e3f-b0b5-bb3440505ed2" />
